@@ -1,0 +1,1369 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Preamble (プリアンブル：文書全体の設定)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[12pt, a4paper]{article}
+
+%----------- パッケージの読み込み -----------%
+\usepackage[utf8]{inputenc} % 文字コードをUTF-8に設定
+\usepackage{amsmath, amssymb} % 数式用のパッケージ
+\usepackage{graphicx}         % 図を挿入するためのパッケージ
+\usepackage[top=30truemm,bottom=30truemm,left=25truemm,right=25truemm]{geometry} % 余白を設定
+\usepackage{authblk}          % 著者と所属を綺麗に表示
+\usepackage{abstract}         % 要旨(Abstract)を独立させる
+\usepackage{natbib}           % 参考文献の引用スタイルをカスタマイズ (e.g., (Author, 2025))
+\usepackage{booktabs}         % 表を綺麗に作成するためのパッケージ
+\usepackage{caption}          % 図表のキャプション設定
+% \usepackage{hyperref}         % PDF内でクリック可能なリンクを生成
+\usepackage{lipsum}           % ダミーテキストを生成 (レイアウト確認用)
+\usepackage{setspace}         % 行間を調整 (onehalfspacing: 1.5倍)
+\usepackage{amsmath,amsfonts}
+\usepackage{amsthm}
+\usepackage{bm}
+% \usepackage[dvipdfmx]{graphicx}
+\usepackage{tocloft}
+\usepackage{mathtools}
+\usepackage{amssymb}
+\usepackage{CJKutf8}
+% \usepackage{url}
+\usepackage{highlightx}
+\usepackage{ulem}
+
+\usepackage[
+  hidelinks, % リンクに枠をつけない
+  dvipdfmx   % dvipdfmx使用ならオプション指定必須
+  ]{hyperref} % PDF内でクリック可能なリンクを生成
+
+
+\usepackage{graphicx}
+
+\usepackage{tcolorbox}
+%----------- 文書全体の設定 -----------%
+\onehalfspacing % 行間を1.5倍に設定
+\captionsetup{labelsep=period, font=small} % キャプションのフォーマット
+\newcommand{\source}[1]{\par\noindent{\footnotesize #1}} % 図表の出所を記載するためのコマンドを定義
+\renewcommand{\today}{\number\year 年\number\month 月\number\day 日} % 日付を日本語表記にする
+
+
+\tcbuselibrary{breakable, skins, theorems}
+\theoremstyle{definition}
+\newtheorem{defn}{定義}
+
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{定理}
+
+\newtheorem{claim}{Claim}
+\newtheorem{proposition}{Proposition}
+
+\renewcommand{\proofname}{\textbf{証明}}
+
+\renewcommand{\abstractname}{要旨}
+\renewcommand{\refname}{参考文献}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Document Body (文書本体)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+%----------- タイトル・著者情報 -----------%
+\title{現職教員を考慮した教員配属マッチングの設計} 
+% \\ \large{\textit{副題があればここに入力}}}
+% 修正：著者が一人の場合の記述に変更
+\author{倉持 誠}
+\affil{横浜市立大学大学院 国際マネジメント研究科 国際マネジメント専攻} 
+% \protect\\ \texttt{email@example.com}}
+\date{\today} % 日付 (不要な場合は \date{} とします)
+
+\maketitle % タイトルを生成
+%----------- 要旨 (Abstract) とキーワード -----------%
+\begin{abstract}
+    \noindent % 段落のインデントをなくす
+    % この部分に論文の要旨（Abstract）を記述します。要旨は論文全体の目的、手法、主要な発見、そして結論を簡潔にまとめたものです。読者が論文全体を読むべきかを判断するための重要な部分となります。
+% 本研究は、公立学校における教員の異動問題を、マーケットデザインの理論的枠組みを用いて分析する。特に、異動対象となる全ての現職教員に必ず配属先を保証するという\textbf{雇用保障制約（本稿では $\alpha$-feasibility と定義）}を満たす、安定的かつ効率的なマッチングメカニズムを構築することを目的とする。
+
+% まず、学校選択の基本モデルに雇用保障の概念を導入し、各校の採用が単純な\textbf{定員制約}に従う場合、\textbf{教員最適公平マッチング（Teacher-Optimal Fair Matching, TOFM）}が常に雇用保障を達成することを示す（\textbf{定理1}）。
+
+% 次に、教員が\textbf{単一の教科免許}を持ち、学校が教科別に採用定員を持つ、より現実的なモデルへと拡張する。この「教科別制約」モデルでは、問題を教科ごとに独立した市場として分解できることを利用し、各市場で基本モデルの知見を適用することで、構築される\textbf{教科別TOFM（Subject-TOFM）}が常に雇用保障を満たすことを証明する（\textbf{定理2}）。
+
+% さらに、教員が\textbf{複数の教科免許}を保有する、最も複雑なモデルを考察する。この場合、教員の配属先の選択肢が教科をまたいで相互に影響するため、既存のアルゴリズムでは雇用保障が達成されないケースが存在することを示す。この課題を解決するため、本研究では「\textbf{主たる指導教科}」という新たな概念を導入し、学校がその教科を専門とする教員を優先するという仮定の下でモデルを改良する。
+
+% 最終的に、この改良された複数教科モデルにおいて、全ての現職教員の雇用を保証する安定的なマッチングを導出する\textbf{カットオフ調整アルゴリズム}を提示し、そのアルゴリズムが常に雇用保障を達成するマッチング（固定点）を見出すことを証明した（\textbf{定理4}）。本稿の貢献は、教員異動という現実の複雑な制約を理論モデルに組み込み、雇用保障という重要な要請を満たす具体的なメカニズムを設計・提案した点にある。
+
+    \vspace{1cm} % 1cmの垂直方向のスペース
+    \noindent % 段落のインデントをなくす
+    % \textbf{Keywords:} マッチング理論, 学校選択問題, メカニズムデザイン\\
+
+    % \textbf{JEL Classification:} C78, D47, D82 % JELコード (経済学論文で主に使用)
+\end{abstract}
+
+\newpage % 新しいページを開始
+
+%----------- 序論 (Introduction) -----------%
+\section{序論}
+\subsection{動機と結果の概要}
+% 研究の背景、問題提起、研究の重要性、そして本稿の目的を明確に述べます。また、論文全体の構成をここで示すのが一般的です。
+% 例えば、引用は \citet{Nakamura2025} のように、または文末で \citep{Kittler2020} のように行います。
+日本の公立高校では、教員の異動に関して、教員の31 \% が「可能なら別の学校に移りたい」と回答しており、年度当初には217名の欠員が発生するなど、希望と実際の配属の不一致が構造的に生じている。このミスマッチは教科欠員や授業負担の偏在を引き起こし、教育機会格差を拡大させている(OECD(2018), 文科省(2022))。
+
+このようなミスマッチが生じる主因は大きく三つある。第一に、教員自身にも勤務校や地域、勤務条件に対する明確な選好が存在するため、人気校に希望が集中しやすいということである。第二に、各学校は教科ごとに受け入れ定員を伴う科目制約を抱えており、たとえ応募者が多くても希望者全員を受け入れられるわけではないということである。第三に、新規採用教員が毎年度一定数加わることで、既存の現職教員と新規採用教員を合わせた全体最適を図る必要が生じ、配属計画の複雑性が飛躍的に高まるということである。これらの要因が絡み合う結果、教員側の希望と学校側の需要を同時に充足させることが制度的に難しくなっている。以上の三つの要因1.人気校志向による希望の偏在、2.科目ごとの定員を超過してはいけないという制約、3.現職と新任を同時に調整することによる複雑性が同時に作用すると、現行制度では、「人員が足りない、または、超過する」という状態が避けられない。
+
+教員の希望は一部の特色校・都市部高偏差値校に集中する傾向が顕著である。文部科学省では、埼玉県の募集32枠に対し150名（4.7倍）、宮城県でも19枠に75名（3.9倍）の応募が殺到している。東京都教育委員会の令和5年度公募結果も、中・高等学校共通枠では、名簿登録者数1617名に受験者は2962名（1.8倍） と募集枠超過が続く状況を示している。更に、採用見込み者数は、1020名とさらに倍率が高くなっている。一方で文科省(2022)によると、始業日時点で高校だけでも217名の欠員が発生しており、人気校への希望集中の裏側で配置が埋まらない学校が恒常的に生じている。
+現在、公立高校の教員は、主に都道府県教育委員会が一括して人事権を持ち、毎年実施される「異動希望調査（人事異動調）」を起点に配属が決められる。教員は10〜11月頃に第一〜第三希望校・地域などを記入し、校長経由で教育委員会へ提出するが、最終決定は科目ごとの定数調整や地域バランス、在任年数ローテーションを優先した教育委員会の裁量で行われる(長野県教育委員会（2024）)。
+
+各県の異動方針は「同一校勤務が6～10年を超えれば原則配置換」「全県的視野で欠員校を優先配置」と明記しており(広島県教育委員会)、個人希望は最終段階で調整弁として後順位に置かれる。実際、千葉県の方針も「地域間・学校間の過不足を県全体で調整し、適材適所を図る」と規定しており(千葉県教育委員会（2024）)、人気校への希望集中と不人気校の欠員を同時に解消するアルゴリズムや客観指標は導入されていない。結果として、希望は反映されにくく、科目欠員等が発生したまま年度が始まるというのが現状である。
+実務では、人事担当が教員希望をなるべく考慮しつつ科目定員を充たそうと試みるものの、希望が集中した教科・地域では定数オーバーで受け入れられず、一方で不人気校や欠員が出やすい教科は定数割れが残る。結果として、始業直前まで空席が埋まらず免許外担当・複数校兼務・長距離通勤といった“その場しのぎ”の配置が発生し、教員の授業準備時間を圧迫する。さらに年度途中に産休代替や退職が重なると、科目制約を守りつつ、現職全員を再配置する余地が出てくるが、現実的には困難であるため、欠員の長期化と希望未充足の負のスパイラルに陥りやすい。つまり、現行方式は三要因を同時に満たす設計原理を持たないため、「配属を決めようとしても決め切れない」「決めたとしても誰かが不満か欠員が残る」といった“うまくいかない”現象が構造的に生じてしまうのである。
+
+本稿は、この課題に対し、経済学のマッチング理論を用いて、教員の希望を尊重しつつ制度的制約を満たす配属メカニズムを設計する。具体的には、1.各学校の科目別定員を守り（科目制約）、2.教員間の不公平感（正当化された嫉妬）をなくし（公平性）、3.その中で教員にとって最も望ましい配属を実現し（教員最適性）、そして何よりも4.全ての現職教員の雇用を保証する（現職必置条件）という、4つの重要条件を同時に満たすことである。本稿で提示する主な結果は以下の通りである。まず、教員が単一の教科免許しか持たない単純化されたモデルでは、既存の理論的枠組みを応用することで、現職教員の雇用保障が、前述の1.~3.を満たした上で達成可能であることを示す（定理1）。さらに、拡張した教員が複数の教科免許を持つ条件下では、既存のアルゴリズムが機能せず、現職教員が配属先を失うケースが存在することを「動機付けの例（例1）」によって具体的に示す。この問題を乗り越えるため、本稿は「主たる指導教科」という概念を導入してモデルを精緻化し、「カットオフ調整アルゴリズム」を設計・提案する。本稿の、主たる貢献は、この提案アルゴリズムが、複数免許という最も複雑な条件下においても、常に本論文で定義した弱い教科公平性を満たし（定理2）、その結果として得られるマッチングが、現職教員の雇用を保証する（現職必置条件を満たす）ことを証明した点にある（定理3）。これにより、現実の教員人事制度が抱える複雑な課題に対し、理論的に裏付けられた具体的な解決策を提示する。
+
+
+
+\subsection{関連研究 (Related literature)}
+% この分野における重要な先行研究をレビューし、既存の研究で何が明らかにされており、どのような課題が残されているのか（リサーチギャップ）を特定します。
+
+% 本論文の今後の流れをワンパラグラフ分入れる。
+
+
+今回は「教員と学校」のような2種類の異なるグループに属する参加者たちをどのように組み合わせるかを考える。このような組み合わせ(マッチング)を二部マッチングと呼ぶ。二部マッチングは、Gale and Shapley(1962)で考案された。Gale and Shapley(1962)では、現実のマッチングに関する問題を数学的に定式化し、どのようにペアを組めば、当事者同士が今のペアよりもお互いを好む組み合わせが存在しないかを考えた。彼らの枠組みにより、金銭を介さない人員配置問題にもゲーム理論的な解が存在することが示された。
+
+しかし、その理論の現実社会への有用性が広く認識されるまでには時間を要した。1980年代に入り、Rothが医学生と病院の人員配置問題を研究したことが、このギャップを埋める契機となった。Roth (1984)は、米国の研修医の労働市場における採用方式を分析し、現在用いられている配置方法のゲーム理論的特徴を解明した。彼はこの市場の現行の手法を調べ、それがGale–Shapleyの提案した方法と極めて近いものであり、当時の医学生と病院の組み合わせ方法は病院側にとって最適な安定マッチングと同等であることを示している。Roth (1984)の貢献により、「安定性」(当事者同士が今のペアよりもお互いを好む組み合わせが存在しないこと)がマッチング市場の長期的安定運用に不可欠であることが国際的にも確認された。また、本研究を契機に、他の分野でも集中マッチングの導入が検討されるようになった。ほかにも、様々な市場で、本理論が活用されており、Roth (1984)が単なる分析に留まらず現実の制度設計を直接に方向付けた例と言える。
+
+続いて、1990年代には、Balinski $\&$ S\"onmez が大学入試における学生配置問題へとマッチング理論を応用し、古典理論を政策設計に結びつける新たな展開を示した。Balinski $\&$ S\"onmez (1999) は、中央集権的な大学入学試験制度にもとづく学生配置問題を新たなマッチング理論モデルとして定式化し、従来の制度を分析した。特に、トルコの大学入学者配置方法に重大な欠陥があることを明らかにした。そこで、彼らは、これらの欠陥を克服しうる代替メカニズムとして学生最適の安定マッチング方式を提案した。この理論分析により、学生側最適な安定マッチング(当事者同士が今のペアよりもお互いを好む組み合わせが存在しないマッチング)が受験者配置問題において望ましい原則であり、複数カテゴリーの試験得点という特殊要因があっても安定マッチング理論が有効に機能することが示された点で、本研究の理論的貢献は大きいと言える。Balinski $\&$ S\"onmez (1999) の貢献により、マッチング理論が労働市場以外の分野にも適用可能であることが示され、特に政策当局が直面する制度設計問題に理論を活かせる道筋が明確になった。これはマッチング理論の応用範囲を大きく拡大し、理論と実践の橋渡しをさらに推し進めた転換点となっている。
+
+しかし両モデルは、複雑な制約を想定していない。そこで、近年、複雑な制約を伴う市場に一歩踏み込んだのがKamada $\&$ Kojima (2024)である。彼らは、実際の保育園入所において従来の全員が満足する安定した割り当てが存在しない場合が存在することを指摘し、制約のある状況下でも優先順位を尊重した公平な割り当てが得られる新たな仕組みを提案した。また、自治体の保育所割当データを用いたシミュレーションにより、この公平な割り当て方式の効果を検証し、有効性を確認した。制約の緩和と公平性の両立によって参加者の満足度や全体の利益を高められる可能性が示された。
+とはいえ今回の研究である公立高校における配属問題にそのまま適応することは、以下のような問題点があることから不可能である。まず、人気校志向によって希望が偏っている点である。既存研究では、希望が特定校に集中した場合に，欠員校を同時に解消する手当てがない。次に、それぞれの学校と科目について定員が設定されている点である。既存研究では、制約は、学科などの1つの上限に対して設定していることが多く、複数科目を横断して上限を同時に守る公立高校の複雑な定員管理には未対応である。最後に、現職の教員を必ずどこかの高校に配属させなければならない点である。既存研究では、単年度の応募者のみを対象としており、既に在籍している職員を必ず再配置するという条件を入れていない。
+
+本研究では、これらの問題点を同時に満たすメカニズムを構築し、教員配属問題に対する実践的な解決策を提示する。具体的な、本稿の構成は以下の通りである。まず第2章では、問題を単純化し、各教員が単一の教科免許のみを持つ「基本モデル」を定義する。このモデルにおいて、既存の理論的枠組みを応用することで、現職教員の雇用が常に保証される安定的なマッチング（教員最適公平マッチング）が存在することを示す（定理1）。次に第3章では、教員が複数の教科免許を持つ、より現実的で複雑な「拡張モデル」へと分析を進める。この状況下では既存のアルゴリズムが機能しないことを例証し、その課題を克服するために独自の「カットオフ調整アルゴリズム」を設計・提案する。そして、この提案アルゴリズムが、複数免許という最も複雑な条件下においても、常に弱い教科公平性を満たし（定理2）、現職教員の雇用を保証するマッチングを導出可能であることを証明する（定理3）。第4章では、これらの理論的結果が持つ実践的な含意について考察する。最後に第5章で、本研究の結論と今後の展望を述べる。
+
+
+
+\section{基本モデル：単一免許を持つ教員}
+% We formally define the school choice model. Let $I$ be a non-empty finite set of teachers and $S$ be a non-empty finite set of schools. Each teacher $i \in I$ has a strict preference relation, $\succ_i$, over the set of schools $S$ and the state of being unmatched, $\emptyset$. Each school $s \in S$ has a strict priority order, $\succ_s$, over the set of teachers $I$. The collection of all preferences is the profile $\succ_I = (\succ_i)_{i \in I}$, and the collection of all priorities is the profile $\succ_S = (\succ_s)_{s \in S}$.
+
+% For each school $s \in S$, its hiring constraints are given by a family of feasible teacher sets, $\mathcal{F}_s$. A subset of teachers $I' \subseteq I$ is defined as {\bf \textit{feasible}} at school $s$ if $I' \in \mathcal{F}_s$. A {\bf \textit{problem}} is therefore characterized by the tuple $(I, S, \succ_I, \succ_S, \{\mathcal{F}_s\}_{s \in S})$.
+
+% A {\bf \textit{matching}}, $\mu$, is a mapping that assigns teachers to schools. It is formally defined by three conditions: (i) for every teacher, her assignment is $\mu_i \in S \cup \{\emptyset\}$; (ii) for every school, its set of assigned teachers is $\mu_s \subseteq I$; and (iii) for any teacher-school pair, the assignments are consistent such that $\mu_i = s$ if and only if $i \in \mu_s$.
+
+% The quality of a matching $\mu$ is assessed through several key properties. A matching is {\bf \textit{feasible}} if $\forall s \in S, \mu_s \in \mathcal{F}_s$. It is {\bf \textit{individually rational}} if $\mu_i \succ_i \emptyset$ for all $i \in I$. A teacher $i$ is said to have {\bf \textit{justified envy toward}} teacher $i'$ if there exists a school $s \in S$ such that $s \succ_i \mu_i$, $i' \in \mu_s$, and $i \succ_s i'$. Consequently, a matching $\mu$ is {\bf \textit{fair}} if no teacher has justified envy toward another. Finally, a matching $\mu$ is {\bf \textit{non-wasteful}} if there exists no pair $(i, s) \in I \times S$ such that $s \succ_i \mu_i$ and $\mu_s \cup \{i\} \in \mathcal{F}_s$.
+
+% A matching $\mu$ is defined as {\bf \textit{stable}} if it is simultaneously feasible, individually rational, fair, and non-wasteful. A related but distinct condition is that of $\alpha$-feasibility. A matching $\mu$ is $\alpha$-{\bf \textit{feasible}} if it satisfies the condition that $\forall s \in S , \mu_s \in \mathcal{F}_s$ and, additionally, $\mu_i \neq \emptyset$ whenever $i$ is designated as an $\alpha$-teacher.
+
+
+
+
+学校選択モデルを形式的に定義する。$I$ を教師からなる空でない有限集合、$S$ を学校からなる空でない有限集合とする。また、$I_{\alpha}$を\textbf{\textit{現職教師}} (currently employed / in-service teachers)からなる空でない有限集合とし、$I_{\alpha} \in I$である。各教師 $i \in I$ は、学校の集合 $S$ とマッチしない状態 $\emptyset$ の上で定義される厳密な選好順序 $\succ_i$ を持つ。各学校 $s \in S$ は、教師の集合 $I$ の上で定義される厳密な優先順位 $\succ_s$ を持つ。すべての選好の組をプロファイル $\succ_I = (\succ_i)_{i \in I}$ とし、すべての優先順位の組をプロファイル $\succ_S = (\succ_s)_{s \in S}$ とする。
+
+各学校 $s \in S$ について、その採用制約は、実現可能な教師集合の族 $\mathcal{F}_s$ によって与えられる。教師の部分集合 $I' \subseteq I$ は、$I' \in \mathcal{F}_s$ であるとき、学校 $s$ において\textbf{\textit{実現可能}} (feasible) であると定義される。したがって、一つの\textbf{\textit{問題}} (problem) は、組 $(I, S, \succ_I, \succ_S, \{\mathcal{F}_s\}_{s \in S})$ によって特徴づけられる。
+
+\textbf{\textit{マッチング}} (matching) $\mu$ とは、教師を学校に割り当てる写像であり、形式的には以下の3つの条件で定義される。
+\begin{itemize}
+    \item[(i)] すべての教師$i$について、その割り当て先は $\mu_i \in S \cup \{\emptyset\}$ である。
+    \item[(ii)] すべての学校$s$について、そこに割り当てられた教師の集合は $\mu_s \subseteq I$ である。
+    \item[(iii)] いかなる教師$i$と学校$s$のペアにおいても、$\mu_i = s$ であることと $i \in \mu_s$ であることが同値であるように、割り当ては整合的でなければならない。
+\end{itemize}
+
+
+
+教科からなる空でない有限集合 $J$ を導入する。割り当て関数 $A$ は、各教師をその単一の教科に、各学校をその学校が募集する教科の集合に対応付ける。教師については、$A: I \to J$ とする。$I_j = \{i \in I \mid A(i) = j\}$ は、教科 $j$ の免許を持つ教師の集合である。学校については、$A: S \to 2^J$ とする。$S_j = \{s \in S \mid j \in A(s)\}$ は、教科 $j$ で募集を行う学校の集合である。
+
+各学校 $s$ は、教科 $j$ ごとに特定のキャパシティ $c^j_s$ を持つ。学校がある教科で募集を行わない場合、その教科のキャパシティはゼロとなる。すなわち、すべての $j \notin A(s)$ について、$c^j_s = 0$ である。
+
+これらの教科制約の下でマッチング $\mu$ が実現可能であるとは、ある学校に任意の教科で割り当てられた教師の数が、その学校の当該教科におけるキャパシティを超えない場合をいう。この実現可能性条件 $\mathcal{F}_s$ は、次のように定義される。
+\[
+\mathcal{F}_s = \{\mu_s \subseteq I : \forall j \in J, |\{i \in \mu_s : A(i) = j \}| \leq c^j_s \}
+\]
+
+
+
+マッチング $\mu$ の質は、いくつかの重要な特性によって評価される。マッチングが\textbf{\textit{実現可能}} (feasible) であるとは、すべての学校 $s \in S$ について $\mu_s \in \mathcal{F}_s$ が成り立つことである。
+\textbf{\textit{個人合理的}} (individually rational) であるとは、すべての教員 $i \in I$ について $\mu_i \succ_i \emptyset$ が成り立つことである。
+ある教師 $i$ が教師 $i'$ に対して\textbf{\textit{正当な嫉妬を持つ}} (have justified envy toward) とは、$s \succ_i \mu_i$、$i' \in \mu_s$、かつ $i \succ_s i'$ となるような学校 $s \in S$ が存在する場合をいう。
+したがって、マッチング $\mu$ が\textbf{\textit{公平}} (fair) であるとは、別の教師に対して正当な嫉妬を持つ教師が一人もいないことである。
+最後に、マッチング $\mu$ が\textbf{\textit{無駄がない}} (non-wasteful) とは、$s \succ_i \mu_i$ かつ $\mu_s \cup \{i\} \in \mathcal{F}_s$ となるようなペア $(i, s) \in I \times S$ が存在しないことである。
+マッチング $\mu$ は、実現可能、個人合理的、公平、かつ無駄がないという性質を同時に満たすとき、\textbf{\textit{安定}} (stable) であると定義される。
+マッチング $\mu$ が\textbf{\textit{現職必置条件}} (in-service teacher condition) を満たすとは、この集合の全ての教師が割り当てを得ること、すなわち $\forall i \in I_{\alpha}, \mu_i \neq \emptyset$ が成り立つ場合をいう。
+
+
+% これと関連するものの異なる条件として、α-実現可能性 (α-feasibility) があります。マッチング $\mu$ が\textbf{\textit{α-実現可能}} (α-feasible) であるとは、すべての $s \in S$ について $\mu_s \in \mathcal{F}_s$ という条件を満たし、かつ、それに加えて、$i$ がα-教師として指定されている場合は常に $\mu_i \neq \emptyset$ となることです。
+
+
+
+公平性（Fairness）の概念は、教科を考慮して精緻化される。ある教師 $i$ が教師 $i'$ に対して\textbf{\textit{教科に基づいた正当な嫉妬}} (subject-justified envy) を持つとは、両者が同じ教科を持ち ($A(i) = A(i')$)、かつ標準的な意味で教師 $i$ が $i'$ に対して正当な嫉妬を持つ（すなわち、$\exists s \in S$ s.t. $s \succ_i \mu_i, i' \in \mu_s, i \succ_s i'$）場合をいう。マッチングが\textbf{\textit{教科公平}} (subject-fair) であるとは、教科に基づいた正当な嫉妬を持つ教師が誰もいない状態を指す。
+
+% \begin{defn}
+%   A constraint $\mathcal{F}_s$ is a {\bf \textit{general upper-bound}} if $I' \in \mathcal{F}_s$ and $I'' \subseteq I'$ imply $I'' \in \mathcal{F}_s$.
+% \end{defn}
+
+% \begin{defn}
+%   A matching $\mu$ is the {\bf \textit{teacher-optimal fair matching (TOFM)}} if:
+  
+%   (i) $\mu$ is feasible, individually rational, and fair, and
+  
+%   (ii) $\mu_i \succeq_i \mu'_i$ for each $i \in I$ and every $\mu'$ that is feasible, individually rational, and fair.
+% \end{defn}
+
+
+\begin{defn}
+制約 $\mathcal{F}_s$ は、$I' \in \mathcal{F}_s$ かつ $I'' \subseteq I'$ ならば常に $I'' \in \mathcal{F}_s$ が成り立つとき、\textbf{\textit{一般上限}} (general upper-bound) である。
+\end{defn}
+
+\begin{defn}
+マッチング $\mu$ は、以下の2つの条件を満たすとき、\textbf{\textit{教師最適公平マッチング (TOFM)}} (teacher-optimal fair matching) となる。
+\begin{itemize}
+    \item[(i)] $\mu$ は、実現可能、個人合理的、かつ公平であり、かつ
+    \item[(ii)] 実現可能、個人合理的、かつ公平である、他のいかなるマッチング $\mu'$ に対しても、すべての教師 $i \in I$ について $\mu_i \succeq_i \mu'_i$ が成り立つ。
+\end{itemize}
+\end{defn}
+
+\begin{defn}
+マッチング $\mu$ が\textbf{\textit{教科別教師最適公平マッチング (subject-TOFM)}} となるのは、以下の条件を満たす場合である。
+\begin{itemize}
+    \item[(i)] $\mu$ は、実現可能、個人合理的、かつ教科公平であり、かつ
+    \item[(ii)] 実現可能、個人合理的、かつ教科公平である、他のいかなるマッチング $\mu'$ に対しても、すべての教師 $i \in I$ について $\mu_i \succeq_i \mu'_i$ が成り立つ。
+\end{itemize}
+\end{defn}
+
+% \subsection{Assumptions}
+% In our model, we introduce the following four key assumptions:
+
+% \textbf{Assumption (1)} For each school $s \in S$, the family of feasible sets of teachers, $\mathcal{F}_s$, represents a general upper-bound constraint. 
+
+% \textbf{Assumption (2)} Schools uniformly prioritize $\alpha$-teachers over other teachers. Formally, for any school $s \in S$, any $\alpha$-teacher $i \in I_\alpha$, and any non-$\alpha$-teacher $j \in I\setminus I_\alpha$, if both are acceptable to the school, the school must prefer the $\alpha$-teacher, such that $[i \succ_s \emptyset \text{ and } j \succ_s \emptyset] \implies i \succ_s j$. 
+
+% \textbf{Assumption (3)} There exists at least one feasible matching that employs all $\alpha$-teachers. That is, there exists a matching $\mu$ such that (i) $\forall s \in S, \mu_s \in \mathcal{F}_s$, and (ii) $\forall i \in I_\alpha, \exists s \in S$ for which $i \in \mu_s$. 
+
+% \textbf{Assumption (4)} All $\alpha$-teachers consider every school to be an acceptable assignment. Formally, for all $i \in I_\alpha$ and for all $s \in S$, it holds that $s \succ_i \emptyset$.
+
+
+% 本モデルでは、教師が特定の免許を持ち、学校が特定の教科で募集を行うという、教科に基づく制約を導入する。
+% 中核となる仮定は、各教師がちょうど1つの教科の免許を持つのに対し、学校は様々なキャパシティで複数の教科について募集できる、というものです。
+
+
+
+このモデルの構造は、教科ごとの分析を可能にする。ある教科 $j \in J$ について、その教科の市場に特有の嫉妬や公平性を定義できる。同じ教科 $j$ を持つ2人の教師間での正当な嫉妬を\textbf{\textit{教科jにおける教科に基づいた正当な嫉妬}} また、教科jにおいて、教科に基づいた正当な嫉妬を持つ教師がいない状態を\textbf{\textit{教科jにおいて教科公平である}} という。その教科を持つ全ての現職教師が雇用されるマッチング。すなわち $\forall i \in I_\alpha \cap I_j, \mu_i \neq \emptyset$となることを\textbf{\textit{教科jにおいて現職必置条件を満たす}} という。
+
+解を見つけるために、カットオフに基づくメカニズムを利用する。各教科 $j$ について、与えられた優先順位カットオフのベクトル $p_j$ における学校 $s$ の需要 $D^j_s(p_j)$ とは、$I_j$ に属する教師の集合であり、その教師は学校 $s$ でカットオフ $p^j_s$ 以上に順位付けられ、かつ、自身が条件を満たす他のどの学校よりも学校 $s$ を好む。形式的には、以下のように記述する。
+
+$D^j_s(p_j) = \{ i \in I_j \mid i \succeq_s i^{(s,p^j_s)} \text{ and } s \succ_i \emptyset; \forall s' \in S_j, i \succeq_{s'} i^{(s',p^j_{s'})} \implies s \succeq_i s' \}$
+
+アルゴリズムの中核は、これらのカットオフを繰り返し調整する\textbf{\textit{教科別カットオフ調整関数}} $T : P \rightarrow P$ である。各学校 $s$ と教科 $j$ について、この関数は次のように定義される。
+\[
+T_s^j(p) =
+\begin{cases}
+p_s^j + 1 & \text{if } | D_s^j(p) | > c^j_s \\
+p_s^j     & \text{if } | D_s^j(p) | \leq c^j_s
+\end{cases}
+\]
+
+\subsection{仮定}
+本モデルでは、以下の4つの重要な仮定を導入する。
+
+\vspace{0.5\baselineskip} % \baselineskip から 0.5\baselineskip へ変更
+\noindent\textbf{仮定 (1)} \\
+各学校 $s \in S$ について、実現可能な教師集合の族 $\mathcal{F}_s$ は、一般上限制約（general upper-bound constraint）である。
+
+\vspace{0.5\baselineskip}
+\noindent\textbf{仮定 (2)} \\
+学校は、他の教師よりも現職教員を一様に優先する。形式的には、任意の学校 $s \in S$、α-教師 $i \in I_\alpha$、非α-教師 $j \in I\setminus I_\alpha$ について、もし両者がその学校にとって受け入れ可能であるならば、学校はα-教師を優先しなければならない。すなわち、$[i \succ_s \emptyset \text{ かつ } j \succ_s \emptyset] \implies i \succ_s j$ が成り立つ。
+
+\vspace{0.5\baselineskip}
+\noindent\textbf{仮定 (3)} \\
+すべての現職教員を雇用する、実現可能なマッチングが少なくとも一つは存在する。すなわち、(i)すべての $s \in S$ で $\mu_s \in \mathcal{F}_s$、かつ (ii)すべての $i \in I_\alpha$ に対して $i \in \mu_s$ となる学校 $s \in S$ が存在する、という条件を満たすマッチング $\mu$ が存在する。
+
+\vspace{0.5\baselineskip}
+\noindent\textbf{仮定 (4)} \\
+すべての現職教師は、いかなる学校も受け入れ可能な割り当て先であると見なす。形式的には、すべての $i \in I_\alpha$ とすべての $s \in S$ について、$s \succ_i \emptyset$ が成り立つ。
+
+
+
+% This section introduces constraints based on subjects, where teachers hold specific licenses and schools recruit for particular subjects. The core assumption is that each teacher holds a license for exactly one subject, while schools may recruit for multiple subjects with varying capacities.
+
+% We extend the model by introducing a non-empty finite set of subjects, $J$. An assignment function $A$ maps each teacher to their single subject and each school to the set of subjects it offers.
+% \begin{itemize}
+%     \item For teachers, $A: I \to J$. We let $I_j = \{i \in I \mid A(i) = j\}$ be the set of teachers with a license for subject $j$.
+%     \item For schools, $A: S \to 2^J$. We let $S_j = \{s \in S \mid j \in A(s)\}$ be the set of schools recruiting for subject $j$.
+% \end{itemize}
+
+% Each school $s$ has a specific capacity $c^j_s$ for each subject $j$. If a school does not recruit for a subject, its capacity for that subject is zero: $\forall j \notin A(s), c^j_s = 0$.
+
+% A matching $\mu$ is feasible under these subject constraints if the number of teachers assigned to a school for any given subject does not exceed the school's capacity for that subject. This feasibility condition, $\mathcal{F}_s$, is defined as:
+% \[
+% \mathcal{F}_s = \{\mu_s \subseteq I : \forall j \in J, |\{i \in \mu_s : A(i) = j \}| \leq c^j_s \}
+% \]
+
+
+
+
+
+
+
+
+% \subsection{Subject-Aware Matching Properties}
+
+% We introduce a special set of teachers, $I_{\alpha}$, representing {\bf \textit{currently employed (in-service) teachers}}. A matching $\mu$ satisfies the {\bf \textit{in-service teacher condition}} if every teacher in this set is assigned a position, i.e., $\forall i \in I_{\alpha}, \mu_i \neq \emptyset$.
+
+% Fairness is now refined to account for subjects. A teacher $i$ has {\bf \textit{subject-justified envy}} toward teacher $i'$ if they share the same subject ($A(i) = A(i')$) and teacher $i$ has justified envy toward $i'$ in the standard sense ($\exists s \in S$ s.t. $s \succ_i \mu_i, i' \in \mu_s, i \succ_s i'$). A matching is {\bf \textit{subject-fair}} if no teacher has subject-justified envy.
+
+% With this, we define our primary solution concept. A matching $\mu$ is the {\bf \textit{subject-teacher-optimal fair matching (subject-TOFM)}} if:
+
+% (i) $\mu$ is feasible, individually rational, and subject-fair, and
+  
+% (ii) $\mu_i \succeq_i \mu'_i$ for each $i \in I$ and every $\mu'$ that is feasible, individually rational, and subject-fair.
+
+% \subsection{Per-Subject Analysis and Algorithmic Components}
+
+% The model's structure allows for a per-subject analysis. For a given subject $j \in J$, we can define envy and fairness specific to that subject's market.
+% \begin{itemize}
+%     \item {\bf \textit{Subject-justified envy on j}}: Envy between two teachers who both have subject $j$.
+%     \item {\bf \textit{Subject-fair on j}}: No teacher has subject-justified envy on $j$.
+%     \item {\bf \textit{$\alpha$-feasible on j}}: A matching is $\alpha$-feasible on subject $j$ if all in-service teachers with that subject are employed: $\forall i \in I_\alpha \cap I_j, \mu_i \neq \emptyset$.
+% \end{itemize}
+
+% To find a solution, we can utilize a cutoff-based mechanism. For each subject $j$, a school $s$'s demand at a given vector of priority cutoffs $p_j$, denoted $D^j_s(p_j)$, is the set of teachers in $I_j$ who are ranked at or above the cutoff $p^j_s$ at school $s$ and who prefer school $s$ over any other school for which they also qualify.
+
+% The core of the algorithm is the {\bf \textit{subject-cutoff adjustment function}}, $T : P \rightarrow P$, which iteratively adjusts these cutoffs. For each school $s$ and subject $j$, the function is defined as:
+% \[
+% T_s^j(p) =
+% \begin{cases}
+% p_s^j + 1 & \text{if } | D_s^j(p) | > c^j_s \\
+% p_s^j     & \text{if } | D_s^j(p) | \leq c^j_s
+% \end{cases}
+% \]
+
+% \subsection{教科を考慮したマッチングの特性}
+
+
+
+
+% \subsection{教科ごとの分析とアルゴリズムの構成要素}
+
+
+\subsection{結果と考察}
+
+% \begin{theorem}
+%   Under subject constraint, subject-TOFM is always $\alpha$-feasible.
+% \end{theorem}
+
+
+%   \begin{proof}
+%   By Kamada and Kojima(2024), there exists a TOFM $\mu^j$ on subject $j$, that is,
+% \begin{align*}
+%   &(i) \text{I.R.}: \forall i \in I_j, \mu^j_i \succ_i \emptyset,\\
+%   &(ii) \text{fair}:  \nexists i,\nexists i' \in I_j, \nexists s \in S_j, s \succ_i \mu^j_i, i' \in \mu^j_s, i \succ_s i',\\
+%   &(iii) \text{feasible}:  \forall s \in S_j, \mu^j_s \in \mathcal{F}^j_s,\\
+%   &(iv) \text{T.O.}:  \mu^j_i \succeq_i \bar{\mu}^j_i \text{ for each } i \in I_j \text{ and every } \bar{\mu}^j \text{ that is feasible, individually rational, and fair on j.}
+% \end{align*}
+% By theorem 1, $\mu^j$ is $\alpha$-feasible on j. Let $\mu$ be such that $\forall i \in I_j$, $\mu_i=\mu^j_i$ and $\forall s \in S$, $\mu_s = \bigcup\limits_{j \in A(s)} \mu^j_s$.
+
+% Show that $\mu$ is subject-TOFM.To show (i).To show $\mu$ is feasible.Take any $s \in S$.Take any $j \in J$.
+
+% Case 1:$j \in A(s)$. $\mu^j_s \in \mathcal{F}^j_s$. In addition, by def of $\mu$, $\{i \in I_j : i \in \mu^j_s\} = \{ i \in I_j : i\in \mu_s \}$. By $\mu^j_s \in \mathcal{F}^j_s$, $|\{i \in I_j : i \in \mu^j_s\}| = |\{ i \in I_j : i\in \mu_s \}| \leq c_j$.
+
+% Case 2:$j \notin A(s)$.  In this case, $c^j_s=0$. $|\{i \in I_j : i \in \mu_s\}|= 0 = c^j_s$. Hence, $\mu_s \in \mathcal{F}_s$.・・・(※) To show $\mu$ is individually rational. Take any $i \in I$. Then, $\exists j \in J$, $i \in I_j$. Since $\mu^j_i$ is individually rational, $\mu_i = \mu^j_i \succeq_i \emptyset$. To show $\mu$ is subject-fair. Take any $i,i' \in I$ with $j \equiv  A(i) = A(i')$. Sps ,by cont, $\exists s \in S$ s.t.  $s \succ_i \mu_i$, $i' \in \mu_s$, $i \succ_s i'$. Since $i' \in \mu_s $, by def of $\mu$, $s \in S_j$. By the assumption, $s \succ_i \mu^j_i$, $i' \in \mu^j_s$, $i \succ_s i'$. This is a cont to the fact that $\mu^j$ is TOFM((ii)fair). Therefore, $\mu$ is subject-fair. 
+
+% To show (ii). Take any $i \in I$. Take any $\mu'$ that is feasible, individually rational, and subject-fair. Let $j \equiv A(i)$. By def of $\mu^j$, $\mu^j$ is TOFM on $j$, i.e., condition (iv) is satisfied. Let $\bar{\mu}^{j}$ be s.t. $\forall i' \in I_j$, $\bar{\mu}^j_{i'} = \bar{\mu}_{i'}$, $\forall s \in S_j$, $\bar{\mu}^j_s = \{ i' \in I_j : i' \in \bar{\mu}_s\}$.Let us show that $\bar{\mu}^j$ is feasible, individually rational, and fair on j.
+
+% To show $\bar{\mu}^j$ is feasible on $j$. Take any $s \in S_j$. Since $\bar{\mu}$ is feasible, $\bar{\mu}_s \in \mathcal{F}_s$.Since $\bar{\mu}_s \in \mathcal{F}_s$, $\forall k \in J$, $|\{i' \in I_k : i' \in \mu_s\}| \leq c^k_s$.Since $j \in J$, $|\{i \in I_j : i \in \mu_s\}| \leq c^j_s$. That is, $\bar{\mu}^j_s = \{ i' \in I_j : i' \in \bar{\mu}^j_s\} = \{ i' \in I_j : i' \in \bar{\mu}_s\}$. $|\{ i' \in I_j : i' \in \bar{\mu}^j_s\}| = |\{ i' \in I_j : i' \in \bar{\mu}_s\}| \leq c^j_s$. Hence, $\bar{\mu}^j_s \in \mathcal{F}^j_s$. Therefore, $\bar{\mu}^j$ is feasible on $j$.
+
+% To show $\bar{\mu}^j$ is individually rational on $j$. Take any $i \in I_j$. Since $\mu'$ is individually rational, $\bar{\mu}_{i'} \succ_{i'} \emptyset$.By def of I.R., $\bar{\mu}^j_{i'} = \bar{\mu}_{i'}\succ_{i'} \emptyset$.Therefore, $\mu^{'j}$ is individually rational on $j$.
+
+% To show $\mu^{'j}$ is fair on $j$. Take any $i',i'' \in I_j$. That is, $j = A(i') = A(i'')$. Sps, by cont,  $\exists s \in S_j$ s.t. $s \succ_{i'} \bar{\mu}^j_{i'}$, $i'' \in \bar{\mu}^j_s$, $i' \succ_s i''$. Since $\mu'$ is subject-fair, $\nexists s \in S$ s.t. $A(i') = A(i'')$, $s \succ_i' \bar{\mu}_i', i'' \in \bar{\mu}_s, i' \succ_s i''$. Since $A(i') = A(i'') = j$, $\nexists s \in S_j \subset S$  s.t. $s \succ_i' \bar{\mu}^j_{i'}, i'' \in \bar{\mu}^j_s, i' \succ_s i''$.This is cont to the assumption. Therefore, $\mu^{'j}$ is fair on $j$. Hence, $\mu^{'j}$ is feasible, individually rational, and fair on j. By def of TOFM on $j$, $\mu^j_{i'} \succeq_i' \bar{\mu}^j_{i'}$. Hence, $\mu_{i'} = \mu^j_{i'} \succeq_i' \bar{\mu}^j_{i'} = \bar{\mu}_{i'}$. Therefore, $\mu_i' \succeq_i' \bar{\mu}_i'$.Therefore, $\mu$ is subject-TOFM.
+
+% To show $\mu$ is $\alpha$-feasible. Since (※), $\mu$ is feasible.To show that $\forall i \in I_\alpha$, $\mu_i \neq \emptyset$. Take any $i \in I_\alpha$. Let $j \equiv A(i)$. Since $\mu^j$ is TOFM on j, by theorem 1, $\mu^j$ is $\alpha$-feasible.($\because$ Also, $\mathcal{F}^j_s$ is capacity constraint on the matching Problem between $I_j$ and $S_j$.) That is, $\mu^j_i \neq \emptyset$. Therefore, $\mu$ is $\alpha$-feasible. Hence, subject-TOFM is always $\alpha$-feasible under subject constraint.
+%   \end{proof}
+
+  
+\begin{theorem}
+教科制約の下で、教科別教師最適公平マッチング（subject-TOFM）は常にα-実現可能である。
+\end{theorem}
+
+\begin{proof}
+% \cite{10.1093/restud/rdad046}
+Kamada \& Kojima(2024)によれば、各教科$j$において、以下の条件を満たす教師最適公平マッチング（TOFM）$\mu^j$が存在する。
+\begin{align*}
+ &(i) \text{個人合理性 (I.R.)}: && \forall i \in I_j, \mu^j_i \succ_i \emptyset,\\
+ &(ii) \text{公平性 (fair)}:  && \nexists i, i' \in I_j, \nexists s \in S_j \text{ s.t. } s \succ_i \mu^j_i, i' \in \mu^j_s, i \succ_s i',\\
+ &(iii) \text{実現可能性 (feasible)}:  && \forall s \in S_j, \mu^j_s \in \mathcal{F}^j_s,\\
+ &(iv) \text{教師最適性 (T.O.)}: && \mu^j_i \succeq_i \bar{\mu}^j_i \text{ (任意の$i \in I_j$と、教科jで実現可能、}\\
+ & && \text{個人合理的、かつ公平な任意の$\bar{\mu}^j$に対して)}
+\end{align*}
+定理1より、$\mu^j$は教科jにおいてα-実現可能である。ここで、$\forall i \in I_j$に対して$\mu_i=\mu^j_i$、かつ、$\forall s \in S$に対して$\mu_s = \bigcup\limits_{j \in A(s)} \mu^j_s$となるようなマッチング$\mu$を構成する。
+
+\paragraph{($\mu$がsubject-TOFMであることを示す)}
+(i)を示すために、まず$\mu$が\textbf{実現可能}であることを示す。任意の$s \in S$と任意の$j \in J$をとる。
+\begin{itemize}
+    \item \textbf{ケース1: $j \in A(s)$の場合。} $\mu^j_s \in \mathcal{F}^j_s$である。$\mu$の定義より$\{i \in I_j : i \in \mu^j_s\} = \{ i \in I_j : i\in \mu_s \}$。$\mu^j_s \in \mathcal{F}^j_s$であるから、$|\{i \in I_j : i \in \mu^j_s\}| = |\{ i \in I_j : i\in \mu_s \}| \leq c_j^s$。
+    \item \textbf{ケース2: $j \notin A(s)$の場合。} このとき、$c^j_s=0$である。$|\{i \in I_j : i \in \mu_s\}|= 0 = c^j_s$。
+\end{itemize}
+したがって、$\mu_s \in \mathcal{F}_s$である。(※)
+
+次に、$\mu$が\textbf{個人合理的}であることを示す。任意の$i \in I$をとると、ある$j \in J$が存在し、$i \in I_j$となる。$\mu^j$は個人合理的であるから、$\mu_i = \mu^j_i \succeq_i \emptyset$。
+
+次に、$\mu$が\textbf{教科公平}であることを示す。$j \equiv A(i) = A(i')$となる任意の$i,i' \in I$をとる。背理法により、ある$s \in S$が存在し、$s \succ_i \mu_i, i' \in \mu_s, i \succ_s i'$が成り立つと仮定する。$i' \in \mu_s$であるから、$\mu$の定義より$s \in S_j$である。仮定より、$s \succ_i \mu^j_i, i' \in \mu^j_s, i \succ_s i'$となる。これは$\mu^j$がTOFMであること（条件(ii)公平性）に矛盾する。したがって、$\mu$は教科公平である。
+
+
+(ii)\textbf{教師最適性}を示すために、任意の$i \in I$と、実現可能、個人合理的、かつ教科公平である任意の$\mu'$をとる。$j \equiv A(i)$とする。$\mu^j$の定義より、$\mu^j$は教科jにおけるTOFMであり、条件(iv)を満たす。ここで、$\forall i' \in I_j$に対して$\bar{\mu}^j_{i'} = \mu'_{i'}$、$\forall s \in S_j$に対して$\bar{\mu}^j_s = \{ i' \in I_j : i' \in \mu'_s\}$となるような$\bar{\mu}^j$を構成する。
+
+この$\bar{\mu}^j$が教科jで実現可能、個人合理的、かつ公平であることを示す。
+
+\paragraph{($\bar{\mu}^j$が教科jで実現可能であることを示す)}
+任意の$s \in S_j$をとる。$\mu'$は実現可能なので$\mu'_s \in \mathcal{F}_s$である。
+$\mu'_s \in \mathcal{F}_s$であるから、任意の$k \in J$について $|\{i' \in I_k : i' \in \mu'_s\}| \leq c^k_s$が成り立つ。
+$j \in J$なので、特に$|\{i \in I_j : i \in \mu'_s\}| \leq c^j_s$である。
+$\bar{\mu}^j$の定義より、$\bar{\mu}^j_s = \{ i' \in I_j : i' \in \mu'_s\}$なので、
+$|\bar{\mu}^j_s| = |\{ i' \in I_j : i' \in \mu'_s\}| \leq c^j_s$となる。
+したがって、$\bar{\mu}^j_s \in \mathcal{F}^j_s$であり、$\bar{\mu}^j$は教科jで実現可能である。
+
+任意の $i \in I_j$ をとる。
+前提より、マッチング $\mu'$ は個人合理的であるから、$\mu'_{i} \succ_{i} \emptyset$ が成り立つ。
+$\bar{\mu}^j$ の定義によれば $\bar{\mu}^j_{i} = \mu'_{i}$ であるため、$\bar{\mu}^j_{i} \succ_{i} \emptyset$ もまた真である。
+したがって、$\bar{\mu}^j$は教科jで個人合理的である。
+
+\paragraph{($\bar{\mu}^j$が教科jで公平であることを示す)}
+任意の $i', i'' \in I_j$ をとる。このとき $A(i')=A(i'')=j$ である。
+背理法により、ある $s \in S_j$ が存在し、$s \succ_{i'} \bar{\mu}^j_{i'}$, $i'' \in \bar{\mu}^j_s$, かつ $i' \succ_s i''$ が成り立つと仮定する。
+
+しかし、前提としてマッチング $\mu'$ は教科公平である。これは、$A(i')=A(i'')$ であることから、$s \succ_{i'} \mu'_{i'}$, $i'' \in \mu'_s$, かつ $i' \succ_s i''$ となるような学校 $s \in S$ が存在しないことを意味する。
+$\bar{\mu}^j$ の定義（$\bar{\mu}^j_{i'} = \mu'_{i'}$, $\bar{\mu}^j_s = \{k \in I_j \mid k \in \mu'_s\}$）を考慮すると、我々の仮定は $\mu'$ の教科公平性に直接矛盾する。
+したがって、$\bar{\mu}^j$ は教科jで公平である。
+
+\vspace{\baselineskip}
+
+以上より、$\bar{\mu}^j$ は教科jにおいて実現可能、個人合理的、かつ公平であることが示された。
+$\mu^j$ は教科jにおけるTOFMであるから、その教師最適性の定義より、任意の $i' \in I_j$ に対して $\mu^j_{i'} \succeq_{i'} \bar{\mu}^j_{i'}$ が成り立つ。
+
+$\mu$ と $\mu'$ の構成方法から、$\mu_{i'} = \mu^j_{i'}$ および $\mu'_{i'} = \bar{\mu}^j_{i'}$ であるため、
+\[
+ \mu_{i'} \succeq_{i'} \mu'_{i'}
+\]
+が導かれる。これは任意の教師について成り立つため、$\mu$ は教科別教師最適公平マッチング（subject-TOFM）である。
+
+\paragraph{($\mu$が現職必置条件を満たしていることを示す)}
+(※)より$\mu$は実現可能である。
+したがって、残るは全ての現職教師が割り当てを得ていること、すなわち $\forall i \in I_\alpha$ に対して $\mu_i \neq \emptyset$ であることを示せばよい。
+
+任意の $i \in I_\alpha$ をとり、$j \equiv A(i)$ とする。
+$\mu^j$ は教科jにおけるTOFMであり、定理1より、$\mu^j$は教科jにおいて現職必置条件を満たしている。
+（なぜなら、$\mathcal{F}^j_s$は教師集合$I_j$と学校集合$S_j$間のマッチング問題におけるキャパシティ制約であるから。）
+
+よって、$\mu^j_i \neq \emptyset$ が成り立つ。
+$\mu$の構成方法から $\mu_i = \mu^j_i$ であるため、$\mu_i \neq \emptyset$ となる。
+これは任意の $i \in I_\alpha$ について真であるため、$\mu$は現職必置条件を満たしている。
+
+よって、subject-TOFMは教科制約の下で常に現職必置条件を満たしている。
+
+
+\end{proof}
+
+
+
+
+\section{拡張モデル：複数免許を持つ教員}
+% We formally define the school choice model. Let $I$ be a non-empty finite set of teachers and $S$ be a non-empty finite set of schools. Each teacher $i \in I$ has a strict preference relation, $\succ_i$, over the set of schools $S$ and the state of being unmatched, $\emptyset$. Each school $s \in S$ has a strict priority order, $\succ_s$, over the set of teachers $I$. The collection of all preferences is the profile $\succ_I = (\succ_i)_{i \in I}$, and the collection of all priorities is the profile $\succ_S = (\succ_s)_{s \in S}$.
+
+% For each school $s \in S$, its hiring constraints are given by a family of feasible teacher sets, $\mathcal{F}_s$. A subset of teachers $I' \subseteq I$ is defined as {\bf \textit{feasible}} at school $s$ if $I' \in \mathcal{F}_s$. A {\bf \textit{problem}} is therefore characterized by the tuple $(I, S, \succ_I, \succ_S, \{\mathcal{F}_s\}_{s \in S})$.
+
+% A {\bf \textit{matching}}, $\mu$, is a mapping that assigns teachers to schools. It is formally defined by three conditions: (i) for every teacher, her assignment is $\mu_i \in S \cup \{\emptyset\}$; (ii) for every school, its set of assigned teachers is $\mu_s \subseteq I$; and (iii) for any teacher-school pair, the assignments are consistent such that $\mu_i = s$ if and only if $i \in \mu_s$.
+
+% The quality of a matching $\mu$ is assessed through several key properties. A matching is {\bf \textit{feasible}} if $\forall s \in S, \mu_s \in \mathcal{F}_s$. It is {\bf \textit{individually rational}} if $\mu_i \succ_i \emptyset$ for all $i \in I$. A teacher $i$ is said to have {\bf \textit{justified envy toward}} teacher $i'$ if there exists a school $s \in S$ such that $s \succ_i \mu_i$, $i' \in \mu_s$, and $i \succ_s i'$. Consequently, a matching $\mu$ is {\bf \textit{fair}} if no teacher has justified envy toward another. Finally, a matching $\mu$ is {\bf \textit{non-wasteful}} if there exists no pair $(i, s) \in I \times S$ such that $s \succ_i \mu_i$ and $\mu_s \cup \{i\} \in \mathcal{F}_s$.
+
+% A matching $\mu$ is defined as {\bf \textit{stable}} if it is simultaneously feasible, individually rational, fair, and non-wasteful. A related but distinct condition is that of $\alpha$-feasibility. A matching $\mu$ is $\alpha$-{\bf \textit{feasible}} if it satisfies the condition that $\forall s \in S , \mu_s \in \mathcal{F}_s$ and, additionally, $\mu_i \neq \emptyset$ whenever $i$ is designated as an $\alpha$-teacher.
+
+
+
+% \begin{defn}
+%   A constraint $\mathcal{F}_s$ is a {\bf \textit{general upper-bound}} if $I' \in \mathcal{F}_s$ and $I'' \subseteq I'$ imply $I'' \in \mathcal{F}_s$.
+% \end{defn}
+
+% \begin{defn}
+%   A matching $\mu$ is the {\bf \textit{teacher-optimal fair matching (TOFM)}} if:
+  
+%   (i) $\mu$ is feasible, individually rational, and fair, and
+  
+%   (ii) $\mu_i \succeq_i \mu'_i$ for each $i \in I$ and every $\mu'$ that is feasible, individually rational, and fair.
+% \end{defn}
+
+
+
+
+% \subsection{Assumptions}
+% In our model, we introduce the following four key assumptions:
+
+% \textbf{Assumption (1)} For each school $s \in S$, the family of feasible sets of teachers, $\mathcal{F}_s$, represents a general upper-bound constraint. 
+
+% \textbf{Assumption (2)} Schools uniformly prioritize $\alpha$-teachers over other teachers. Formally, for any school $s \in S$, any $\alpha$-teacher $i \in I_\alpha$, and any non-$\alpha$-teacher $j \in I\setminus I_\alpha$, if both are acceptable to the school, the school must prefer the $\alpha$-teacher, such that $[i \succ_s \emptyset \text{ and } j \succ_s \emptyset] \implies i \succ_s j$. 
+
+% \textbf{Assumption (3)} There exists at least one feasible matching that employs all $\alpha$-teachers. That is, there exists a matching $\mu$ such that (i) $\forall s \in S, \mu_s \in \mathcal{F}_s$, and (ii) $\forall i \in I_\alpha, \exists s \in S$ for which $i \in \mu_s$. 
+
+% \textbf{Assumption (4)} All $\alpha$-teachers consider every school to be an acceptable assignment. Formally, for all $i \in I_\alpha$ and for all $s \in S$, it holds that $s \succ_i \emptyset$.
+
+
+
+学校選択モデルを形式的に定義する。$I$ を教師からなる空でない有限集合、$S$ を学校からなる空でない有限集合とする。各教師 $i \in I$ は、学校の集合 $S$ とマッチしない状態 $\emptyset$ の上で定義される厳密な選好順序 $\succ_i$ を持つ。各学校 $s \in S$ は、教師の集合 $I$ の上で定義される厳密な優先順位 $\succ_s$ を持つ。すべての選好の組をプロファイル $\succ_I = (\succ_i)_{i \in I}$ とし、すべての優先順位の組をプロファイル $\succ_S = (\succ_s)_{s \in S}$ とする。
+
+各学校 $s \in S$ について、その採用制約は、実現可能な教師集合の族 $\mathcal{F}_s$ によって与えられる。教師の部分集合 $I' \subseteq I$ は、$I' \in \mathcal{F}_s$ であるとき、学校 $s$ において\textbf{\textit{実現可能}} (feasible) であると定義される。したがって、一つの\textbf{\textit{問題}} (problem) は、組 $(I, S, \succ_I, \succ_S, \{\mathcal{F}_s\}_{s \in S})$ によって特徴づけられる。
+
+\textbf{\textit{マッチング}} (matching) $\mu$ とは、教師を学校に割り当てる写像であり、形式的には以下の3つの条件で定義される。
+\begin{itemize}
+    \item[(i)] すべての教師$i$について、その割り当て先は $\mu_i \in S \cup \{\emptyset\}$ である。
+    \item[(ii)] すべての学校$s$について、そこに割り当てられた教師の集合は $\mu_s \subseteq I$ である。
+    \item[(iii)] いかなる教師$i$と学校$s$のペアにおいても、$\mu_i = s$ であることと $i \in \mu_s$ であることが同値であるように、割り当ては整合的でなければならない。
+\end{itemize}
+
+
+
+% このセクションでは、前節のモデルを\textbf{複数教科制約} (Multi-Subject Constraint) の場合に拡張する。
+% これにより、教師が持つ免許は1つだけという制約がなくなり、複数の教科で資格を持つことが許容される。
+% モデルの他の側面は、単一教科の場合と同様である。
+
+% 主な変更点は、
+教師と教科の割り当て関数$A$は、各教師をその教師が免許を持つ教科の空でない集合に対応付ける。
+\[
+A: I \to 2^J\setminus {\emptyset}
+\]
+ある教科 $j \in J$ に関連する教師の集合 $I_j$ と学校の集合 $S_j$ は、この新しい文脈の下で以前と同様に、$I_j = \{i \in I \mid j \in A(i)\}$ および $S_j = \{s \in S \mid j \in A(s)\}$ と定義される。再配置前に教師 $i$ が担当していた主担当教科の集合を$B(i)$と定義し、$|B(i)| = 1$ と仮定する。また、教師 $i$ が免許を持つものの、以前は担当していなかった教科の集合を$C(i) = A(i) \setminus B(i)$とする。
+
+学校の実現可能性制約 $\mathcal{F}_s$ は、大きく異なる。
+教師の集合 $\mu_s$ が学校 $s$ にとって実現可能であるとは、受け入れられた各教師をその教師が免許を持つ教科のいずれか一つに割り当てることで、学校の教科ごとのキャパシティを満たすような方法が存在する場合をいう。
+これは、各教師 $i \in \mu_s$ に対して $J_s(i) \in A(i)$ を満たす\textbf{\textit{教科割り当て関数}} (subject assignment function) $J_s : \mu_s \rightarrow J$ に依存する。
+形式的な制約は以下の通りである。
+\[
+\mathcal{F}_s =\{\mu_s \subseteq I : \exists J_s:\mu_s \to J \text{ s.t. } \forall j \in J, |\{i \in \mu_s : J_s(i)= j\}| \leq c_s^j\}
+\]
+
+
+マッチング $\mu$ の質は、いくつかの重要な特性によって評価される。マッチングが\textbf{\textit{実現可能}} (feasible) であるとは、すべての $s \in S$ について $\mu_s \in \mathcal{F}_s$ が成り立つことである。
+\textbf{\textit{個人合理的}} (individually rational) であるとは、すべての $i \in I$ について $\mu_i \succ_i \emptyset$ が成り立つことである。
+ある教師 $i$ が教師 $i'$ に対して\textbf{\textit{正当化された嫉妬を持つ}} (have justified envy toward) とは、$s \succ_i \mu_i$、$i' \in \mu_s$、かつ $i \succ_s i'$ となるような学校 $s \in S$ が存在する場合をいう。
+したがって、マッチング $\mu$ が\textbf{\textit{公平}} (fair) であるとは、別の教師に対して正当化された嫉妬を持つ教師が一人もいないことである。
+最後に、マッチング $\mu$ が\textbf{\textit{無駄がない}} (non-wasteful) とは、$s \succ_i \mu_i$ かつ $\mu_s \cup \{i\} \in \mathcal{F}_s$ となるようなペア $(i, s) \in I \times S$ が存在しないことである。
+マッチング $\mu$ は、実現可能、個人合理的、公平、かつ無駄がないという性質を同時に満たすとき、\textbf{\textit{安定}} (stable) であると定義される。
+マッチング $\mu$ が\textbf{\textit{現職必置条件}} (in-service teacher condition) を満たすとは、この集合の全ての教師が割り当てを得ること、すなわち $\forall i \in I_{\alpha}, \mu_i \neq \emptyset$ が成り立つ場合をいう。
+
+
+公平性の概念は、この新しい設定に合わせて調整される。
+ある教師 $i$ が教師 $i'$ に対して\textbf{\textit{弱い教科に基づいた正当な嫉妬}} (weak subject justified envy) を持つとは、教師 $i$ が教えることのできる教科の集合が教師 $i'$ のそれ以上であり（すなわち、$A(s) \cap A(i') \subset A(s) \cap A(i)$）、かつ標準的な正当な嫉妬の条件が満たされる（$\exists s \in S \text{ s.t. } s \succ_i \mu_i, i' \in \mu_s, i \succ_s i'$）場合をいう。
+マッチングが\textbf{\textit{弱い教科公平}} (weak subject-fair) であるとは、他の教師に対して弱い教科に基づいた正当な嫉妬を持つ教師が誰もいない状態を指す。
+
+さらに、マッチングが\textbf{\textit{教科jにおいて現職必置条件を満たす}} ($\alpha$-feasible on j) であるとは、複数教科制約の下で実現可能であり、かつ、教科 $j$ の免許を持つ全ての現職教師が雇用されている（すなわち、$\forall i \in I_\alpha \cap I_j, \mu_i \neq \emptyset$）場合をいう。
+
+% これと関連するものの異なる条件として、α-実現可能性 (α-feasibility) があります。マッチング $\mu$ が\textbf{\textit{α-実現可能}} (α-feasible) であるとは、すべての $s \in S$ について $\mu_s \in \mathcal{F}_s$ という条件を満たし、かつ、それに加えて、$i$ がα-教師として指定されている場合は常に $\mu_i \neq \emptyset$ となることです。
+
+
+
+\paragraph{定義1.(再掲)}
+制約 $\mathcal{F}_s$ は、$I' \in \mathcal{F}_s$ かつ $I'' \subseteq I'$ ならば常に $I'' \in \mathcal{F}_s$ が成り立つとき、\textbf{\textit{一般上限}} (general upper-bound) である。
+
+
+\paragraph{定義2.(再掲)}
+マッチング $\mu$ は、以下の2つの条件を満たすとき、\textbf{\textit{教師最適公平マッチング (TOFM)}} (teacher-optimal fair matching) となる。
+\begin{itemize}
+    \item[(i)] $\mu$ は、実現可能、個人合理的、かつ公平であり、かつ
+    \item[(ii)] 実現可能、個人合理的、かつ公平である、他のいかなるマッチング $\mu'$ に対しても、すべての教師 $i \in I$ について $\mu_i \succeq_i \mu'_i$ が成り立つ。
+\end{itemize}
+
+
+カットオフ調整アルゴリズムを、複数教科のケースを扱えるように拡張する。
+学校$s$の教科$j$における需要関数 $D^j_s(p)$ は、教師が持つ全ての免許教科にわたる他の選択肢（alternative opportunities）を考慮するように再定義される。
+教師 $i \in I_j$ がこの需要集合に含まれるのは、その教師が学校$s$の教科$j$におけるカットオフを上回り、かつ、自身が条件を満たす他のいかなる割り当て候補となる学校$s'$の科目$j'$よりも学校$s$での職を好む場合である。
+
+\begin{align*}
+  D^j_s(p) = \{ i \in I_j \mid {} & i \succeq_s i^{(s,p^j_s)} \text{ かつ } s \succ_i \emptyset \text{ であり、} \\
+  & \forall s' \in S\setminus \{s\}, \forall j' \in A(i) \cap A(s'), 
+  i \succeq_{s'} i^{(s',p^{j'}_{s'})} \implies s \succ_i s' \}
+\end{align*}
+
+
+% The {\bf \textit{subject-cutoff adjustment function}}, $T : P \rightarrow P$, operates as before, but on this new demand function:
+% \[
+% T_s^j(p) =
+% \begin{cases}
+% p_s^j + 1 & \text{if } | D_s^j(p) | > c^j_s \\
+% p_s^j     & \text{if } | D_s^j(p) | \leq c_j^s
+% \end{cases}
+% \]
+% If $p$ is a fixed point of this function $T$, then the resulting sets of demanded teachers are feasible for each school, i.e., $\bigcup_{j \in A(s)} D^j_s(p) \in \mathcal{F}_s$. A final matching $\mu^p$ can be constructed from this fixed point by assigning to each school the union of its demanded teachers across all subjects it offers:
+% \[
+% \mu^{p}_s =\bigcup_{j \in A(s)} D^j_s(p)
+% \]
+
+
+\textbf{\textit{教科別カットオフ調整関数}} $T : P \rightarrow P$ は、以前と同様に動作しますが、この新しい需要関数に対して適用される。
+\[
+T_s^j(p) =
+\begin{cases}
+p_s^j + 1 & \text{if } | D_s^j(p) | > c^j_s \\
+p_s^j     & \text{if } | D_s^j(p) | \leq c^j_s
+\end{cases}
+\]
+
+もし $p$ がこの関数 $T$ の不動点（fixed point）であるならば、その結果として得られる需要のある教師の集合は、各学校にとって実現可能となる。すなわち、$\bigcup_{j \in A(s)} D^j_s(p) \in \mathcal{F}_s$ である。
+この不動点から最終的なマッチング $\mu^p$ を構成することができる。これは、各学校に対して、その学校が募集するすべての教科にわたる需要のある教師の和集合を割り当てることで行われる。
+\[
+\mu^{p}_s =\bigcup_{j \in A(s)} D^j_s(p)
+\]
+
+
+
+\subsection{仮定}
+本モデルでは、以下の5つの重要な仮定を導入する。
+
+\vspace{0.5\baselineskip} % \baselineskip から 0.5\baselineskip へ変更
+\noindent\textbf{仮定 (1)} \\
+各学校 $s \in S$ について、実現可能な教師集合の族 $\mathcal{F}_s$ は、一般上限制約（general upper-bound constraint）である。
+
+\vspace{0.5\baselineskip}
+\noindent\textbf{仮定 (2)} \\
+学校は、他の教師よりも現職教員を一様に優先する。形式的には、任意の学校 $s \in S$、α-教師 $i \in I_\alpha$、非現職教員 $j \in I\setminus I_\alpha$ について、もし両者がその学校にとって受け入れ可能であるならば、学校は現職教員を優先しなければなりません。すなわち、$[i \succ_s \emptyset \text{ かつ } j \succ_s \emptyset] \implies i \succ_s j$ が成り立つ。
+
+\vspace{0.5\baselineskip}
+% \noindent\textbf{仮定 (3)} \\
+% すべての現職教員を雇用する、実現可能なマッチングが少なくとも一つは存在する。すなわち、(i)すべての $s \in S$ で $\mu_s \in \mathcal{F}_s$、かつ (ii)すべての $i \in I_\alpha$ に対して $i \in \mu_s$ となる学校 $s \in S$ が存在する、という条件を満たすマッチング $\mu$ が存在する。\textbf{\textit{教科jにおいて現職必置条件を満たす:}} 
+\paragraph{\textbf{仮定 (3)'}}
+後述する例1で浮き彫りになった問題に対処するため、主担当教科に基づいて現職教師を優先する、さらなる仮定を導入する。
+この仮定は、以前の仮定(3)を置き換えるものである。
+我々は、全ての現職教師が自身の主担当教科の職に割り当てられるような、実現可能なマッチングが少なくとも一つは存在すると仮定する。
+形式的には、以下の条件を満たすマッチング $\mu$ が存在する。
+\begin{enumerate}
+    \item $\forall s \in S, \mu_s \in \mathcal{F}_s$。
+    \item $\forall i \in I_\alpha$ について、$i$ がその主担当教科 $j=B(i)$ を教えるために学校 $s$ に割り当てられるような、$s \in S$ が存在する。
+\end{enumerate}
+
+\vspace{0.5\baselineskip}
+\noindent\textbf{仮定 (4)} \\
+すべての現職教員は、いかなる学校も受け入れ可能な割り当て先であると見なす。形式的には、すべての $i \in I_\alpha$ とすべての $s \in S$ について、$s \succ_i \emptyset$ が成り立つ。
+
+
+
+\paragraph{\textbf{仮定 (5)}}
+任意の学校 $s \in S$ と、その学校が募集する任意の教科 $j \in A(s)$ について、学校は、主担当教科が $j$ である教師を、$j$ が副次的な免許教科である教師よりも優先する。
+形式的には、
+\[
+\forall s \in S, \forall i, i' \in I, \forall j \in A(s), \text{ もし } B(i) = \{j\} \text{ かつ } j \in C(i'), \text{ ならば } i \succ_{s}^j i'.
+\]
+
+と書き、ここでは、$\succ_s^j$ は、教科 $j$ の資格を持つ教師に対する学校 $s$ の選好を表すものとする。
+
+
+
+
+
+% まず、各教師について2つの新しい集合を定義する。
+
+
+% これらの定義を用いて、学校の優先順位に関する新しい仮定を導入し、適切なマッチングの存在に関する以前の仮定を修正します。
+
+
+
+% \textbf{Assumption (5)}
+% For any school $s \in S$ and any subject $j \in A(s)$ it offers, the school prioritizes teachers whose primary subject is $j$ over teachers for whom $j$ is a secondary licensed subject. Formally:
+% \[
+% \forall s \in S, \forall i, i' \in I, \forall j \in A(s), \text{ if } B(i) = \{j\} \text{ and } j \in C(i'), \text{ then } i \succ_{s}^j i'.
+% \]
+
+% \textbf{Assumption (3)'}
+% This assumption replaces the previous Assumption (3). We now assume there exists at least one feasible matching where every in-service teacher is assigned a position in their primary subject. Formally, there exists a matching $\mu$ such that:
+% \begin{enumerate}
+%     \item[(i)] $\forall s \in S, \mu_s \in \mathcal{F}_s$.
+%     \item[(ii)] $\forall i \in I_\alpha$, there exists a school $s \in S$ such that $i$ is assigned to $s$ to teach their primary subject $j=B(i)$.
+% \end{enumerate}
+
+
+
+
+
+
+
+
+% This section extends the previous model to the case of a \textbf{Multi-Subject Constraint}. This removes the restriction that teachers hold only a single teaching license, allowing them to be qualified for multiple subjects. Other aspects of the model remain similar to the single-subject case.
+
+% The primary change is in the teacher-to-subject assignment function, $A$, which now maps each teacher to a non-empty set of subjects for which they are licensed:
+% \[
+% A: I \to 2^J\setminus {\emptyset}
+% \]
+% The sets of teachers and schools associated with a subject $j \in J$ are defined as before, but with this new context: $I_j = \{i \in I \mid j \in A(i)\}$ and $S_j = \{s \in S \mid j \in A(s)\}$.
+
+% The feasibility constraint for a school, $\mathcal{F}_s$, is significantly different. A set of teachers $\mu_s$ is feasible for school $s$ if there exists a way to assign each admitted teacher to exactly one of their licensed subjects such that the school's per-subject capacities are met. This relies on a {\bf \textit{subject assignment function}}, $J_s : \mu_s \rightarrow J$, where $J_s(i) \in A(i)$ for each teacher $i \in \mu_s$. The formal constraint is:
+% \[
+% \mathcal{F}_s =\{\mu_s \subseteq I : \exists \text{ a subject assignment function } J_s:\mu_s \to J \text{ s.t. } \forall j \in J, |\{i \in \mu_s : J_s(i)= j\}| \leq c_s^j\}
+% \]
+
+
+
+% \subsection{New Matching Properties}
+
+% The concept of fairness is adapted for this new setting. A teacher $i$ has {\bf \textit{weak subject justified envy}} toward teacher $i'$ if the set of subjects that teacher $i$ can teach is at least as large as that of teacher $i'$(i.e., $A(s) \cap A(i') \subset A(s) \cap A(i)$) and the standard conditions for justified envy hold ($\exists s \in S \text{ s.t. } s \succ_i \mu_i, i' \in \mu_s^j, i \succ_s i'$). A matching is {\bf \textit{weak subject-fair}} if no teacher has weak-subject justified envy toward another.
+
+
+
+
+% Furthermore, a matching is {\bf \textit{$\alpha$-feasible on j}} if it is feasible under the multi-subject constraint and all in-service teachers with a license for subject $j$ are employed: $\forall i \in I_\alpha \cap I_j, \mu_i \neq \emptyset$.
+
+
+% \subsection{新しいマッチングの特性}
+
+
+
+% \subsection{Algorithmic Extension for Multiple Subjects}
+
+% The cutoff-adjustment algorithm is extended to handle the multi-subject case. The demand function $D^j_s(p)$ for school $s$ in subject $j$ is redefined to account for a teacher's alternative opportunities across all their licensed subjects. A teacher $i \in I_j$ is in the demand set if they are above school $s$'s cutoff for subject $j$, and they prefer the position at $s$ over any other potential assignment $(s', j')$ for which they also qualify.
+% \begin{align*}
+%   D^j_s(p) = \{ i \in I_j \mid {} i \succeq_s i^{(s,p^j_s)} \text{ and } s \succ_i \emptyset ; \forall s' \in S\setminus \{s\}, \forall j' \in A(i) \cap A(s'), i \succeq_{s'} i^{(s',p^{j'}_{s'})} \implies s \succ_i s' \}
+% \end{align*}
+
+% \subsection{複数教科に対応するためのアルゴリズムの拡張}
+
+\subsection{結果と考察}
+
+
+
+% \begin{theorem}
+%   If a cutoff profile \( p \in P\) is a fixed point of \( T \), then \( \mu^{p} \) is weak subject-fair.
+% \end{theorem}
+
+\begin{theorem}
+もしカットオフのプロファイル \( p \in P\) が関数 \( T \) の不動点であるならば、それによって定まるマッチング \( \mu^{p} \) は弱い教科公平（weak subject-fair）である。
+\end{theorem}
+
+
+\begin{proof}
+%   Sps a cutoff profile \( p \in P\) is a fixed point of \( T \). 
+% Assume for contradiction that \( \mu^{p} \) is not weak subject-fair. 
+% Then, $\exists i,i' \in I$, $\exists s \in S$ s.t. $A(s) \cap A(i')\subset A(s) \cap A(i)$ and $s \succ_i \mu_i^p$, $i' \in \mu_s^p$, $i \succ_s i'$. 
+% Since $i' \in  \mu^{p}_s$, by def of $\mu^{p}_s$, $\exists j \in A(s)$, $i' \in D_s^j(p)$, $j \in A(i')$. Since $i' \in D_s^j(p)$, $i' \succeq_s i^{(s,p_s^j)}$. Since $A(s) \cap A(i')\subset A(s) \cap A(i)$ and $j \in A(s) \cap A(i')$, $j \in A(s) \cap A(i)$.
+% Then, $j \in A(i)$. 
+% Since $i \succ_s i'$ and $i' \succeq_s i^{(s,p_s^j)}$, $i \succ_s i^{(s,p_s^j)}$. 
+
+カットオフのプロファイル \( p \in P\) が \( T \) の不動点であると仮定する。
+背理法により、\( \mu^{p} \) が弱い教科公平でないと仮定する。
+このとき、$A(s) \cap A(i')\subset A(s) \cap A(i)$ かつ $s \succ_i \mu_i^p$, $i' \in \mu_s^p$, $i \succ_s i'$ を満たすような教師 $i,i' \in I$ と学校 $s \in S$ が存在する。
+$i' \in \mu^{p}_s$ であるから、$\mu^{p}_s$ の定義より、$i' \in D_s^j(p)$ かつ $j \in A(i')$ となるような教科 $j \in A(s)$ が存在する。
+$i' \in D_s^j(p)$ であるから、$i' \succeq_s i^{(s,p_s^j)}$ が成り立つ。
+一方、$A(s) \cap A(i')\subset A(s) \cap A(i)$ かつ $j \in A(s) \cap A(i')$ であることから、$j \in A(s) \cap A(i)$ である。
+すなわち、$j \in A(i)$ となる。
+$i \succ_s i'$ かつ $i' \succeq_s i^{(s,p_s^j)}$ であるから、優先順位の推移性より $i \succ_s i^{(s,p_s^j)}$ が成り立つ。
+
+  
+%   First, consider the case with $\mu_i^p = \emptyset$. 
+% Then, $i \notin D_s^j(p)$.
+% So, $\exists s' \in S\setminus \{s\}$, $j' \in A(i) \cap A(s')$, $i \succ_{s'} i^{(s',j',p_{(s',j')})}$ and $s' \succ_i s$.
+% Since $\mu_i^p = \emptyset$, $i \notin D_{s'}^{j'}(p)$.
+% So, $\exists s'' \in S\setminus \{s'\}$, $j'' \in A(i) \cap A(s'')$, $i \succ_{s''} i^{(s'',j'',p_{(s'',j'')})}$ and $s'' \succ_i s'$.
+% This can be repeated infinitely.
+% This contradicts the fact that $s,j$ is finite.
+
+まず、\( \mu_i^p = \emptyset \) のケースを考える。
+このとき、\( i \) は需要集合 \( D_s^j(p) \) には含まれない。
+前段の議論から \( i \) は 学校$s$の科目$j$でのカットオフは満たしているので、\( i \notin D_s^j(p) \) となる理由は、\( i \) が \( s \) よりも厳密に好む別の選択肢が存在するためでなければならない。
+すなわち、\( i \succeq_{s'} i^{(s',p^{j'}_{s'})} \) かつ \( s' \succ_i s \) となるような、別の学校$s'$の科目$j'$（ただし \( s' \in S\setminus \{s\}, j' \in A(i) \cap A(s') \)）が存在する。
+しかし、前提より \( \mu_i^p = \emptyset \) であるから、\( i \) は最終的に \( s' \) にも割り当てられないため、\( i \notin D_{s'}^{j'}(p) \) でもある。
+したがって、この論法を繰り返すと、\( s'' \succ_i s' \) となる、さらに好ましい学校 \( s'' \) が存在することになる。
+この手続きは無限の選好サイクル（\( \dots \succ_i s'' \succ_i s' \succ_i s \)）を示唆するが、これは学校 \( S \) と教科 \( J \) の集合が有限であるという事実に矛盾する。
+
+
+  
+  % Second, consider the case with $\mu_i^p \neq \emptyset$. Let $s' \equiv \mu_i^p$. Then, $i \in \mu_{s'}^p$. Hence $i \in D_{s'}^{j'}(p)$ for some $j' \in A(s')$. Since $s \neq s'$, $j \in A(i) \cap A(s)$, and $i \succeq_{s} i^{(s,p_{s}^j)}$, by def of $D_{s'}^{j'}(p)$, we have $\mu_i^p = s' \succ_i s$. This is a contradiction to $s \succ_i \mu_i^p = s'$.
+
+次に、\( \mu_i^p \neq \emptyset \) のケースを考える。
+教師 \( i \) の割り当て先を \( s' \equiv \mu_i^p \) とおく。
+このとき、定義より \( i \in \mu_{s'}^p \) となる。
+したがって、\( \mu_{s'}^p \) の定義から、ある教科 \( j' \in A(s') \) について \( i \in D_{s'}^{j'}(p) \) となる。
+我々は元々、教師 \( i \) が学校 \( s \) において嫉妬を持つ状況を考えており、\( s \neq s' \) である。
+前段の議論から、\( j \in A(i) \cap A(s) \) かつ \( i \succeq_{s} i^{(s,p_{s}^j)} \) が成立している。
+\( i \in D_{s'}^{j'}(p) \) であることの定義は、\( i \) がカットオフを満たす他のいかなる学校（この場合は \(s\)）よりも \( s' \) を好むことを要求する。
+よって、\( \mu_i^p = s' \succ_i s \) でなければならない。
+しかし、これは元々の弱い教科に基づいた嫉妬の仮定である \( s \succ_i \mu_i^p = s' \) と矛盾する。
+\end{proof}
+
+
+% \subsection{Model Refinements for Guaranteed Placement}
+
+% This section presents a case where the previous model fails to guarantee a position for all in-service teachers and introduces model refinements to address this issue.
+
+% \subsection{割り当てを保証するためのモデルの精緻化}
+
+% このセクションでは、前述のモデルが現職教師全員への割り当てを保証できないケースを提示し、この問題に対処するためのモデルの精緻化を導入する。
+
+
+
+% \subsubsection{A Motivating Example}
+% Consider the following example, which illustrates a scenario where no $\alpha$-feasible fixed point exists under the previous algorithm.
+
+
+% \textbf{Example 2.}
+% Let the sets of teachers and schools be $I = \{1,2,3,4\}$ and $S = \{5,6\}$, with the set of in-service teachers being $I_\alpha = \{1,2,3\}$.
+
+% The preferences are as follows:
+% \begin{itemize}
+%     \item $\succ_i: 6 \succ 5 \succ \emptyset$ for all $i \in I$.
+%     \item $\succ_s: 1 \succ 2 \succ 3 \succ 4 \succ \emptyset$ for all $s \in S$.
+% \end{itemize}
+
+% Subject licenses ($A(i)$) and school recruitment subjects ($A(s)$) are:
+% \begin{itemize}
+%     \item $A(1) = \{\text{English, Math}\}$
+%     \item $A(2) = \{\text{English, Math}\}$
+%     \item $A(3) = \{\text{Math}\}$
+%     \item $A(4) = \{\text{English}\}$
+%     \item $A(5) = \{\text{English, Math}\}$
+%     \item $A(6) = \{\text{English}\}$
+% \end{itemize}
+
+% Finally, the per-subject capacities are $c_5^{\text{English}} = 2$ and $c_5^{\text{Math}} = 1$.
+
+% In this setup, a possible outcome of the algorithm could result in a matching such as $\mu_5 = \{2\}$ and $\mu_6 = \{1\}$. Here, teacher 3, who is an in-service teacher ($3 \in I_\alpha$), remains unemployed. This demonstrates that the existence of an $\alpha$-feasible matching is not guaranteed.
+
+% \subsubsection{動機付けの例}
+
+% 以下の例を考えます。これは、前述のアルゴリズムの下では、現職必置条件を満たす不動点が存在しないシナリオを説明するものである。
+
+
+
+\textbf{例 1.}(仮定(3)',仮定(5)を仮定しない場合に現職必置条件を保証できない例)
+教師の集合を $I = \{1,2,3,4\}$、学校の集合を $S = \{5,6\}$ とし、現職教師の集合を $I_\alpha = \{1,2,3\}$ とする。
+
+選好は以下の通りである。
+\begin{itemize}
+    \item 全ての教師 $i \in I$ について、$\succ_i: 6 \succ 5 \succ \emptyset$。
+    \item 全ての学校 $s \in S$ について、$\succ_s: 1 \succ 2 \succ 3 \succ 4 \succ \emptyset$。
+\end{itemize}
+
+教師の免許教科 ($A(i)$) と学校の募集教科 ($A(s)$) は以下の通りである。
+\begin{itemize}
+    \item $A(1) = \{\text{英語, 数学}\}$
+    \item $A(2) = \{\text{英語, 数学}\}$
+    \item $A(3) = \{\text{数学}\}$
+    \item $A(4) = \{\text{英語}\}$
+    \item $A(5) = \{\text{英語, 数学}\}$
+    \item $A(6) = \{\text{英語}\}$
+\end{itemize}
+
+最後に、教科ごとのキャパシティは $c_5^{\text{英語}} = 2$ および $c_5^{\text{数学}} = 1$ である。
+
+この設定では、アルゴリズムの一つの結果として、$\mu_5 = \{2\}$ および $\mu_6 = \{1\}$ といったマッチングが生じうる。
+この場合、現職教師である教師3 ($3 \in I_\alpha$) は、職を得られないままとなる。
+これは、現職必置条件を満たすマッチングの存在が保証されないことを示している。
+
+
+
+
+% \subsubsection{New Assumptions and Definitions}
+% To address the issue highlighted in Example 2, we introduce further assumptions that give priority to in-service teachers based on their primary teaching subject.
+
+% First, we define two new sets for each teacher:
+% \begin{itemize}
+%     \item $B(i)$: The primary subject taught by teacher $i$ before reassignment. We assume $|B(i)| = 1$.
+%     \item $C(i) = A(i) \setminus B(i)$: The set of subjects teacher $i$ is licensed for but did not previously teach.
+% \end{itemize}
+
+% Using these definitions, we introduce a new assumption on school priorities and modify a previous assumption on the existence of a suitable matching. Let $\succ_s^j$ denote the preference of school $s$ over teachers qualified for subject $j$.
+
+
+
+% \subsubsection{新しい仮定と定義}
+
+
+
+
+% \begin{theorem}
+%   $\exists$ fixed point $p$ of $T$ s.t. $\mu^p$ is $\alpha$-feasible.
+% \end{theorem}
+
+\begin{theorem}
+マッチング \( \mu^p \) がα-実現可能となるような、関数 \( T \) の不動点 \( p \) が存在する。
+\end{theorem}
+
+
+
+\begin{proof}
+  % Let $\widehat{I} \equiv I_\alpha$. Let $\forall i \in \widehat{I}$, $\widehat{A}(i) \equiv B(i)$. That is, $\forall i \in \widehat{I}$, $|\widehat{A}(i)| = 1$. We will consider matchings $\mu$ between $\widehat{I}$ and $S$. Define $\widehat{\mathcal{F}}_s = \{\mu_s \subset \widehat{I} : \forall j \in J, |\{i \in \mu_s : \widehat{A}(i)= \{j\}\}| \leqq c_s^j\}$.
+
+$\widehat{I} \equiv I_\alpha$ とおく。
+全ての $i \in \widehat{I}$ について、$\widehat{A}(i) \equiv B(i)$ とする。
+すなわち、全ての $i \in \widehat{I}$ について $|\widehat{A}(i)| = 1$ である。
+ここでは、$\widehat{I}$ と $S$ の間のマッチング $\mu$ を考える。
+このとき、実現可能性制約を次のように定義する。
+\[
+\widehat{\mathcal{F}}_s = \{\mu_s \subset \widehat{I} : \forall j \in J, |\{i \in \mu_s : \widehat{A}(i)= \{j\}\}| \leq c_s^j\}
+\]
+
+
+
+% Since it is multi-subject constraint, (1) is satisfied.Since $I\setminus I_\alpha = \emptyset$, (2) is satisfied.By (3) on $(I,S,\succ_I,\succ_S,\mathcal{F}_s)$, $\exists \mu$ satisfying (i), (ii).Define $\widehat{\mu}$, $\forall i \in \widehat{I}$, $\widehat{\mu}_i = \mu_i$.By (3)', $\widehat{\mu}_s \in \widehat{\mathcal{F}}_s$, $\forall i \in \widehat{I}$, $\exists s \in S$, $i \in \widehat{\mu}_s$, $\widehat{\mu}$ satisfies Assumption(3).By (4) on the original problem $(I,S,\succ_I,\succ_S,\mathcal{F}_s)$, $\forall i \in I_\alpha$, $\forall s \in S$, $s \succ_i \emptyset$.Assumption(1)-(4) are satisfied.
+
+複数教科制約であるから、(仮定1)は満たされる。
+$I\setminus I_\alpha = \emptyset$ であるから、(仮定2)も満たされる。
+元の問題 $(I,S,\succ_I,\succ_S,\mathcal{F}_s)$ における(仮定3)より、(i)と(ii)を満たすマッチング $\mu$ が存在する。
+ここで、全ての $i \in \widehat{I}$ について $\widehat{\mu}_i = \mu_i$ となるように、$\widehat{\mu}$ を定義する。
+(仮定3)'より、$\widehat{\mu}_s \in \widehat{\mathcal{F}}_s$ であり、かつ全ての $i \in \widehat{I}$ についてある $s \in S$ が存在して $i \in \widehat{\mu}_s$ となる。
+したがって、$\widehat{\mu}$ は(元の)仮定(3)を満たす。
+元の問題 $(I,S,\succ_I,\succ_S,\mathcal{F}_s)$ における(仮定4)より、全ての $i \in I_\alpha (=\widehat{I})$ と全ての $s \in S$ について、$s \succ_i \emptyset$ である。
+以上より、(このサブ問題において)仮定(1)から(4)は全て満たされる。
+
+
+% By $|\widehat{A}(i)| = 1$ and by construction of $\widehat{\mathcal{F}}_s$, this constraint is subject constraint.Since this is subject constraint, by theorem 2, $\exists$ subject-TOFM on $(\widehat{I},S,\succ_{\widehat{I}},\succ_S,\widehat{\mathcal{F}}_s)$ $\widehat{\mu}$ and $\widehat{\mu}$ is $\alpha$-feasible.
+% Let $\widehat{i}^{(s,j,l)}$ be the l-th lowest student among $\{i\}_{i \in \widehat{I}_j}$ according to $\succ_s$. Take any $s \in S$ and $j \in J$.
+% \[
+% p_{(s,j)}^\star =
+% \begin{cases}
+% \text{min} \{l | \widehat{i}^{(s,j,l)} \in \widehat{\mu}_s^j \} & \text{if } \widehat{\mu}_s^j \neq \emptyset, \\
+% |\widehat{I}_j| + 1     & \text{if } \widehat{\mu}_s^j = \emptyset.
+% \end{cases}
+% \]
+% Define $\widehat{D}^j_s(p^\star_j) = \{ i \in I_j \mid i \succeq_s i^{(s,j,p^\star
+% _{(s,j)})} \text{ and } s \succ_i \emptyset; \forall s' \in S_j, i \succeq_{s'} i^{(s',j,p^\star_{(s,j)})} \implies s \succeq_i s' \}$.
+
+
+$|\widehat{A}(i)| = 1$ という条件と $\widehat{\mathcal{F}}_s$ の構成方法から、この制約は教科制約（subject constraint）である。
+この制約が教科制約であることから、定理2より、問題 $(\widehat{I},S,\succ_{\widehat{I}},\succ_S,\widehat{\mathcal{F}}_s)$ において、α-実現可能であるような教科別教師最適公平マッチング（subject-TOFM）$\widehat{\mu}$ が存在する。
+
+$\widehat{i}^{(s,j,l)}$ を、学校 $s$ の優先順位 $\succ_s$ に従って並べたときに、集合 $\{i\}_{i \in \widehat{I}_j}$ の中で $l$ 番目に順位の低い教師とする。
+任意の $s \in S$ と $j \in J$ をとる。
+\[
+p_{(s,j)}^\star =
+\begin{cases}
+\text{min} \{l \mid \widehat{i}^{(s,j,l)} \in \widehat{\mu}_s^j \} & \text{if } \widehat{\mu}_s^j \neq \emptyset, \\
+|\widehat{I}_j| + 1      & \text{if } \widehat{\mu}_s^j = \emptyset.
+\end{cases}
+\]
+需要集合を次のように定義する。
+\begin{align*}
+\widehat{D}^j_s(p^\star_j) = \{ i \in I_j \mid & i \succeq_s i^{(s,j,p^\star_{(s,j)})} \text{ かつ } s \succ_i \emptyset; \\
+& \text{かつ } \forall s' \in S_j, i \succeq_{s'} i^{(s',j,p^\star_{(s',j)})} \implies s \succeq_i s' \}
+\end{align*}
+
+
+% To show $\widehat{\mu} = \widehat{\mu}^{p^\star}$.(That is, $\forall s \in S, \forall j \in J, \widehat{\mu}_s^j = \widehat{\mu}_{(s,j)}^{p^\star} = \widehat{D}_s^j(p_j^\star)$)
+
+% To show $\widehat{\mu}_s^j \subset \widehat{D}_s^j(p_j^\star)$.
+% Take any $i \in \widehat{\mu}_s^j$.
+% Let $l$ be s.t. $\widehat{i}^{(s,j,l)} = i$.
+% By $i \in \widehat{\mu}_s^j$ and definition of $p_{(s,j)}^\star$, $i = \widehat{i}^{(s,j,l)} \succeq_s \widehat{i}^{(s,j,p_{(s,j)}^\star)}$.
+% Sps, by cont that$\exists s' \in S_j$, $i \succeq_{s'} \widehat{i}^{(s',j,p_{(s,j)}^\star)}$ and $s' \succ_i s = \widehat{\mu}_i$.
+% Then, $s' \succ_i \widehat{\mu}_i$.
+% By def of $\widehat{i}^{(s',j,p^\star_{(s',j)})}$, $\widehat{i}^{(s',j,p_{(s,j)}^\star)} \in \widehat{\mu}_{s'}^j$.
+% This is a cont to the fact that $\widehat{\mu}$ is subject-fair.
+% So, $\forall s' \in S_j$, $i \succeq_{s'} \widehat{i}^{(s',j,p_{(s,j)}^\star)}$ $\Rightarrow s \succeq_i s'$.
+% Since $\mu$ is I.R., $\widehat{\mu}_i = s \succ_i \emptyset$. Since $i \succeq_s \widehat{i}^{(s,j,p_{(s,j)}^\star)}$ and $s \succ_i \emptyset$, $\forall s' \in S_j$, $i \succeq_{s'} \widehat{i}^{(s',j,p_{(s,j)}^\star)} \Rightarrow s \succeq_i s'$, then $i \in \widehat{D}_s^j(p_j^\star)$.
+
+
+
+\paragraph{\(\widehat{\mu} = \widehat{\mu}^{p^\star}\) を示す}
+（すなわち、全ての \(s \in S, j \in J\) について、\(\widehat{\mu}_s^j = \widehat{\mu}_{(s,j)}^{p^\star} = \widehat{D}_s^j(p_j^\star)\) であることを示す）
+
+\subparagraph{\(\widehat{\mu}_s^j \subseteq \widehat{D}_s^j(p_j^\star)\) を示す}
+任意の \(i \in \widehat{\mu}_s^j\) をとる。
+\(i = \widehat{i}^{(s,j,l)}\) となるような \(l\) を考える。
+\(i \in \widehat{\mu}_s^j\) ということと、$p_{(s,j)}^\star$ の定義から、$i = \widehat{i}^{(s,j,l)} \succeq_s \widehat{i}^{(s,j,p_{(s,j)}^\star)}$ が成り立つ。
+ここで、背理法により、$i \succeq_{s'} \widehat{i}^{(s',j,p_{(s',j)}^\star)}$ かつ $s' \succ_i s = \widehat{\mu}_i$ となるような $s' \in S_j$ が存在すると仮定する。
+このとき、$s' \succ_i \widehat{\mu}_i$ である。
+$p^\star_{(s',j)}$ の定義から、カットオフランクの教師はマッチングに含まれるため、$\widehat{i}^{(s',j,p^\star_{(s',j)})} \in \widehat{\mu}_{s'}^j$ である。
+この状況は、教師 $i$ が学校 $s'$ において、そこに割り当てられている教師 $\widehat{i}^{(s',j,p^\star_{(s',j)})}$ に対して正当化された嫉妬を持つことを意味し、これは $\widehat{\mu}$ が教科公平（subject-fair）であるという事実に矛盾する。
+したがって、背理法の仮定は偽であり、全ての $s' \in S_j$ について、$i \succeq_{s'} \widehat{i}^{(s',j,p_{(s',j)}^\star)}$ ならば $s \succeq_i s'$ でなければならない。
+$\widehat{\mu}$ は個人合理的（I.R.）であるから、$\widehat{\mu}_i = s \succ_i \emptyset$ である。
+以上より、$i \succeq_s \widehat{i}^{(s,j,p_{(s,j)}^\star)}$、$s \succ_i \emptyset$、そして「全ての $s' \in S_j$ について $i \succeq_{s'} \widehat{i}^{(s',j,p_{(s',j)}^\star)} \Rightarrow s \succeq_i s'$」が全て成立するため、$i \in \widehat{D}_s^j(p_j^\star)$ である。
+
+
+% To show $\widehat{\mu}_s^j \supset \widehat{D}_s^j(p_j^\star)$.
+% Take any $i \in \widehat{D}_s^j(p_j^\star)$.
+% Sps, by cont, $i \notin \widehat{\mu}_s^j$.
+% Since $i \in \widehat{D}_s^j(p_j^\star)$, $i \succeq_s \widehat{i}^{(s,j,p_{(s,j)}^\star)} \in \widehat{\mu}_s^j$.
+% By $i \neq \widehat{i}^{(s,,p_{(s,j)}^\star)}$, $i \succ_s \widehat{i}^{(s,j,p_{(s,j)}^\star)}$.
+% Moreover, $\widehat{i}^{(s,j,p_{(s,j)}^\star)} \in \widehat{\mu}_s^j$.
+% Let $s' = \widehat{\mu}_i$ s.t. $s \neq s'$.
+% Let $l$ be s.t. $\widehat{i}^{(s',j,l)} = i$.
+% By $i \in \widehat{\mu}_{s'}^j$ and by def of $p_{(s,j)}^\star$, $i = \widehat{i}^{(s',j, l)} \succeq_{s'} \widehat{i}^{(s',j,p_{(s,j)}^\star)}$.
+% Since $i \in \widehat{D}_s^j(p_j^\star)$, $i \succeq_{s'} \widehat{i}^{(s',j,p_{(s,j)}^\star)} \Rightarrow s \succeq_i s'$.
+% By $s \neq s'$, this implies $s \succ_i s'$.
+% Then $s \succ_i s' = \widehat{\mu}_i$, $\widehat{i}^{(s,j,p_{(s,j)}^\star)} \in \widehat{\mu}_s^j$, $i \succ_s \widehat{i}^{(s,j,p_{(s,j)}^\star)}$.
+% This is a cont to the fact that $\widehat{\mu}$ is subject-fair.
+% So, $i \in \widehat{\mu}_s^j$.
+
+
+\subparagraph{\(\widehat{\mu}_s^j \supseteq \widehat{D}_s^j(p_j^\star)\) を示す}
+任意の \(i \in \widehat{D}_s^j(p_j^\star)\) をとる。
+背理法により、$i \notin \widehat{\mu}_s^j$ と仮定する。
+\(i \in \widehat{D}_s^j(p_j^\star)\) であるから、定義より \(i \succeq_s \widehat{i}^{(s,j,p_{(s,j)}^\star)}\) であり、かつ $\widehat{i}^{(s,j,p_{(s,j)}^\star)} \in \widehat{\mu}_s^j$ である。
+背理法の仮定 \(i \notin \widehat{\mu}_s^j\) より、$i \neq \widehat{i}^{(s,j,p_{(s,j)}^\star)}$ であるため、優先順位の関係は厳密になり、$i \succ_s \widehat{i}^{(s,j,p_{(s,j)}^\star)}$ となる。
+$\widehat{\mu}$ はα-実現可能であるため \(i\) はどこかに割り当てられるはずなので、その学校を $s' = \widehat{\mu}_i$ とする。仮定より $s \neq s'$ である。
+$i = \widehat{i}^{(s',j,l)}$ となるような $l$ を考える。$i \in \widehat{\mu}_{s'}^j$ ということと、$p_{(s',j)}^\star$ の定義から、$i = \widehat{i}^{(s',j, l)} \succeq_{s'} \widehat{i}^{(s',j,p_{(s',j)}^\star)}$ が成り立つ。
+一方、$i \in \widehat{D}_s^j(p_j^\star)$ であるから、その定義より、「$i \succeq_{s'} \widehat{i}^{(s',j,p_{(s',j)}^\star)}$ ならば $s \succeq_i s'$」でなければならない。
+$s \neq s'$ であることから、これは $s \succ_i s'$ を意味する。
+これらをまとめると、$s \succ_i s' = \widehat{\mu}_i$, $\widehat{i}^{(s,j,p_{(s,j)}^\star)} \in \widehat{\mu}_s^j$, かつ $i \succ_s \widehat{i}^{(s,j,p_{(s,j)}^\star)}$ が成立する。
+これは、$\widehat{\mu}$ が教科公平であるという事実に矛盾する。s
+したがって、最初の仮定は偽であり、$i \in \widehat{\mu}_s^j$ でなければならない。
+
+
+% Define
+% \[
+% \widehat{T}_s^j(p^\star) =
+% \begin{cases}
+% p^\star_{(s,j)} + 1 & \text{if } | \widehat{D}_s^j(p_j^\star) | > c^j_s \\
+% p^\star_{(s,j)}     & \text{if } | \widehat{D}_s^j(p_j^\star) | \leqq  c^j_s,
+% \end{cases}
+% \]
+% where we set \( (|\widehat{I}_j| + 1) + 1 = 1. \)
+
+% To show that $p^\star$ is a fixed point of $\widehat{T}$, we need to show that $\widehat{T}_s^j(p^\star) = p_{(s,j)}^\star$, $\forall s,j$.
+% Take any $s$, $j$.
+% Since $\widehat{\mu} = \widehat{\mu}^{p^\star}$ and feasibility of $\widehat{\mu}$, $\widehat{D}_s^j(p_j^\star) \in \widehat{\mathcal{F}}_s^j$.
+% By def of $\widehat{T}$, if $\widehat{D}_s^j(p_j^\star) \in \widehat{\mathcal{F}}_s^j$, then $\widehat{T}_s^j(p^\star) = p^\star$.
+
+
+次のように関数 \( \widehat{T} \) を定義する。
+\[
+\widehat{T}_s^j(p^\star) =
+\begin{cases}
+p^\star_{(s,j)} + 1 & \text{if } | \widehat{D}_s^j(p_j^\star) | > c^j_s \\
+p^\star_{(s,j)}     & \text{if } | \widehat{D}_s^j(p_j^\star) | \leq c^j_s,
+\end{cases}
+\]
+ただし、\( (|\widehat{I}_j| + 1) + 1 = 1 \) と定める。
+
+\(p^\star\) が \( \widehat{T} \) の不動点であることを示すには、全ての \(s,j\) について \(\widehat{T}_s^j(p^\star) = p_{(s,j)}^\star\) であることを示せばよい。
+
+任意の \(s, j\) をとる。
+前の議論で示した \(\widehat{\mu} = \widehat{\mu}^{p^\star}\) という等式と、\(\widehat{\mu}\) の実現可能性から、\(\widehat{D}_s^j(p_j^\star)\) は実現可能である。
+すなわち、\(|\widehat{D}_s^j(p_j^\star)| \leq c_s^j\) が成り立つ。
+
+\( \widehat{T} \) の定義によれば、もし \(|\widehat{D}_s^j(p_j^\star)| \leq c_s^j\) ならば、\(\widehat{T}_s^j(p^\star) = p_{(s,j)}^\star\) となる。
+これは示すべきことであった。
+
+
+% We will consider the problem $(I, S, \succ_I, \succ_S, \mathcal{F}_s)$.Let $i^{(s,j,l)}$ be the l-th lowest student among $\{i\}_{i \in I_j}$ according to $\succ_s$. 
+% Let \[
+% p_{(s,j)} =
+% \begin{cases}
+% p_{(s,j)}^\star + |I_j \setminus \{i \in I_\alpha: B(i) = j\}| & \text{if } \widehat{\mu}_s^j \neq \emptyset, \\
+% |I_j| + 1    & \text{if } \widehat{\mu}_s^j = \emptyset.
+% \end{cases}
+% \]
+
+
+問題 $(I, S, \succ_I, \succ_S, \mathcal{F}_s)$ を考える。
+
+$i^{(s,j,l)}$ を、学校 $s$ の優先順位 $\succ_s$ に従って並べたときに、集合 $\{i\}_{i \in I_j}$ の中で $l$ 番目に順位の低い教師とする。
+ここで、次のように定義する。
+\[
+p_{(s,j)} =
+\begin{cases}
+p_{(s,j)}^\star + |I_j \setminus \{i \in I_\alpha: B(i) = \{j\}\}| & \text{if } \widehat{\mu}_s^j \neq \emptyset, \\
+|I_j| + 1      & \text{if } \widehat{\mu}_s^j = \emptyset.
+\end{cases}
+\]
+
+% \textcolor{red}{
+% ・$\mu$がちゃんとマッチングになっているのか確認する必要がある（後日）。2つのところにマッチしてしまっていないかなど。}
+
+
+% To show $\forall i \in I_\alpha$, $\widehat{\mu}_i^{p^\star} = \mu_i^p$ and $\forall i \notin I_\alpha$, $\mu_i^p = \emptyset$.(That is, $\widehat{D}_s^j(p^\star_j) = D_s^j(p)$)\
+
+全ての現職教師 $i \in I_\alpha$ について $\widehat{\mu}_i^{p^\star} = \mu_i^p$ であり、かつ、全ての非現職教師 $i \notin I_\alpha$ について $\mu_i^p = \emptyset$ であることを示す。
+（これは、需要集合について $\widehat{D}_s^j(p^\star_j) = D_s^j(p)$ であることを示すことと同値である。）
+
+
+
+% To show $\widehat{D}_s^j(p^\star_j) \subset D_s^j(p)$.
+% Take any $i \in \widehat{D}_s^j(p^\star_j)$.
+% Then, $B(i) =j$.
+% Since $i \in \widehat{D}_s^j(p^\star_j)$, $i \succeq_s \widehat{i}^{(s,j,p^\star_{(s,j)})}$.
+% This and by the construction of $p$, $\widehat{i}^{(s,j,p^\star_{(s,j)})} = i^{(s,j,p_{(s,j)})}$, $i \succeq_s i^{(s,j,p_{(s,j)})}$.
+% Sps, by cont, $\exists s' \in S\setminus \{s\},\exists j' \in A(i) \cap A(s'), i \succeq_{s'} i^{(s',j',p_{(s',j')})} $ and $s' \succ_i s$.
+% $\forall j' \in A(i)$, if $j' \neq j$, then by assumption(5), $\forall i' \in I_\alpha $ with $B(i') =j'$, we have $i' \succ_{s'}^{j'} i$.・・・(6)
+% Sps, by cont, $i \succeq_{s'} i^{(s',j',p_{(s',j')})}$.・・・(7)
+% Then, $|\{i' \in I_{j'} ; i \succeq_{s'} i'\}| \geq p_{(s',j')}$.%これが成り立つのは、iがカットオフ値そのものだったときにイコールになり、それよりも、順位が上であった時に、それ以下となる教員の数は、カットオフ値よりも大きくなっていることが確認できると思う。
+% By (6), $|\{i' \in I_{j'}; i' \succ_{s'} i\}| \geq | \{i' \in I_{\alpha} ; B(i') = j' \}|$.・・・(8)%前式には、iより順位が上であればいいので、A(i') =jとなる様なものも入っている可能性がある。入っている場合は、>であり、入っていない場合は=となる。
+% By (7) and (8), $|\{i' \in I_{j'}; i' \succ_{s'} i\}| +|\{i' \in I_{j'} ; i \succeq_{s'} i'\}| = |I_{j'}| \geq p_{(s',j')} + | \{i' \in I_{\alpha} ; B(i') = j' \}|$.・・・(9)%両辺足し合わせただけ
+
+\paragraph{\(\widehat{D}_s^j(p^\star_j) \subseteq D_s^j(p)\) を示す}
+
+任意の \(i \in \widehat{D}_s^j(p^\star_j)\) をとる。
+このとき、定義より \(B(i) = \{j\}\) である。
+\(i \in \widehat{D}_s^j(p^\star_j)\) であるから、$i \succeq_s \widehat{i}^{(s,j,p^\star_{(s,j)})}$ が成り立つ。
+このことと、$p$ の構成方法から $\widehat{i}^{(s,j,p^\star_{(s,j)})} = i^{(s,j,p_{(s,j)})}$ であるため、$i \succeq_s i^{(s,j,p_{(s,j)})}$ が従う。
+
+ここで、背理法により、$i \succeq_{s'} i^{(s',j',p_{(s',j')})}$ かつ $s' \succ_i s$ となるような $s' \in S\setminus \{s\}$ と $j' \in A(i) \cap A(s')$ が存在すると仮定する。
+
+(仮定5)より、\(i\) の主担当ではない全ての教科 \(j' \in A(i)\) ($j' \neq j$) について、\(B(k) =\{j'\}\) となる全ての現職教師 \(k \in I_\alpha\) に対して、$k \succ_{s'}^{j'} i$ が成り立つ。(6)
+
+背理法の仮定より、$i \succeq_{s'} i^{(s',j',p_{(s',j')})}$ であった。(7)
+これは、教師 \(i\) の優先順位がカットオフ \(p_{(s',j')}\) 以上であることを意味するため、不等式で表すと次のようになる。
+\[
+ |\{k \in I_{j'} \mid i \succeq_{s'} k\}| \geq p_{(s',j')}
+\]
+
+また、(6)から、\(i\) よりも優先順位が厳密に高い教師の数は、主担当教科が \(j'\) である現職教師の数以上でなければならない。
+\[
+ |\{k \in I_{j'} \mid k \succ_{s'} i\}| \geq | \{k \in I_{\alpha} \mid B(k) = \{j'\}\} | \quad \cdots (8)
+\]
+
+(7)と(8)より、
+\[
+ |I_{j'}| = |\{k \in I_{j'} \mid k \succ_{s'} i\}| + |\{k \in I_{j'} \mid i \succeq_{s'} k\}| \geq | \{k \in I_{\alpha} \mid B(k) = \{j'\}\} | + p_{(s',j')} \quad \cdots (9)
+\]
+となる。
+
+
+% Case1:$\widehat{\mu}_{s'}^{j'} \neq \emptyset$.
+% Then, $p_{(s',j')} = p^\star_{(s',j')} + |I_{j'}\setminus \{i' \in I_\alpha ; B(i') = j\}|$.
+% (9) $= p^\star_{(s',j')} + |I_{j'}\setminus \{i' \in I_\alpha ; B(i') = j\} + | \{i' \in I_{\alpha} ; B(i') = j' \}| = p^\star_{(s',j')} + |I_{j'}| > |I_{j'}|$. This is a cont.
+
+% Case2:$\widehat{\mu}_{s'}^{j'} = \emptyset$.
+% $p_{(s',j')} = |I_{j'}| + 1$.
+% Then, by (9), $|I_{j'}| \geq |I_{j'}| + 1 + | \{i' \in I_{\alpha} ; B(i') = j' \}|$.
+% This is a cont.
+% Therefore, if $j' \neq j$, then $i \nsucceq i^{(s',j',p_{(s',j')})}$.
+% Then $j' = j$.
+
+\paragraph{ケース1: \(\widehat{\mu}_{s'}^{j'} \neq \emptyset\) の場合}
+このとき、$p$ の定義より、$p_{(s',j')} = p^\star_{(s',j')} + |I_{j'}\setminus \{i' \in I_\alpha \mid B(i') = \{j'\}\}|$ である。
+これを(9)式の右辺に代入すると、
+\begin{align*}
+    \text{(9)式の右辺} &= p_{(s',j')} + | \{i' \in I_{\alpha} \mid B(i') = \{j'\}\} | \\
+    &= p^\star_{(s',j')} + |I_{j'}\setminus \{i' \in I_\alpha \mid B(i') = \{j'\}\}| + | \{i' \in I_{\alpha} \mid B(i') = \{j'\}\} | \\
+    &= p^\star_{(s',j')} + |I_{j'}|
+\end{align*}
+したがって、(9)式は $|I_{j'}| \geq p^\star_{(s',j')} + |I_{j'}|$ となる。$p^\star_{(s',j')} \geq 1$ であるから、これは矛盾である。
+
+\paragraph{ケース2: \(\widehat{\mu}_{s'}^{j'} = \emptyset\) の場合}
+このとき、$p$ の定義より、$p_{(s',j')} = |I_{j'}| + 1$ である。
+これを(9)式に代入すると、$|I_{j'}| \geq (|I_{j'}| + 1) + | \{i' \in I_{\alpha} \mid B(i') = \{j'\}\}|$ となる。
+これは明らかに矛盾である。
+
+\vspace{\baselineskip}
+ケース1、2のいずれにおいても矛盾が導かれた。
+これは、背理法の最初の仮定（$s' \succ_i s$ となるような \(i\) の主担当ではない教科 \(j' \neq j\) が存在する）が誤りであったことを意味する。
+したがって、$j' = j$ でなければならない。
+
+% Sps, by cont, $\exists s' \in S\setminus \{s\},\exists j' \in A(i) \cap A(s'), i \succeq_{s'} i^{(s',j',p_{(s',j')})} $ and $s' \succ_i s$.
+% Since $j' = j$, $\exists s' \in S\setminus \{s\}, \{j\}=  A(i) \cap A(s'), i \succeq_{s'} i^{(s',j,p_{(s',j)})} $ and $s' \succ_i s$.
+% That is, $\exists s' \in S_j$, $i \succeq_{s'} i^{(s',j,p_{(s',j)})} $ and $s' \succ_i s$.
+% By the construction of $p$, $\widehat{i}^{(s,j,p^\star_{(s,j)})} = i^{(s,j,p_{(s,j)})}$, $\exists s' \in S_j$, $i \succeq_{s'} \widehat{i}^{(s',j,p^\star_{(s',j)})} $ and $s' \succ_i s$.
+% This is a cont to the fact that $\widehat{\mu}^{p^\star} = \widehat{D}_s^j(p^\star_j)$ is subject-fair.
+% Therefore, $i \in D_s^j(p)$
+
+
+ここで、再度背理法により、$i \succeq_{s'} i^{(s',j',p_{(s',j')})}$ かつ $s' \succ_i s$ となるような $s' \in S\setminus \{s\}$ と $j' \in A(i) \cap A(s')$ が存在すると仮定する。
+しかし、前段の結論から $j' = j$ でなければならない。
+したがって、この仮定は、ある $s' \in S_j$ が存在し、$i \succeq_{s'} i^{(s',j,p_{(s',j)})}$ かつ $s' \succ_i s$ となることを意味する。
+$p$ の構成方法（$\widehat{i}^{(s,j,p^\star_{(s,j)})} = i^{(s,j,p_{(s,j)})}$）を用いると、これは「ある $s' \in S_j$ が存在し、$i \succeq_{s'} \widehat{i}^{(s',j,p^\star_{(s',j)})}$ かつ $s' \succ_i s$ となる」ことと同値である。
+しかし、これは $\widehat{\mu}^{p^\star} (= \widehat{D}^j(p_j^\star))$ が教科公平であるという事実（証明済み）に矛盾する。
+したがって、背理法の仮定は偽であり、最終的に $i \in D_s^j(p)$ でなければならない。
+
+% To show $D_s^j(p_j^\star) \supset D_s^j(p)$.
+% Take any $i \in D_s^j(p)$.
+% Since $i \in D_s^j(p)$, $i \succeq_s i^{(s,j,p_{(s,j)})}$.
+% This and by the construction of $p$,$\widehat{i}^{(s,j,p^\star_{(s,j)})} = i^{(s,j,p_{(s,j)})}$, $i \succeq_s i^{(s,j,p^\star_{(s,j)})}$.
+% Since $i \in D_s^j(p)$, $\forall s' \in S\setminus \{s\},\forall j' \in A(i) \cap A(s'), i \succeq_{s'} i^{(s',j',p_{(s',j')})} \implies s \succ_i s'$.
+% Since $ j \in A(i) \cap A(s')$, $\forall s' \in S_j, i \succeq_{s'} i^{(s',j,p_{(s',j)})} \implies s \succ_i s'$.
+% Therefore, $i \in \widehat{D}_s^j(p^\star_j)$.
+
+
+\paragraph{\(D_s^j(p) \subseteq \widehat{D}_s^j(p^\star_j)\) を示す}
+任意の \(i \in D_s^j(p)\) をとる。
+\(i \in D_s^j(p)\) であるから、定義より $i \succeq_s i^{(s,j,p_{(s,j)})}$ が成り立つ。
+このことと、$p$ の構成方法（$\widehat{i}^{(s,j,p^\star_{(s,j)})} = i^{(s,j,p_{(s,j)})}$）から、$i \succeq_s \widehat{i}^{(s,j,p^\star_{(s,j)})}$ が従う。
+また、$i \in D_s^j(p)$ であるから、その定義より、全ての $s' \in S\setminus \{s\}$ と全ての $j' \in A(i) \cap A(s')$ について、
+\[
+ i \succeq_{s'} i^{(s',j',p_{(s',j')})} \implies s \succ_i s'
+\]
+が成り立つ。
+特に、教科 $j$ に限定すると、全ての $s' \in S_j$ について、「$i \succeq_{s'} i^{(s',j,p_{(s',j)})}$ ならば $s \succ_i s'$」が成り立つことになる。
+これは、$i$ が $\widehat{D}_s^j(p^\star_j)$ の定義における選好条件（$s \succeq_i s'$）よりも強い条件を満たしていることを意味する。
+$i$ が $\widehat{D}_s^j(p_j^\star)$ の元であるための条件は、(1)カットオフを満たすこと、(2)個人合理的であること（$i \in D_s^j(p)$ より成立）、(3)他の選択肢より$s$を好むこと、の3つである。
+上記で示したことはこれらの条件を全て満たすため、$i \in \widehat{D}_s^j(p_j^\star)$ である。
+
+
+
+
+% We will show that $p$ is a fixed point of $T$ in this situation.
+% We need to show that $\forall s \in S$, $\forall j \in J$, $T_s^j(p) = p_s^j$.
+% Take any $s \in S$ and $j \in J$.
+% Since $\widehat{D}_s^j(p^\star_j) = D_s^j(p)$, $\forall i \in I_\alpha$, $\mu_i^p = \widehat{\mu}_i^{p^\star}$($i \in I\setminus I_\alpha$, $\mu_i^p =\emptyset$.) and feasiblity of $\widehat{\mu}^{p^\star}$, $|D_s^j(p)| \leqq c_s^j$.
+% By def of $T$, if $| D_s^j(p) | \leqq  c^j_s$, then $T_s^j(p) = p_s^j$.
+
+この状況において、$p$ が $T$ の不動点であることを示します。
+そのためには、全ての $s \in S$ と全ての $j \in J$ について、$T_s^j(p) = p_s^j$ であることを示す必要があります。
+任意の $s \in S$ と $j \in J$ をとります。
+これまでの証明により、$\widehat{D}_s^j(p^\star_j) = D_s^j(p)$ であり、また $\widehat{\mu}^{p^\star}$ は実現可能でした。
+$\widehat{D}_s^j(p^\star_j) = \widehat{\mu}_s^j(p^\star)$ であり、その実現可能性から $|\widehat{\mu}_s^j(p^\star)| \leq c_s^j$ です。
+したがって、
+\[
+|D_s^j(p)| = |\widehat{D}_s^j(p^\star_j)| = |\widehat{\mu}_s^j(p^\star)| \leq c_s^j
+\]
+が成り立ちます。
+関数 $T$ の定義によれば、もし $| D_s^j(p) | \leq c^j_s$ ならば、$T_s^j(p) = p_s^j$ となります。
+これは、$p$ が $T$ の不動点であることを示しています。
+\end{proof}
+
+
+% \begin{table}[htbp]
+%   \centering
+%   \caption{記述統計量のサンプル}
+%   \label{tab:example}
+%   % エラー修正：列の定義を5つ(lcccc)から6つ(lccccc)に変更しました。
+%   \begin{tabular}{lccccc}
+%     \toprule
+%     変数名 & 観測数 & 平均 & 標準偏差 & 最小値 & 最大値 \\
+%     \midrule
+%     変数A & 100 & 10.5 & 2.1 & 5.0 & 15.0 \\
+%     変数B & 100 & 25.2 & 5.8 & 12.3 & 38.1 \\
+%     変数C & 100 & -0.8 & 1.2 & -3.0 & 2.5 \\
+%     \bottomrule
+%   \end{tabular}
+%   \source{出所：著者作成。}
+% \end{table}
+
+%----------- 本文セクション3 (結果と考察) -----------%
+\section{結果と考察}
+
+% 図の例を Figure \ref{fig:example} に示します。
+
+% \begin{figure}[htbp]
+%     \centering
+%     % "example-image-a" はLaTeXに標準で入っているダミー画像です。
+%     % 実際の画像ファイル名 (e.g., my_figure.png) に置き換えてください。
+%     \includegraphics[width=0.7\textwidth]{example-image-a}
+%     \caption{分析結果の可視化サンプル}
+%     \label{fig:example}
+%     \source{出所：著者作成。}
+% \end{figure}
+
+%----------- 結論 (Conclusion) -----------%
+\section{結論}
+% 本研究の主要な発見を要約し、その学術的および実務的な含意を述べます。また、本研究の限界と、今後の研究課題についても言及します。
+
+
+%----------- Appendix (付録) -----------%
+% % 修正：付録の章を追加
+% % \appendix
+\section*{付録:証明}
+% この付録では、本文中で省略した定理や命題の証明を記述します。
+
+% \textbf{CounterExample 1} (Under budget constraints, may not be $\alpha$-feasible).\\
+% Sps that $s_4,S_5 \in S$ and $i_1,i_2,i_3 \in I$ and $i_1,i_3 \in I_\alpha$ and $i_2 \in I \setminus I_\alpha$.\\
+%   Assume that 
+% \begin{align*}
+%     &\succ_{i_1}:45\emptyset, \\
+%     &\succ_{i_2}:4\emptyset 5, \\
+%     &\succ_{i_3}:54\emptyset ,\\
+%     &\succ_{s_4}:132\emptyset,\\
+%     &\succ_{s_5}:312\emptyset.\text{・・・(5)}
+% \end{align*}
+%   Since $\mathcal{F}_s$ is budget constraints, this satisfies (1). (5) stisfies (2) and (4). Since $\exists \mu$ s.t. $i_1 \in \mu_{s_5}$ and $i_3 \in \mu_{s_4}$, this satisfies (3). Then, the matching $\mu*$ s.t. $i_3 \in \mu*_{s_5}$is TOFM but not $\alpha$-feasible because $i_1 \in I_\alpha, \mu*_{i_1} = \emptyset$. Therefore, TOFM may not be $\alpha$-feasible under budget constraints.
+  
+
+\textbf{反例1} (予算制約下では、現職必置条件満たさない場合がある)
+
+$s_4, S_5 \in S$、$i_1, i_2, i_3 \in I$、$i_1, i_3 \in I_\alpha$、そして $i_2 \in I \setminus I_\alpha$ であると仮定する。
+
+このとき、選好が以下であると仮定する。
+\begin{align*}
+    &\succ_{i_1}: 45\emptyset, \\
+    &\succ_{i_2}: 4\emptyset 5, \\
+    &\succ_{i_3}: 54\emptyset, \\
+    &\succ_{s_4}: 132\emptyset, \\
+    &\succ_{s_5}: 312\emptyset. \tag{5}
+\end{align*}
+$\mathcal{F}_s$ が予算制約であるため、これは(1)を満たす。(5)は(2)と(4)を満たします。$i_1 \in \mu_{s_5}$ かつ $i_3 \in \mu_{s_4}$ となるようなマッチング $\mu$ が存在するため、これは(3)も満たす。このとき、$i_3 \in \mu^*_{s_5}$ となるマッチング $\mu^*$ はTOFMだが、$i_1 \in I_\alpha$ であり、かつ $\mu^*_{i_1} = \emptyset$ であるため、現職必置条件を満たさない。したがって、TOFMは予算制約下で職必置条件を満たさない場合がある。
+
+% \begin{theorem}
+%   If $\forall s \in S, \mathcal{F}_s$ is capacity constraints, then TOFM is always $\alpha$-feasible.
+% \end{theorem}
+%   \begin{proof}
+%     Sps $\mathcal{F}_s$ is capacity constraints. By (1),$\exists$ TOFM $\mu^*$. Sps , by cont, that $\exists i' \in I_\alpha$ s.t. $\mu^*_{i'} = \emptyset$. By (4), $\forall s \in S$, $s \succ_{i'} \emptyset$. By (3), $\exists s' \in S$ s.t. $i' \in \mu'_{s'}$. By $\mathcal{F}_s$ is capacity constraints, $|\mu*_{s'}| \leq q_{s'}$.\\
+    
+%     Case 1:$|\mu*_{s'}| < q_{s'}$\\
+%     $|\mu*_{s'} \cup \{i'\}| \leq q_{s'}$
+%     Let \[
+%         \mu^{''}_s =
+%         \begin{cases}
+%         \mu^*_s \cup \{i'\} & \text{if } s = s', \\
+%         \mu^*_s & \text{if } s \neq s'.
+%         \end{cases}
+%         \]
+%     $\mu''$ is FM.(By $|\mu*_{s'} \cup \{i'\}| \leq q_{s'}$, $\mu''$ is feasible. By (4), $\mu''$ is I.R.. By (2), $\mu''$ is fair.) By def of TOFM(ii), $\mu^*_{i'} \succ_{i'} \mu''_{i'}$. But $\mu*_{i'} = \emptyset $, $\mu''_{i'} = s'$, and $s' \succ_{i'} \emptyset$. Therefore, $\mu*_{i'} \nsucc_{i'} \mu''_{i'}$. This is cont by def of TOFM(ii).\\
+    
+%     Case 2:$|\mu*_{s'}| = q_{s'}$\\
+%     $\exists j \in I\setminus I_\alpha$ s.t. $j \in \mu*_{s'}$. By (2), $i' \succ_{s'} j$.
+%     Let \[
+%         \mu^{'''}_s =
+%         \begin{cases}
+%         (\mu^*_s\setminus \{j\}) \cup \{i'\} & \text{if } s = s', \\
+%         \mu^*_s & \text{if } s \neq s'.
+%         \end{cases}
+%         \]
+%     $\mu'''$ is FM.(By $|\mu*_{s'} \cup \{i'\}| \leq q_{s'}$, $\mu'''$ is feasible. By (4), $\mu'''$ is I.R.. By (2), $\mu'''$ is fair.) By def of TOFM(ii), $\mu^*_{i'} \succ_{i'} \mu'''_{i'}$. But $\mu*_{i'} = \emptyset $, $\mu'''_{i'} = s'$, and $s' \succ_{i'} \emptyset$. Therefore, $\mu*_{i'} \nsucc_{i'} \mu'''_{i'}$. This is cont by def of TOFM(ii). Therefore, $\forall i \in I_\alpha$, $\mu^*_i \neq \emptyset$. Therefore, TOFM is always $\alpha$-feasible under capacity constraints.
+%   \end{proof}
+
+\begin{theorem}
+  全ての $s \in S$ に対して $\mathcal{F}_s$ が定員制約であるならば、TOFMは常に現職必置条件を満たす。
+\end{theorem}
+
+\begin{proof}
+  $\mathcal{F}_s$ が定員制約であると仮定する。(1)より、TOFMである $\mu^*$ が存在する。背理法により、$\mu^*_{i'} = \emptyset$ となるような $i' \in I_\alpha$ が存在すると仮定する。(4)より、全ての $s \in S$ に対して $s \succ_{i'} \emptyset$ である。(3)より、$i' \in \mu'_{s'}$ となるような $s' \in S$ が存在する。$\mathcal{F}_s$ が定員制約であることから、$|\mu^*_{s'}| \leq q_{s'}$ である。
+
+  \textbf{場合1:} $|\mu^*_{s'}| < q_{s'}$ のとき\\
+  このとき、 $|\mu^*_{s'} \cup \{i'\}| \leq q_{s'}$ である。
+  以下のようにマッチング $\mu''$ を定義する。
+  \[
+      \mu''_{s} =
+      \begin{cases}
+      \mu^*_{s} \cup \{i'\} & \text{もし } s = s' \text{ の場合}, \\
+      \mu^*_{s} & \text{もし } s \neq s' \text{ の場合}.
+      \end{cases}
+  \]
+  $\mu''$ は実行可能なマッチング(FM)である。（$|\mu^*_{s'} \cup \{i'\}| \leq q_{s'}$ であるため $\mu''$ は実行可能であり、(4)より個人合理性を満たし、(2)より公平である。）
+  TOFMの定義(ii)より、$\mu^*_{i'} \succ_{i'} \mu''_{i'}$ でなければならない。
+  しかし、$\mu^*_{i'} = \emptyset$、$\mu''_{i'} = s'$ であり、かつ $s' \succ_{i'} \emptyset$ である。
+  したがって、$\mu^*_{i'} \nsucc_{i'} \mu''_{i'}$ となる。これはTOFMの定義(ii)に矛盾する。
+
+  \textbf{場合2:} $|\mu^*_{s'}| = q_{s'}$ のとき\\
+このとき、$j \in \mu^*_{s'}$ となるような $j \in I \setminus I_\alpha$ が存在し、(2)より $i' \succ_{s'} j$ が成立する。
+以下のようにマッチング $\mu'''$ を定義する。
+\[
+    \mu'''_{s} =
+    \begin{cases}
+    (\mu^*_{s} \setminus \{j\}) \cup \{i'\} & \text{もし } s = s' \text{ の場合}, \\
+    \mu^*_{s} & \text{もし } s \neq s' \text{ の場合}.
+    \end{cases}
+\]
+$\mu'''$ は実行可能なマッチング(FM)である。（$|(\mu^*_{s'}\setminus \{j\}) \cup \{i'\}| = q_{s'}$ であり定員を満たすため $\mu'''$ は実行可能であり、(4)より個人合理性を満たし、(2)より公平である。）
+TOFMの定義(ii)より、$\mu^*_{i'} \succ_{i'} \mu'''_{i'}$ でなければならない。
+しかし、$\mu^*_{i'} = \emptyset$、$\mu'''_{i'} = s'$ であり、かつ $s' \succ_{i'} \emptyset$ である。
+したがって、$\mu^*_{i'} \nsucc_{i'} \mu'''_{i'}$ となる。これはTOFMの定義(ii)に矛盾する。
+
+場合1と場合2のいずれにおいても矛盾が導かれたため、最初の仮定（$\mu^*_{i'} = \emptyset$ となる $i' \in I_\alpha$ が存在する）は偽である。
+したがって、全ての $i \in I_\alpha$ に対して $\mu^*_i \neq \emptyset$ である。
+ゆえに、TOFMは定員制約の下で常に現職必置条件を満たす。
+\end{proof}
+
+
+
+%----------- 参考文献 (References) -----------%
+% natbib パッケージを使用する場合
+\section*{参考文献}
+% \bibliographystyle{apalike} % APAスタイルに似た形式
+% \bibliography{my_references} % 参考文献ファイル名 (my_references.bib) を指定
+% プリアンブルに以下を追加してください
+% \usepackage{url} または \usepackage{hyperref}
+% \usepackage{xurl}
+
+
+
+
+\begin{itemize}
+    \item OECD（2020）『TALIS 2018結果（第2巻）：教員と校長の専門職としての価値（日本：カントリーノート拡張版）』OECD出版、パリ.(最終アクセス日: 2025年5月8日) \url{https://www.oecd.org/content/dam/oecd/en/about/programmes/edu/talis/talis2018participantnotes/volii/TALIS2018_CN_JPN_Vol_II_extended_jpn.pdf}
+    \item 文部科学省（2022）『教師不足に関する実態調査』.(最終アクセス日: 2025年5月8日) \url{https://www.mext.go.jp/content/20220128-mxt_kyoikujinzai01-000020293-1.pdf}
+    \item 文部科学省『別紙1 公立学校教員の公募制・FA制等の取組事例』.(最終アクセス日: 2025年5月8日) \url{https://www.mext.go.jp/b_menu/shingi/chukyo/chukyo3/040/siryo/attach/1379275.htm}
+    \item 東京都教育委員会（2023年9月29日）．令和5年度東京都公立学校教員採用候補者選考（6年度採用）の結果について.(最終アクセス日: 2025年5月8日) \url{https://www.kyoiku.metro.tokyo.lg.jp/information/press/2023/09/2023092901}
+    \item 長野県教育委員会（2024）．令和6年度高等学校教育職員人事異動方針．(最終アクセス日: 2025年5月8日) \url{https://www.pref.nagano.lg.jp/kyoiku/koko/saiyo-nyuushi/joho/documents/0_2jinjikoko.pdf}
+    \item 広島県教育委員会．広島県公立学校教職員人事異動方針．(最終アクセス日: 2025年5月8日) \url{https://www.pref.hiroshima.lg.jp/site/kyouiku/04file-h26-jinjiihoushin.html}
+    \item 千葉県教育委員会（2024）．令和6年度末及び令和7年度公立学校職員人事異動方針．(最終アクセス日: 2025年5月8日) \url{https://www.pref.chiba.lg.jp/kyouiku/syokuin/jinji/idou/documents/r06-jinjiidouhoushin.pdf}
+    \item Gale, D., \& Shapley, L. S. (1962). College admissions and the stability of marriage. The American Mathematical Monthly, 69(1), 9–15.
+    \item Roth, A. E. (1984). The evolution of the labor market for medical interns and residents: A case study in game theory. Journal of Political Economy, 92(6), 991–1016.
+    \item Balinski, M., \& Sönmez, T. (1999). A tale of two mechanisms: Student placement. Journal of Economic Theory, 84(1), 73–94.
+    \item Kamada, Y., \& Kojima, F. (2024). Fair matching under constraints: Theory and applications. The Review of Economic Studies, 91(2), 1162–1199.
+\end{itemize}
+\end{document}
