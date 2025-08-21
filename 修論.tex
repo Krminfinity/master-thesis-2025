@@ -138,7 +138,7 @@
 
 
 
-\section{基本モデル：単一免許を持つ教員}
+\section{基本モデル：教員が単一免許を持つケース}
 % We formally define the school choice model. Let $I$ be a non-empty finite set of teachers and $S$ be a non-empty finite set of schools. Each teacher $i \in I$ has a strict preference relation, $\succ_i$, over the set of schools $S$ and the state of being unmatched, $\emptyset$. Each school $s \in S$ has a strict priority order, $\succ_s$, over the set of teachers $I$. The collection of all preferences is the profile $\succ_I = (\succ_i)_{i \in I}$, and the collection of all priorities is the profile $\succ_S = (\succ_s)_{s \in S}$.
 
 % For each school $s \in S$, its hiring constraints are given by a family of feasible teacher sets, $\mathcal{F}_s$. A subset of teachers $I' \subseteq I$ is defined as {\bf \textit{feasible}} at school $s$ if $I' \in \mathcal{F}_s$. A {\bf \textit{problem}} is therefore characterized by the tuple $(I, S, \succ_I, \succ_S, \{\mathcal{F}_s\}_{s \in S})$.
@@ -152,37 +152,69 @@
 
 
 
-学校選択モデルを形式的に定義する。$I$ を教師からなる空でない有限集合、$S$ を学校からなる空でない有限集合とする。また、$I_{\alpha}$を\textbf{\textit{現職教師}} (currently employed / in-service teachers)からなる空でない有限集合とし、$I_{\alpha} \in I$である。各教師 $i \in I$ は、学校の集合 $S$ とマッチしない状態 $\emptyset$ の上で定義される厳密な選好順序 $\succ_i$ を持つ。各学校 $s \in S$ は、教師の集合 $I$ の上で定義される厳密な優先順位 $\succ_s$ を持つ。すべての選好の組をプロファイル $\succ_I = (\succ_i)_{i \in I}$ とし、すべての優先順位の組をプロファイル $\succ_S = (\succ_s)_{s \in S}$ とする。
+$I = \{1, ..., m\}$ を教師からなる空でない有限集合、$S = \{m+1, ..., n\}$ を学校からなる空でない有限集合とする。また、$I_{\alpha}$を\textbf{\textit{現職教師}} (currently employed / in-service teachers)からなる空でない有限集合とし、$I_{\alpha} \subset I$である。各教師 $i \in I$ は、学校の集合 $S$ とマッチしない状態 $\emptyset$ の和集合$S \cup \{ \emptyset \}$で定義される厳密な選好順序 $\succ_i$ を持つ。各学校 $s \in S$ は、教師の集合 $I$ の上で定義される厳密な優先順位 $\succ_s$ を持つ。教師が持つすべての選好の組をプロファイル $\succ_I = (\succ_i)_{i \in I}$ で表し、学校が持つすべての優先順位の組をプロファイル $\succ_S = (\succ_s)_{s \in S}$ で表す。
 
-各学校 $s \in S$ について、その採用制約は、実現可能な教師集合の族 $\mathcal{F}_s$ によって与えられる。教師の部分集合 $I' \subseteq I$ は、$I' \in \mathcal{F}_s$ であるとき、学校 $s$ において\textbf{\textit{実現可能}} (feasible) であると定義される。したがって、一つの\textbf{\textit{問題}} (problem) は、組 $(I, S, \succ_I, \succ_S, \{\mathcal{F}_s\}_{s \in S})$ によって特徴づけられる。
+各学校 $s \in S$ について、その採用制約は、実現可能な教師集合の族 $\mathcal{F}_s \subset 2^{I}$ によって与えられる。教師の部分集合 $I' \subseteq I$ は、$I' \in \mathcal{F}_s$ であるとき、学校 $s$ において\textbf{\textit{実現可能}} (feasible) であると定義される。したがって、一つの\textbf{\textit{問題}} (problem) は、組 $(I, S, \succ_I, \succ_S, \{\mathcal{F}_s\}_{s \in S})$ によって特徴づけられる。
 
-\textbf{\textit{マッチング}} (matching) $\mu$ とは、教師を学校に割り当てる写像であり、形式的には以下の3つの条件で定義される。
+\textbf{\textit{マッチング}} (matching)とは、教師と学校の組み合わせを決める写像$ \mu : I \cup S \to S \cup \{\emptyset\} \cup 2^{I}$であり、以下の3つの条件で定義される。
 \begin{itemize}
-    \item[(i)] すべての教師$i$について、その割り当て先は $\mu_i \in S \cup \{\emptyset\}$ である。
-    \item[(ii)] すべての学校$s$について、そこに割り当てられた教師の集合は $\mu_s \subseteq I$ である。
-    \item[(iii)] いかなる教師$i$と学校$s$のペアにおいても、$\mu_i = s$ であることと $i \in \mu_s$ であることが同値であるように、割り当ては整合的でなければならない。
+    \item[(i)] すべての教師$i \in I$について、その割り当て先は $\mu_i \in S \cup \{\emptyset\}$ である。
+    \item[(ii)] すべての学校$s \in S$について、そこに割り当てられた教師の集合は $\mu_s \subseteq I$ である。
+    \item[(iii)] いかなる教師$i \in I$と学校$s \in S$のペアにおいても、$\mu_i = s$ であることと $i \in \mu_s$ であることが同値であるように、割り当てなければならない。
 \end{itemize}
 
 
 
-教科からなる空でない有限集合 $J$ を導入する。割り当て関数 $A$ は、各教師をその単一の教科に、各学校をその学校が募集する教科の集合に対応付ける。教師については、$A: I \to J$ とする。$I_j = \{i \in I \mid A(i) = j\}$ は、教科 $j$ の免許を持つ教師の集合である。学校については、$A: S \to 2^J$ とする。$S_j = \{s \in S \mid j \in A(s)\}$ は、教科 $j$ で募集を行う学校の集合である。
+教師が担当する\textbf{\textit{教科}} (subject) を空でない有限集合 $J = \{j_1, j_2, ..., j_k\}$で表す。各教師$i \in I$について、$A(i) \subset J$ は、各教師が担当可能な教科の集合である。この章では、任意の$i \in I$について、$|A(i)| = 1$とする。つまり、各教師は単一の教科のみを担当する。便宜上、各教師$i$が担当可能な教科$j \in A(i)$と、$A(i)$を同一視する。このとき、$I_j = \{i \in I \mid A(i) = j\}$ は、教科 $j$ の免許を持つ教師の集合である。各学校$s \in S$について、$A(s)$でその学校が募集している科目を表す。このとき、学校については、$A: S \to 2^J$ とする。$S_j = \{s \in S \mid j \in A(s)\}$ は、教科 $j$ で募集を行う学校の集合である。
 
-各学校 $s$ は、教科 $j$ ごとに特定のキャパシティ $c^j_s$ を持つ。学校がある教科で募集を行わない場合、その教科のキャパシティはゼロとなる。すなわち、すべての $j \notin A(s)$ について、$c^j_s = 0$ である。
+各学校 $s \in S$ は、教科 $j \in J$ ごとに特定のキャパシティ $c^j_s \geq 0$ を持つ。学校がある教科で募集を行っている場合は、その教科のキャパシティは正の数であり、学校がある教科で募集を行わない場合、その教科のキャパシティはゼロとなる。すなわち、すべての $j \in A(s)$について、$c^j_s > 0$であり、$j \notin A(s)$ について、$c^j_s = 0$ である。
 
-これらの教科制約の下でマッチング $\mu$ が実現可能であるとは、ある学校に任意の教科で割り当てられた教師の数が、その学校の当該教科におけるキャパシティを超えない場合をいう。この実現可能性条件 $\mathcal{F}_s$ は、次のように定義される。
+これらの教科制約の下でマッチング $\mu$ が実現可能であるとは、ある学校に任意の教科で割り当てられた教師の数が、その学校の当該教科におけるキャパシティを超えないことをいう。この実現可能性条件 $\mathcal{F}_s$ は、次のように定義される。
 \[
 \mathcal{F}_s = \{\mu_s \subseteq I : \forall j \in J, |\{i \in \mu_s : A(i) = j \}| \leq c^j_s \}
 \]
 
 
 
-マッチング $\mu$ の質は、いくつかの重要な特性によって評価される。マッチングが\textbf{\textit{実現可能}} (feasible) であるとは、すべての学校 $s \in S$ について $\mu_s \in \mathcal{F}_s$ が成り立つことである。
+マッチング $\mu$ の望ましさは、いくつかの重要な特性によって評価される。マッチングが\textbf{\textit{実現可能}} (feasible) であるとは、すべての学校 $s \in S$ について、$\mu_i \neq \emptyset$ならば、$\mu_s \in \mathcal{F}_s$ が成り立つことである。
 \textbf{\textit{個人合理的}} (individually rational) であるとは、すべての教員 $i \in I$ について $\mu_i \succ_i \emptyset$ が成り立つことである。
 ある教師 $i$ が教師 $i'$ に対して\textbf{\textit{正当な嫉妬を持つ}} (have justified envy toward) とは、$s \succ_i \mu_i$、$i' \in \mu_s$、かつ $i \succ_s i'$ となるような学校 $s \in S$ が存在する場合をいう。
 したがって、マッチング $\mu$ が\textbf{\textit{公平}} (fair) であるとは、別の教師に対して正当な嫉妬を持つ教師が一人もいないことである。
-最後に、マッチング $\mu$ が\textbf{\textit{無駄がない}} (non-wasteful) とは、$s \succ_i \mu_i$ かつ $\mu_s \cup \{i\} \in \mathcal{F}_s$ となるようなペア $(i, s) \in I \times S$ が存在しないことである。
+最後に、マッチング $\mu$ が\textbf{\textit{効率的}} (non-wasteful)\footnote{\url{https://www.esri.cao.go.jp/jp/esri/archive/bun/bun203/bun203b.pdf}のp.16参照} であるとは、$s \succ_i \mu_i$ かつ $\mu_s \cup \{i\} \in \mathcal{F}_s$ となるようなペア $(i, s) \in I \times S$ が存在しないことである。
 マッチング $\mu$ は、実現可能、個人合理的、公平、かつ無駄がないという性質を同時に満たすとき、\textbf{\textit{安定}} (stable) であると定義される。
-マッチング $\mu$ が\textbf{\textit{現職必置条件}} (in-service teacher condition) を満たすとは、この集合の全ての教師が割り当てを得ること、すなわち $\forall i \in I_{\alpha}, \mu_i \neq \emptyset$ が成り立つ場合をいう。
+
+Kamada and Kojima(2024)では、公平性と実現可能性をマッチングに求めた際に安定性が失われる可能性があることを指摘している。以下は、Kamada and Kojima(2024)に記載されている例である。
+
+\textbf{例1} (安定性を満たすマッチングが存在しない). 
+学校が1つ（$s$）、学生が10人（$i_1, i_2, \dots, i_{10}$）いると仮定する。
+全ての学生は、誰ともマッチしないよりは学校$s$とマッチすることを望む。
+学校$s$の選好順位は以下の通りである。
+\[
+    \succ_s: i_1, i_2, \dots, i_9, i_{10}.
+\]
+奇数の添え字を持つ学生は学校にとって3単位の費用がかかり、偶数の添え字を持つ学生は4単位の費用がかかる。
+学校$s$は20単位の予算制約があり、ある学生の集合が$s$にとって実現可能であるのは、その学生たちに関連する費用の合計が20単位を超えない場合に限られる。
+
+このとき、例えば $\mu_s = \{i_1, i_2, i_3, i_4, i_5\}$ となるマッチング $\mu$ を考える。
+このマッチングは、$\mu_s \cup \{i_7\}$ が実現可能であり、かつ学生 $i_7$ が誰ともマッチしないより$s$とマッチすることを望むため、公平（fair）ではあるが効率的でない（wasteful）。
+一方で、$\mu'_s = \mu_s \cup \{i_7\}$ となるマッチング $\mu'$ は、効率性（non-wastefulness）を満たすが、
+$s \succ_{i_6} \emptyset$、$i_7 \in \mu'_s$、かつ $i_6 \succ_s i_7$ であるため、公平性（fairness）に反する。
+実際、この例には安定なマッチングが存在しない。
+これを示すため、まず公平性をマッチングに要求することから、$s$とマッチする学生の集合は、ある $l \in \{1, \dots, 10\}$ について $I^l = \bigcup_{k=1}^l\{i_k\}$ という形式をとるか、$I^0 = \emptyset$ でなければならない点に注意する。
+$l \le 5$ の場合、$I^l \cup \{i_7\} \in \mathcal{F}_s$ かつ $s \succ_{i_7} \emptyset$ であるため、集合 $I^l$ は効率的でない。
+一方、$l \ge 6$ の場合、集合 $I^l$ は実現可能ではない。
+
+
+
+
+
+マッチング $\mu$ が\textbf{\textit{現職必置条件}} (in-service teacher condition) を満たすとは、$\forall i \in I_{\alpha}, \mu_i \neq \emptyset$ が成り立つことであり、全ての現職教師が割り当てられることをいう。
+
+
+Kamada and Kojima(2024)では、例1のような制約がある状態で、安定性を保証することができないため、公平性、個人合理性、実現可能性を満たすマッチングを考えている。しかし、それに現職必置条件を置いた場合、公平性、個人合理性、実現可能性を満たすマッチングを保証することができない。以下にその例を示す。
+
+\textbf{例2} (公平性・個人合理性・実現可能性を満たすマッチングが存在しない). 
+
 
 
 % これと関連するものの異なる条件として、α-実現可能性 (α-feasibility) があります。マッチング $\mu$ が\textbf{\textit{α-実現可能}} (α-feasible) であるとは、すべての $s \in S$ について $\mu_s \in \mathcal{F}_s$ という条件を満たし、かつ、それに加えて、$i$ がα-教師として指定されている場合は常に $\mu_i \neq \emptyset$ となることです。
@@ -1314,7 +1346,7 @@ $\mathcal{F}_s$ が予算制約であるため、これは(1)を満たす。(5)�
       \mu^*_{s} & \text{もし } s \neq s' \text{ の場合}.
       \end{cases}
   \]
-  $\mu''$ は実行可能なマッチング(FM)である。（$|\mu^*_{s'} \cup \{i'\}| \leq q_{s'}$ であるため $\mu''$ は実行可能であり、(4)より個人合理性を満たし、(2)より公平である。）
+  $\mu''$ は実現可能なマッチング(FM)である。（$|\mu^*_{s'} \cup \{i'\}| \leq q_{s'}$ であるため $\mu''$ は実現可能であり、(4)より個人合理性を満たし、(2)より公平である。）
   TOFMの定義(ii)より、$\mu^*_{i'} \succ_{i'} \mu''_{i'}$ でなければならない。
   しかし、$\mu^*_{i'} = \emptyset$、$\mu''_{i'} = s'$ であり、かつ $s' \succ_{i'} \emptyset$ である。
   したがって、$\mu^*_{i'} \nsucc_{i'} \mu''_{i'}$ となる。これはTOFMの定義(ii)に矛盾する。
@@ -1329,7 +1361,7 @@ $\mathcal{F}_s$ が予算制約であるため、これは(1)を満たす。(5)�
     \mu^*_{s} & \text{もし } s \neq s' \text{ の場合}.
     \end{cases}
 \]
-$\mu'''$ は実行可能なマッチング(FM)である。（$|(\mu^*_{s'}\setminus \{j\}) \cup \{i'\}| = q_{s'}$ であり定員を満たすため $\mu'''$ は実行可能であり、(4)より個人合理性を満たし、(2)より公平である。）
+$\mu'''$ は実現可能なマッチング(FM)である。（$|(\mu^*_{s'}\setminus \{j\}) \cup \{i'\}| = q_{s'}$ であり定員を満たすため $\mu'''$ は実現可能であり、(4)より個人合理性を満たし、(2)より公平である。）
 TOFMの定義(ii)より、$\mu^*_{i'} \succ_{i'} \mu'''_{i'}$ でなければならない。
 しかし、$\mu^*_{i'} = \emptyset$、$\mu'''_{i'} = s'$ であり、かつ $s' \succ_{i'} \emptyset$ である。
 したがって、$\mu^*_{i'} \nsucc_{i'} \mu'''_{i'}$ となる。これはTOFMの定義(ii)に矛盾する。
