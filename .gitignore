@@ -19,3 +19,6 @@ out/
 
 # システムファイルを除外
 .DS_Store
+
+# 使用していない参考文献ファイルを除外
+my_references.bib
