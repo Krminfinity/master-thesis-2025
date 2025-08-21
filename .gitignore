@@ -12,3 +12,10 @@
 *.nav
 *.snm
 *.vrb
+
+# outディレクトリ全体を除外（PDFは個別に管理）
+out/
+!out/*.pdf
+
+# システムファイルを除外
+.DS_Store
