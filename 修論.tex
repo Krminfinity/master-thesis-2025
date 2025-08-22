@@ -4,7 +4,9 @@
 \documentclass[12pt, a4paper]{article}
 
 %----------- パッケージの読み込み -----------%
-\usepackage[utf8]{inputenc} % 文字コードをUTF-8に設定
+% \usepackage[utf8]{inputenc} % 文字コードをUTF-8に設定
+% \usepackage{zxjatype}
+\usepackage{luatexja}
 \usepackage{amsmath, amssymb} % 数式用のパッケージ
 \usepackage{graphicx}         % 図を挿入するためのパッケージ
 \usepackage[top=30truemm,bottom=30truemm,left=25truemm,right=25truemm]{geometry} % 余白を設定
@@ -23,15 +25,12 @@
 \usepackage{tocloft}
 \usepackage{mathtools}
 \usepackage{amssymb}
-\usepackage{CJKutf8}
+% \usepackage{CJKutf8}
 % \usepackage{url}
 \usepackage{highlightx}
 \usepackage{ulem}
 
-\usepackage[
-  hidelinks, % リンクに枠をつけない
-  dvipdfmx   % dvipdfmx使用ならオプション指定必須
-  ]{hyperref} % PDF内でクリック可能なリンクを生成
+\usepackage[hidelinks]{hyperref} % PDF内でクリック可能なリンクを生成
 
 
 \usepackage{graphicx}
@@ -68,7 +67,7 @@
 \begin{document}
 
 %----------- タイトル・著者情報 -----------%
-\title{現職教員を考慮した教員配属マッチングの設計} 
+\title{現職教員を考慮した教員たちの配属マッチングの設計} 
 % \\ \large{\textit{副題があればここに入力}}}
 % 修正：著者が一人の場合の記述に変更
 \author{倉持 誠}
