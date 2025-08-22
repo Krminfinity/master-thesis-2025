@@ -1,0 +1,39 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build LaTeX (LuaLaTeX)",
+            "type": "shell",
+            "command": "latexmk",
+            "args": [
+                "-lualatex",
+                "-synctex=1",
+                "-interaction=nonstopmode",
+                "-file-line-error",
+                "-output-directory=out",
+                "修論.tex"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Clean LaTeX",
+            "type": "shell",
+            "command": "latexmk",
+            "args": [
+                "-C",
+                "-output-directory=out"
+            ],
+            "group": "build"
+        }
+    ]
+}

@@ -1,0 +1,45 @@
+{
+    "latex-workshop.latex.tools": [
+        {
+            "name": "lualatex",
+            "command": "lualatex",
+            "args": [
+                "-synctex=1",
+                "-interaction=nonstopmode",
+                "-file-line-error",
+                "-output-directory=%OUTDIR%",
+                "%DOC%"
+            ],
+            "env": {}
+        },
+        {
+            "name": "bibtex",
+            "command": "bibtex",
+            "args": [
+                "%DOCFILE%"
+            ],
+            "env": {}
+        }
+    ],
+    "latex-workshop.latex.recipes": [
+        {
+            "name": "lualatex",
+            "tools": [
+                "lualatex"
+            ]
+        },
+        {
+            "name": "lualatex -> bibtex -> lualatex*2",
+            "tools": [
+                "lualatex",
+                "bibtex",
+                "lualatex",
+                "lualatex"
+            ]
+        }
+    ],
+    "latex-workshop.latex.recipe.default": "lualatex",
+    "latex-workshop.latex.autoBuild.run": "onSave",
+    "latex-workshop.view.pdf.viewer": "tab",
+    "latex-workshop.latex.outDir": "./out"
+}

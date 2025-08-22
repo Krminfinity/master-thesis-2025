@@ -20,5 +20,8 @@ out/
 # システムファイルを除外
 .DS_Store
 
-# 使用していない参考文献ファイルを除外
-my_references.bib
+# 他の環境で必要なファイルは除外しない：
+# - *.tex (LaTeXソースファイル)
+# - *.bib (参考文献ファイル) 
+# - .latexmkrc (latexmk設定)
+# - .vscode/ (VS Code設定)
