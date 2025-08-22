@@ -270,6 +270,102 @@ kamada and kojima(2024)は、現職必置条件を要求せず、$|J| = 1$であ
 
 
 流れとしては、dとかtsとか定義→不動点を定義→不動点なら3つの性質を満たす→不動点の集合がラティスになっている→不動点から作ることができるマッチングの中に教師最適公平マッチングがある
+
+
+Our approach is to characterize the matchings that satisfy fairness, individual rationality, and feasibility by fixed points of a function on a finite lattice. To establish this characterization, consider the space of cutoff profiles \( P := \{ 1, \ldots, | I |, | I | + 1 \} ^S \), endowed with a partial order \( \leq \) such that \( p \leq p' \) if and only if \( p_s \) is weakly smaller than \( p_s' \) for all \( s \in S \). This space is a finite (hence complete) lattice. For each school \( s \), let \( i_{(s,l)} \) be the student whose rank is the \( l \)-th from the bottom according to the priority of \( s \) (for example, the best student for \( s \) is \( i_{(s,|I|)} \), and the worst is \( i_{(s,1)} \)). Also, consider a hypothetical student \( i^* \in I \) such that \( i^* = i_{(s,|I|+1)} \) for all \( s \in S \), and expand the domain of \( \succ_s \) for each \( s \in S \) so that for any \( i \in I \), \( i^* \succ_s i \) holds. Given a cutoff profile \( p \in P \), define the "demand" at each \( s \in S \) as
+\[
+  D_s(p) := \{i \in I \mid i \succeq_s i^{(s,p_s)} \text{ and } s \succ_i \emptyset; i \succeq_{s'} i^{(s',p_{s'})} \implies s \succeq_i s' \}.
+\]
+In this definition, the first part ``\( i \succeq_s i^{(s,p_s)} \) and \( s \succ_i \emptyset \)'' says that student \( i \) is as good as the cutoff student \( i^{(s,p_s)} \) and finds \( s \) acceptable, while the second part ``\( i \succeq_{s'} i^{(s',p_{s'})} \implies s \succeq_i s' \)'' says that \( s \) is the most preferred school among the ones at which \( i \) passes the cutoff. The demand for \( s \) is a collection of students who meet those two criteria.
+
+
+
+
+\begin{tcolorbox}[
+  colframe = black, 
+  title = $D_s(p)$の数値例, 
+  fonttitle = \bfseries,
+  sharp corners = downhill]
+  5人の学生 \( i_1, i_2, i_3, i_4, i_5 \) がおり、学校 \( s \) の優先度リストは以下の通りとする。 また、学校 \( s \) のカットオフプロファイルは \( p_s = 3 \) であり、カットオフ学生は \( i_3 \) とする。
+  \[
+  i_1 \succ_s i_2 \succ_s i_3 \succ_s i_4 \succ_s i_5
+  \]
+
+  また、学校 \( s' \) の優先度リストも同様に以下の通りとし、のカットオフプロファイルは \( p_s = 1 \) であり、カットオフ学生は \( i_5 \) とする。
+  \[
+  i_1 \succ_s i_2 \succ_s i_3 \succ_s i_4 \succ_s i_5
+  \]
+
+学生の選好を以下のように設定する。
+
+学生 \( i_1 \) の選好：$s' \succ_i s \succ_i \emptyset$ \\
+学生 \( i_2 \) の選好：$s \succ_i s' \succ_i \emptyset$ \\
+学生 \( i_3 \) の選好：$s \succ_i s' \succ_i \emptyset$ \\
+学生 \( i_4 \) の選好：$s' \succ_i s \succ_i \emptyset$ \\
+学生 \( i_5 \) の選好：$s \succ_i \emptyset$ \\
+
+\[
+  D_s(p) := \{i \in I \mid i \succeq_s i^{(s,p_s)} \text{ and } s \succ_i \emptyset; i \succeq_{s'} i^{(s',p_{s'})} \implies s \succeq_i s' \}.
+\]
+
+上記定義から、まず、前半の条件である \( i \succeq_s i^{(s,p_s)} \) と \( s \succ_i \emptyset \) を満たす学生を選ぶ。これを満たすのは、\( i_1, i_2, i_3 \) である。
+
+次に、後半の条件である \( i \succeq_{s'} i^{(s',p_{s'})} \implies s \succeq_i s' \) を満たす学生を選ぶ。これを満たすのは、\( i_2, i_3, i_5 \) である。
+
+ここで、両条件を満たす学生は、\( i_2, i_3 \) である。したがって、学校 \( s \) における需要は以下のようになる。
+
+\[
+D_s(p) = \{i_2, i_3\}
+\]
+
+\end{tcolorbox}
+
+
+We call a mapping T: $P \to P$ a {\bf \emph{cutoff adjustment function}} if 
+\[
+    T_s(p) =
+    \begin{cases}
+        p_s + 1 & \text{if } D_s(p) \notin F_s, \\
+        p_s     & \text{if } D_s(p) \in F_s.
+    \end{cases}
+\]
+where \( (|I| + 1) + 1 = 1 \). 
+
+
+
+
+\textbf{Theorem 1}. If a cutoff profile $p \in P$ is a fixed point of the cutoff adjustment function $T$, then $\mu^p$ is feasible, individually rational, and fair. Moreover, if $\mu$ is a feasible, individually rational, and fair matching, then there exists a cutoff profile $p \in P$ with $\mu = \mu^p$ that is a fixed point of $T$.
+
+
+
+
+We call a poset  \( (X, \succeq) \) a \textbf{ \textit{lattice}} if \( \forall x, \forall y \in X \), \( \exists \sup_{\succeq} \{x, y\} \) and \( \exists \inf_{\succeq} \{x, y\} \) .
+
+We call a poset \( (X, \succeq) \) a \textbf{ \textit{complete lattice}} if  \( \forall Y \in 2^X \), \( \exists \sup_{\succeq} Y \) and \( \exists \inf_{\succeq} Y \) .
+
+
+
+
+\begin{tcolorbox}[
+  enhanced,
+  colframe = black,
+  colback = white,
+  title = Tarski's Fixed Point Theoremについて,
+  fonttitle = \bfseries,
+  breakable = true,
+  coltitle = black,
+  attach boxed title to top left = {xshift=5mm, yshift=-3mm}, 
+  boxed title style = {colframe = black, colback = white},
+  top = 4mm]
+  \newtheorem*{theoremTemp}{Theorem}
+  \begin{theoremTemp}[Tarski's Fixed Point Theorem]
+    Let $(L, \leq)$ be a complete lattice and $f: L \to L$ an increasing function, that is, $x \leq y$ implies $f(x) \leq f(y)$. Then the set $\{ u \in L : f(u) = u \}$ of fixed points of $f$ forms a complete lattice under $\leq$. In particular, $f$ has a least fixed point $\underline{u}$ and a greatest fixed point $\overline{u}$.  \footnote{特に、f は最小の不動点 $\underline{u}$ と最大の不動点 $\bar{u}$ を持つ。}
+    
+  \end{theoremTemp}
+  (\url{https://pauldelatte.github.io/files/L3.pdf})
+
+\end{tcolorbox}
+
 証明はなし
 
 示したことをせつめい
@@ -280,7 +376,6 @@ kamada and kojima(2024)は、現職必置条件を要求せず、$|J| = 1$であ
 
 不動点の際に、３つの性質が満たされていることも例から確認する
 
-\textbf{Theorem 1}. If a cutoff profile $p \in P$ is a fixed point of the cutoff adjustment function $T$, then $\mu^p$ is feasible, individually rational, and fair. Moreover, if $\mu$ is a feasible, individually rational, and fair matching, then there exists a cutoff profile $p \in P$ with $\mu = \mu^p$ that is a fixed point of $T$.
 
 
 ラティスを定義する
