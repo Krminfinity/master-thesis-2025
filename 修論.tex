@@ -260,8 +260,40 @@ $I = I_\alpha = \{1, 2\}$、$S = \{3, 4\}$ とする。
 \end{defn}
 
 
-\subsection{Kamada and Kojima(2024)のレビュー}
-kamada and kojima(2024)は、現職必置条件を要求せず、$|J| = 1$であるとき、教師最適マッチング(TOFM)がカットオフアジャストメントアルゴリズムを用いて求められることを示した。本節では、そのことについて詳しく説明する。
+
+
+\textcolor{red}{動画は00:34:42から 以下のKamada and Kojima(2024)の結果の部分は、論文をGeminiとかに読ませて、まとめさせる。この流れに関する部分だけ。 その際タラツキー入れる？}
+
+\subsection{Kamada and Kojima(2024)の結果}
+kamada and kojima(2024)は、現職必置条件を要求せず、$|J| = 1$であるときを分析し、教師最適マッチング(TOFM)がカットオフアジャストメントアルゴリズム(cutoff adjustment algorithm)を用いて求められることを示した。本節では、そのことについて詳しく説明する。
+
+
+
+流れとしては、dとかtsとか定義→不動点を定義→不動点なら3つの性質を満たす→不動点の集合がラティスになっている→不動点から作ることができるマッチングの中に教師最適公平マッチングがある
+証明はなし
+
+示したことをせつめい
+
+不動点を出したところでどういうところが不動点になるのか、例で説明する
+
+学校と生徒で例をだして、不動点になるカットオフ値とそうでないカットオフ値を出して比較する
+
+不動点の際に、３つの性質が満たされていることも例から確認する
+
+\textbf{Theorem 1}. If a cutoff profile $p \in P$ is a fixed point of the cutoff adjustment function $T$, then $\mu^p$ is feasible, individually rational, and fair. Moreover, if $\mu$ is a feasible, individually rational, and fair matching, then there exists a cutoff profile $p \in P$ with $\mu = \mu^p$ that is a fixed point of $T$.
+
+
+ラティスを定義する
+
+ラティスの一番上が、教師最適公平マッチングになっていることを示した
+
+
+\textbf{Theorem 2}. If the constraint at each school is a general upper-bound, then there exists an SOFM.
+
+\textbf{Claim 1}. The mapping $T$ has the smallest fixed point, i.e. there exists $p \in P$ such that $T(p) = p$ and $p \leq p'$ for all $p' \in P$ with $T(p') = p'$.
+
+現職必置条件は満たさないので、私たちは、公平性を弱めて、強化公平性を満たすマッチングに着目する。
+
 
 \begin{defn}
 マッチング $\mu$ が\textbf{\textit{教科別教師最適公平マッチング (subject-TOFM)}} となるのは、以下の条件を満たす場合である。
