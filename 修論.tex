@@ -187,7 +187,7 @@ $I = \{1, ..., m\}$ を教師からなる空でない有限集合、$S = \{m+1, 
 ある教師 $i$ が教師 $i'$ に対して\textbf{\textit{正当な嫉妬を持つ}} (have justified envy toward) とは、$s \succ_i \mu_i$、$i' \in \mu_s$、かつ $i \succ_s i'$ となるような学校 $s \in S$ が存在する場合をいう。
 したがって、マッチング $\mu$ が\textbf{\textit{公平}} (fair) であるとは、別の教師に対して正当な嫉妬を持つ教師が一人もいないことである。
 最後に、マッチング $\mu$ が\textbf{\textit{効率的}} (non-wasteful)\footnote{\url{https://www.esri.cao.go.jp/jp/esri/archive/bun/bun203/bun203b.pdf}のp.16参照} であるとは、$s \succ_i \mu_i$ かつ $\mu_s \cup \{i\} \in \mathcal{F}_s$ となるようなペア $(i, s) \in I \times S$ が存在しないことである。
-マッチング $\mu$ は、実現可能、個人合理的、公平、かつ無駄がないという性質を同時に満たすとき、\textbf{\textit{安定}} (stable) であると定義される。
+マッチング $\mu$ は、実現可能、個人合理的、公平、かつ効率的という性質を同時に満たすとき、\textbf{\textit{安定}} (stable) であると定義される。
 
 Kamada and Kojima(2024)では、公平性と実現可能性をマッチングに求めた際に安定性が失われる可能性があることを指摘している。以下は、Kamada and Kojima(2024)に記載されている例である。
 
@@ -226,13 +226,13 @@ $I = I_\alpha = \{1, 2\}$、$S = \{3, 4\}$ とする。
 このマッチングは教員2は教員1に対して正当な嫉妬（justified envy）を抱くため、公正（fair）ではない。
 
 
-\textcolor{red}{ここから　動画は、00:24:44から}
+% \textcolor{red}{ここから　動画は、00:24:44から}
 
 % これと関連するものの異なる条件として、α-実現可能性 (α-feasibility) があります。マッチング $\mu$ が\textbf{\textit{α-実現可能}} (α-feasible) であるとは、すべての $s \in S$ について $\mu_s \in \mathcal{F}_s$ という条件を満たし、かつ、それに加えて、$i$ がα-教師として指定されている場合は常に $\mu_i \neq \emptyset$ となることです。
 
 
 
-公平性（Fairness）の概念は、教科を考慮して精緻化される。ある教師 $i$ が教師 $i'$ に対して\textbf{\textit{教科に基づいた正当な嫉妬}} (subject-justified envy) を持つとは、両者が同じ教科を持ち ($A(i) = A(i')$)、かつ標準的な意味で教師 $i$ が $i'$ に対して正当な嫉妬を持つ（すなわち、$\exists s \in S$ s.t. $s \succ_i \mu_i, i' \in \mu_s, i \succ_s i'$）場合をいう。マッチングが\textbf{\textit{教科公平}} (subject-fair) であるとは、教科に基づいた正当な嫉妬を持つ教師が誰もいない状態を指す。
+公平性（Fairness）の概念は、教科を考慮して弱められる。ある教師 $i$ が教師 $i'$ に対して\textbf{\textit{教科に基づいた正当な嫉妬}} (subject-justified envy) を持つとは、$A(i) = A(i')$であり、ある$ s \in S$が存在し、$s \succ_i \mu_i, i' \in \mu_s, i \succ_s i'$が成り立つ時をいう。これは、両者が同じ教科を持ち、かつ標準的な意味で教師 $i$ が $i'$ に対して正当な嫉妬を持つことを意味する。マッチングが\textbf{\textit{教科公平}} (subject-fair) であるとは、教科に基づいた正当な嫉妬を持つ教師が誰もいない状態を指す。
 
 % \begin{defn}
 %   A constraint $\mathcal{F}_s$ is a {\bf \textit{general upper-bound}} if $I' \in \mathcal{F}_s$ and $I'' \subseteq I'$ imply $I'' \in \mathcal{F}_s$.
@@ -247,9 +247,9 @@ $I = I_\alpha = \{1, 2\}$、$S = \{3, 4\}$ とする。
 % \end{defn}
 
 
-\begin{defn}
-制約 $\mathcal{F}_s$ は、$I' \in \mathcal{F}_s$ かつ $I'' \subseteq I'$ ならば常に $I'' \in \mathcal{F}_s$ が成り立つとき、\textbf{\textit{一般上限}} (general upper-bound) である。
-\end{defn}
+% \begin{defn}
+% 制約 $\mathcal{F}_s$ は、$I' \in \mathcal{F}_s$ かつ $I'' \subseteq I'$ ならば常に $I'' \in \mathcal{F}_s$ が成り立つとき、\textbf{\textit{一般上限}} (general upper-bound) である。
+% \end{defn}
 
 \begin{defn}
 マッチング $\mu$ は、以下の2つの条件を満たすとき、\textbf{\textit{教師最適公平マッチング (TOFM)}} (teacher-optimal fair matching) となる。
@@ -258,6 +258,10 @@ $I = I_\alpha = \{1, 2\}$、$S = \{3, 4\}$ とする。
     \item[(ii)] 実現可能、個人合理的、かつ公平である、他のいかなるマッチング $\mu'$ に対しても、すべての教師 $i \in I$ について $\mu_i \succeq_i \mu'_i$ が成り立つ。
 \end{itemize}
 \end{defn}
+
+
+\subsection{Kamada and Kojima(2024)のレビュー}
+kamada and kojima(2024)は、現職必置条件を要求せず、$|J| = 1$であるとき、教師最適マッチング(TOFM)がカットオフアジャストメントアルゴリズムを用いて求められることを示した。本節では、そのことについて詳しく説明する。
 
 \begin{defn}
 マッチング $\mu$ が\textbf{\textit{教科別教師最適公平マッチング (subject-TOFM)}} となるのは、以下の条件を満たす場合である。
@@ -580,8 +584,8 @@ A: I \to 2^J\setminus {\emptyset}
 \textbf{\textit{個人合理的}} (individually rational) であるとは、すべての $i \in I$ について $\mu_i \succ_i \emptyset$ が成り立つことである。
 ある教師 $i$ が教師 $i'$ に対して\textbf{\textit{正当化された嫉妬を持つ}} (have justified envy toward) とは、$s \succ_i \mu_i$、$i' \in \mu_s$、かつ $i \succ_s i'$ となるような学校 $s \in S$ が存在する場合をいう。
 したがって、マッチング $\mu$ が\textbf{\textit{公平}} (fair) であるとは、別の教師に対して正当化された嫉妬を持つ教師が一人もいないことである。
-最後に、マッチング $\mu$ が\textbf{\textit{無駄がない}} (non-wasteful) とは、$s \succ_i \mu_i$ かつ $\mu_s \cup \{i\} \in \mathcal{F}_s$ となるようなペア $(i, s) \in I \times S$ が存在しないことである。
-マッチング $\mu$ は、実現可能、個人合理的、公平、かつ無駄がないという性質を同時に満たすとき、\textbf{\textit{安定}} (stable) であると定義される。
+最後に、マッチング $\mu$ が\textbf{\textit{効率的}} (non-wasteful) とは、$s \succ_i \mu_i$ かつ $\mu_s \cup \{i\} \in \mathcal{F}_s$ となるようなペア $(i, s) \in I \times S$ が存在しないことである。
+マッチング $\mu$ は、実現可能、個人合理的、公平、かつ効率的という性質を同時に満たすとき、\textbf{\textit{安定}} (stable) であると定義される。
 マッチング $\mu$ が\textbf{\textit{現職必置条件}} (in-service teacher condition) を満たすとは、この集合の全ての教師が割り当てを得ること、すなわち $\forall i \in I_{\alpha}, \mu_i \neq \emptyset$ が成り立つ場合をいう。
 
 
