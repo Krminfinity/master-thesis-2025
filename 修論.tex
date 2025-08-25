@@ -29,10 +29,14 @@
 % \usepackage{url}
 \usepackage{highlightx}
 \usepackage{ulem}
+\usepackage{tikz}
+% \usetikzlibrary{positioning} % ←これが必要
+\usetikzlibrary{positioning,arrows.meta}
+
 
 \usepackage[hidelinks]{hyperref} % PDF内でクリック可能なリンクを生成
-
-
+\usepackage{amsmath,amssymb,booktabs,array}
+% \usepackage[margin=25mm]{geometry}
 % \usepackage[
 %   hidelinks, % リンクに枠をつけない
 %   dvipdfmx   % dvipdfmx使用ならオプション指定必須
@@ -158,11 +162,11 @@
 
 
 
-$I = \{1, ..., m\}$ を教師からなる空でない有限集合、$S = \{m+1, ..., n\}$ を学校からなる空でない有限集合とする。また、$I_{\alpha}$を\textbf{\textit{現職教師}} (currently employed / in-service teachers)からなる空でない有限集合とし、$I_{\alpha} \subset I$である。各教師 $i \in I$ は、学校の集合 $S$ とマッチしない状態 $\emptyset$ の和集合$S \cup \{ \emptyset \}$で定義される厳密な選好順序 $\succ_i$ を持つ。各学校 $s \in S$ は、教師の集合 $I$ の上で定義される厳密な優先順位 $\succ_s$ を持つ。教師が持つすべての選好の組をプロファイル $\succ_I = (\succ_i)_{i \in I}$ で表し、学校が持つすべての優先順位の組をプロファイル $\succ_S = (\succ_s)_{s \in S}$ で表す。
+$I = \{1, ..., m\}$ を教師からなる空でない有限集合、$S = \{m+1, ..., n\}$ を学校からなる空でない有限集合とする。また、$I_{\alpha}$を\textbf{\textit{現職教師(currently employed / in-service teachers)}} からなる空でない有限集合とし、$I_{\alpha} \subset I$である。各教師 $i \in I$ は、学校の集合 $S$ とマッチしない状態 $\emptyset$ の和集合$S \cup \{ \emptyset \}$で定義される厳密な選好順序 $\succ_i$ を持つ。各学校 $s \in S$ は、教師の集合 $I$ の上で定義される厳密な優先順位 $\succ_s$ を持つ。教師が持つすべての選好の組をプロファイル $\succ_I = (\succ_i)_{i \in I}$ で表し、学校が持つすべての優先順位の組をプロファイル $\succ_S = (\succ_s)_{s \in S}$ で表す。
 
-各学校 $s \in S$ について、その採用制約は、実現可能な教師集合の族 $\mathcal{F}_s \subset 2^{I}$ によって与えられる。教師の部分集合 $I' \subseteq I$ は、$I' \in \mathcal{F}_s$ であるとき、学校 $s$ において\textbf{\textit{実現可能}} (feasible) であると定義される。したがって、一つの\textbf{\textit{問題}} (problem) は、組 $(I, S, \succ_I, \succ_S, \{\mathcal{F}_s\}_{s \in S})$ によって特徴づけられる。
+各学校 $s \in S$ について、その採用制約は、実現可能な教師集合の族 $\mathcal{F}_s \subset 2^{I}$ によって与えられる。教師の部分集合 $I' \subseteq I$ は、$I' \in \mathcal{F}_s$ であるとき、学校 $s$ において\textbf{\textit{実現可能(feasible) }} であると定義される。したがって、一つの\textbf{\textit{問題(problem) }} は、組 $(I, S, \succ_I, \succ_S, \{\mathcal{F}_s\}_{s \in S})$ によって特徴づけられる。
 
-\textbf{\textit{マッチング}} (matching)とは、教師と学校の組み合わせを決める写像$ \mu : I \cup S \to S \cup \{\emptyset\} \cup 2^{I}$であり、以下の3つの条件で定義される。
+\textbf{\textit{マッチング (matching)}}とは、教師と学校の組み合わせを決める写像$ \mu : I \cup S \to S \cup \{\emptyset\} \cup 2^{I}$であり、以下の3つの条件で定義される。
 \begin{itemize}
     \item[(i)] すべての教師$i \in I$について、その割り当て先は $\mu_i \in S \cup \{\emptyset\}$ である。
     \item[(ii)] すべての学校$s \in S$について、そこに割り当てられた教師の集合は $\mu_s \subseteq I$ である。
@@ -171,7 +175,7 @@ $I = \{1, ..., m\}$ を教師からなる空でない有限集合、$S = \{m+1, 
 
 
 
-教師が担当する\textbf{\textit{教科}} (subject) を空でない有限集合 $J = \{j_1, j_2, ..., j_k\}$で表す。各教師$i \in I$について、$A(i) \subset J$ は、各教師が担当可能な教科の集合である。この章では、任意の$i \in I$について、$|A(i)| = 1$とする。つまり、各教師は単一の教科のみを担当する。便宜上、各教師$i$が担当可能な教科$j \in A(i)$と、$A(i)$を同一視する。このとき、$I_j = \{i \in I \mid A(i) = j\}$ は、教科 $j$ の免許を持つ教師の集合である。各学校$s \in S$について、$A(s)$でその学校が募集している科目を表す。このとき、学校については、$A: S \to 2^J$ とする。$S_j = \{s \in S \mid j \in A(s)\}$ は、教科 $j$ で募集を行う学校の集合である。
+教師が担当する\textbf{\textit{教科 (subject) }}を空でない有限集合 $J = \{j_1, j_2, ..., j_k\}$で表す。各教師$i \in I$について、$A(i) \subset J$ は、各教師が担当可能な教科の集合である。この章では、任意の$i \in I$について、$|A(i)| = 1$とする。つまり、各教師は単一の教科のみを担当する。便宜上、各教師$i$が担当可能な教科$j \in A(i)$と、$A(i)$を同一視する。このとき、$I_j = \{i \in I \mid A(i) = j\}$ は、教科 $j$ の免許を持つ教師の集合である。各学校$s \in S$について、$A(s)$でその学校が募集している科目を表す。このとき、学校については、$A: S \to 2^J$ とする。$S_j = \{s \in S \mid j \in A(s)\}$ は、教科 $j$ で募集を行う学校の集合である。
 
 各学校 $s \in S$ は、教科 $j \in J$ ごとに特定のキャパシティ $c^j_s \geq 0$ を持つ。学校がある教科で募集を行っている場合は、その教科のキャパシティは正の数であり、学校がある教科で募集を行わない場合、その教科のキャパシティはゼロとなる。すなわち、すべての $j \in A(s)$について、$c^j_s > 0$であり、$j \notin A(s)$ について、$c^j_s = 0$ である。
 
@@ -182,12 +186,12 @@ $I = \{1, ..., m\}$ を教師からなる空でない有限集合、$S = \{m+1, 
 
 
 
-マッチング $\mu$ の望ましさは、いくつかの重要な特性によって評価される。マッチングが\textbf{\textit{実現可能}} (feasible) であるとは、すべての学校 $s \in S$ について、$\mu_i \neq \emptyset$ならば、$\mu_s \in \mathcal{F}_s$ が成り立つことである。
-\textbf{\textit{個人合理的}} (individually rational) であるとは、すべての教員 $i \in I$ について $\mu_i \succ_i \emptyset$ が成り立つことである。
-ある教師 $i$ が教師 $i'$ に対して\textbf{\textit{正当な嫉妬を持つ}} (have justified envy toward) とは、$s \succ_i \mu_i$、$i' \in \mu_s$、かつ $i \succ_s i'$ となるような学校 $s \in S$ が存在する場合をいう。
-したがって、マッチング $\mu$ が\textbf{\textit{公平}} (fair) であるとは、別の教師に対して正当な嫉妬を持つ教師が一人もいないことである。
-最後に、マッチング $\mu$ が\textbf{\textit{効率的}} (non-wasteful)\footnote{\url{https://www.esri.cao.go.jp/jp/esri/archive/bun/bun203/bun203b.pdf}のp.16参照} であるとは、$s \succ_i \mu_i$ かつ $\mu_s \cup \{i\} \in \mathcal{F}_s$ となるようなペア $(i, s) \in I \times S$ が存在しないことである。
-マッチング $\mu$ は、実現可能、個人合理的、公平、かつ効率的という性質を同時に満たすとき、\textbf{\textit{安定}} (stable) であると定義される。
+マッチング $\mu$ の望ましさは、いくつかの重要な特性によって評価される。マッチングが\textbf{\textit{実現可能 (feasible) }}であるとは、すべての学校 $s \in S$ について、$\mu_i \neq \emptyset$ならば、$\mu_s \in \mathcal{F}_s$ が成り立つことである。
+\textbf{\textit{個人合理的(individually rational) }} であるとは、すべての教員 $i \in I$ について $\mu_i \succ_i \emptyset$ が成り立つことである。
+ある教師 $i$ が教師 $i'$ に対して\textbf{\textit{正当な嫉妬を持つ (have justified envy toward) }}とは、$s \succ_i \mu_i$、$i' \in \mu_s$、かつ $i \succ_s i'$ となるような学校 $s \in S$ が存在する場合をいう。
+したがって、マッチング $\mu$ が\textbf{\textit{公平 (fair) }}であるとは、別の教師に対して正当な嫉妬を持つ教師が一人もいないことである。
+最後に、マッチング $\mu$ が\textbf{\textit{効率的 (non-wasteful)}}\footnote{\url{https://www.esri.cao.go.jp/jp/esri/archive/bun/bun203/bun203b.pdf}のp.16参照} であるとは、$s \succ_i \mu_i$ かつ $\mu_s \cup \{i\} \in \mathcal{F}_s$ となるようなペア $(i, s) \in I \times S$ が存在しないことである。
+マッチング $\mu$ は、実現可能、個人合理的、公平、かつ効率的という性質を同時に満たすとき、\textbf{\textit{安定 (stable) }}であると定義される。
 
 Kamada and Kojima(2024)では、公平性と実現可能性をマッチングに求めた際に安定性が失われる可能性があることを指摘している。以下は、Kamada and Kojima(2024)に記載されている例である。
 
@@ -214,7 +218,7 @@ $l \le 5$ の場合、$I^l \cup \{i_7\} \in \mathcal{F}_s$ かつ $s \succ_{i_7}
 
 
 
-マッチング $\mu$ が\textbf{\textit{現職必置条件}} (in-service teacher condition) を満たすとは、$\forall i \in I_{\alpha}, \mu_i \neq \emptyset$ が成り立つことであり、全ての現職教師が割り当てられることをいう。
+マッチング $\mu$ が\textbf{\textit{現職必置条件 (in-service teacher condition) }}を満たすとは、$\forall i \in I_{\alpha}, \mu_i \neq \emptyset$ が成り立つことであり、全ての現職教師が割り当てられることをいう。
 
 
 Kamada and Kojima(2024)では、例1のような制約がある状態で、安定性を保証することができないため、公平性、個人合理性、実現可能性を満たすマッチングを考えている。しかし、それに現職必置条件を置いた場合、公平性、個人合理性、実現可能性を満たすマッチングを保証することができない。以下にその例を示す。
@@ -223,7 +227,7 @@ Kamada and Kojima(2024)では、例1のような制約がある状態で、安�
 $I = I_\alpha = \{1, 2\}$、$S = \{3, 4\}$ とする。
 全ての $i \in I_\alpha$ について $\succ_i = 3, 4, \emptyset$、全ての $s \in S$ について $\succ_s = 1, 2, \emptyset$、そして全ての $s \in S, j \in J$ について $c_s^j = 1$ と仮定する。
 このとき、マッチングは $\mu_1 = 3$、$\mu_2 = 4$ となる。
-このマッチングは教員2は教員1に対して正当な嫉妬（justified envy）を抱くため、公正（fair）ではない。
+このマッチングは教員2は教員1に対して正当な嫉妬（justified envy）を抱くため、公平（fair）ではない。
 
 
 % \textcolor{red}{ここから　動画は、00:24:44から}
@@ -232,7 +236,7 @@ $I = I_\alpha = \{1, 2\}$、$S = \{3, 4\}$ とする。
 
 
 
-公平性（Fairness）の概念は、教科を考慮して弱められる。ある教師 $i$ が教師 $i'$ に対して\textbf{\textit{教科に基づいた正当な嫉妬}} (subject-justified envy) を持つとは、$A(i) = A(i')$であり、ある$ s \in S$が存在し、$s \succ_i \mu_i, i' \in \mu_s, i \succ_s i'$が成り立つ時をいう。これは、両者が同じ教科を持ち、かつ標準的な意味で教師 $i$ が $i'$ に対して正当な嫉妬を持つことを意味する。マッチングが\textbf{\textit{教科公平}} (subject-fair) であるとは、教科に基づいた正当な嫉妬を持つ教師が誰もいない状態を指す。
+公平性（Fairness）の概念は、教科を考慮して弱められる。ある教師 $i$ が教師 $i'$ に対して\textbf{\textit{教科に基づいた正当な嫉妬 (subject-justified envy) }}を持つとは、$A(i) = A(i')$であり、ある$ s \in S$が存在し、$s \succ_i \mu_i, i' \in \mu_s, i \succ_s i'$が成り立つ時をいう。これは、両者が同じ教科を持ち、かつ標準的な意味で教師 $i$ が $i'$ に対して正当な嫉妬を持つことを意味する。マッチングが\textbf{\textit{教科公平(subject-fair) }} であるとは、教科に基づいた正当な嫉妬を持つ教師が誰もいない状態を指す。
 
 % \begin{defn}
 %   A constraint $\mathcal{F}_s$ is a {\bf \textit{general upper-bound}} if $I' \in \mathcal{F}_s$ and $I'' \subseteq I'$ imply $I'' \in \mathcal{F}_s$.
@@ -252,7 +256,7 @@ $I = I_\alpha = \{1, 2\}$、$S = \{3, 4\}$ とする。
 % \end{defn}
 
 \begin{defn}
-マッチング $\mu$ は、以下の2つの条件を満たすとき、\textbf{\textit{教師最適公平マッチング (TOFM)}} (teacher-optimal fair matching) となる。
+マッチング $\mu$ は、以下の2つの条件を満たすとき、\textbf{\textit{教師最適公平マッチング (TOFM)(teacher-optimal fair matching) }} となる。
 \begin{itemize}
     \item[(i)] $\mu$ は、実現可能、個人合理的、かつ公平であり、かつ
     \item[(ii)] 実現可能、個人合理的、かつ公平である、他のいかなるマッチング $\mu'$ に対しても、すべての教師 $i \in I$ について $\mu_i \succeq_i \mu'_i$ が成り立つ。
@@ -262,7 +266,8 @@ $I = I_\alpha = \{1, 2\}$、$S = \{3, 4\}$ とする。
 
 
 
-\textcolor{red}{動画は00:34:42から 以下のKamada and Kojima(2024)の結果の部分は、論文をGeminiとかに読ませて、まとめさせる。この流れに関する部分だけ。 その際タラツキー入れる？}
+\textcolor{red}{基本のモデルでP定義されてなくね？\\
+  動画は00:34:42から 以下のKamada and Kojima(2024)の結果の部分は、論文をGeminiとかに読ませて、まとめさせる。この流れに関する部分だけ。 その際タラツキー入れる？}
 
 \subsection{Kamada and Kojima(2024)の結果}
 kamada and kojima(2024)は、現職必置条件を要求せず、$|J| = 1$であるときを分析し、教師最適マッチング(TOFM)がカットオフアジャストメントアルゴリズム(cutoff adjustment algorithm)を用いて求められることを示した。本節では、そのことについて詳しく説明する。
@@ -272,14 +277,27 @@ kamada and kojima(2024)は、現職必置条件を要求せず、$|J| = 1$であ
 流れとしては、dとかtsとか定義→不動点を定義→不動点なら3つの性質を満たす→不動点の集合がラティスになっている→不動点から作ることができるマッチングの中に教師最適公平マッチングがある
 
 
-Our approach is to characterize the matchings that satisfy fairness, individual rationality, and feasibility by fixed points of a function on a finite lattice. To establish this characterization, consider the space of cutoff profiles \( P := \{ 1, \ldots, | I |, | I | + 1 \} ^S \), endowed with a partial order \( \leq \) such that \( p \leq p' \) if and only if \( p_s \) is weakly smaller than \( p_s' \) for all \( s \in S \). This space is a finite (hence complete) lattice. For each school \( s \), let \( i_{(s,l)} \) be the student whose rank is the \( l \)-th from the bottom according to the priority of \( s \) (for example, the best student for \( s \) is \( i_{(s,|I|)} \), and the worst is \( i_{(s,1)} \)). Also, consider a hypothetical student \( i^* \in I \) such that \( i^* = i_{(s,|I|+1)} \) for all \( s \in S \), and expand the domain of \( \succ_s \) for each \( s \in S \) so that for any \( i \in I \), \( i^* \succ_s i \) holds. Given a cutoff profile \( p \in P \), define the "demand" at each \( s \in S \) as
+% Our approach is to characterize the matchings that satisfy fairness, individual rationality, and feasibility by fixed points of a function on a finite lattice. To establish this characterization, consider the space of cutoff profiles \( P := \{ 1, \ldots, | I |, | I | + 1 \} ^S \), endowed with a partial order \( \leq \) such that \( p \leq p' \) if and only if \( p_s \) is weakly smaller than \( p_s' \) for all \( s \in S \). This space is a finite (hence complete) lattice. For each school \( s \), let \( i_{(s,l)} \) be the student whose rank is the \( l \)-th from the bottom according to the priority of \( s \) (for example, the best student for \( s \) is \( i_{(s,|I|)} \), and the worst is \( i_{(s,1)} \)). Also, consider a hypothetical student \( i^* \in I \) such that \( i^* = i_{(s,|I|+1)} \) for all \( s \in S \), and expand the domain of \( \succ_s \) for each \( s \in S \) so that for any \( i \in I \), \( i^* \succ_s i \) holds. Given a cutoff profile \( p \in P \), define the "demand" at each \( s \in S \) as
+% \[
+%   D_s(p) := \{i \in I \mid i \succeq_s i^{(s,p_s)} \text{ and } s \succ_i \emptyset; i \succeq_{s'} i^{(s',p_{s'})} \implies s \succeq_i s' \}.
+% \]
+% In this definition, the first part ``\( i \succeq_s i^{(s,p_s)} \) and \( s \succ_i \emptyset \)'' says that student \( i \) is as good as the cutoff student \( i^{(s,p_s)} \) and finds \( s \) acceptable, while the second part ``\( i \succeq_{s'} i^{(s',p_{s'})} \implies s \succeq_i s' \)'' says that \( s \) is the most preferred school among the ones at which \( i \) passes the cutoff. The demand for \( s \) is a collection of students who meet those two criteria.
+
+
+我々の手法は、公平性、個人合理性、そして実行可能性を満たすマッチングを、有限束（a finite lattice）上の関数の不動点（fixed point）によって特徴付けることです。
+
+この特徴付けを確立するため、カットオフプロファイルの集合 \( P := \{ 1, \ldots, | I |, | I | + 1 \} ^S \) を考えます。この集合には、すべての \( s \in S \) に対して \( p_s \) が \( p_s' \) 以下であるとき、かつそのときに限り \( p \leq p' \) となる半順序（partial order）\( \leq \) が与えられています。この空間は有限束（したがって完備束 (complete) でもあります）です。
+
+各学校 \( s \) について、\( i_{(s,l)} \) を、\( s \) の優先順位に従って下から \( l \) 番目の学生とします（例えば、\( s \) にとって最も順位の高い学生は \( i_{(s,|I|)} \) であり、最も低い学生は \( i_{(s,1)} \) です）。
+また、すべての \( s \in S \) に対して \( i^* = i_{(s,|I|+1)} \) となるような架空の学生 \( i^* \in I \) を考え、各 \( s \in S \) について選好 \( \succ_s \) の定義域を、任意の \( i \in I \) に対して \( i^* \succ_s i \) が成立するように拡張します。
+
+カットオフプロファイル \( p \in P \) が与えられたとき、各学校 \( s \in S \) における「需要」を次のように定義します。
 \[
-  D_s(p) := \{i \in I \mid i \succeq_s i^{(s,p_s)} \text{ and } s \succ_i \emptyset; i \succeq_{s'} i^{(s',p_{s'})} \implies s \succeq_i s' \}.
+  D_s(p) := \{i \in I \mid i \succeq_s i^{(s,p_s)} \text{ かつ } s \succ_i \emptyset; i \succeq_{s'} i^{(s',p_{s'})} \implies s \succeq_i s' \}.
 \]
-In this definition, the first part ``\( i \succeq_s i^{(s,p_s)} \) and \( s \succ_i \emptyset \)'' says that student \( i \) is as good as the cutoff student \( i^{(s,p_s)} \) and finds \( s \) acceptable, while the second part ``\( i \succeq_{s'} i^{(s',p_{s'})} \implies s \succeq_i s' \)'' says that \( s \) is the most preferred school among the ones at which \( i \) passes the cutoff. The demand for \( s \) is a collection of students who meet those two criteria.
-
-
-
+この定義において、第一部「\( i \succeq_s i^{(s,p_s)} \) かつ \( s \succ_i \emptyset \)」は、学生 \( i \) がカットオフ学生 \( i^{(s,p_s)} \) と同等以上の順位であり、かつ学校 \( s \) を受容可能（acceptable）と見なしていることを意味します。
+一方、第二部「\( i \succeq_{s'} i^{(s',p_{s'})} \implies s \succeq_i s' \)」は、\( s \) が、学生 \( i \) がカットオフを通過する学校の中で最も選好（most preferred）する学校であることを意味します。
+\( s \) への需要は、これら2つの基準を満たす学生の集合です。
 
 \begin{tcolorbox}[
   colframe = black, 
@@ -321,27 +339,42 @@ D_s(p) = \{i_2, i_3\}
 \end{tcolorbox}
 
 
-We call a mapping T: $P \to P$ a {\bf \emph{cutoff adjustment function}} if 
+% We call a mapping T: $P \to P$ a {\bf \emph{cutoff adjustment function}} if 
+% \[
+%     T_s(p) =
+%     \begin{cases}
+%         p_s + 1 & \text{if } D_s(p) \notin F_s, \\
+%         p_s     & \text{if } D_s(p) \in F_s.
+%     \end{cases}
+% \]
+% where \( (|I| + 1) + 1 = 1 \). 
+
+
+
+写像 $T: P \to P$ が、以下の条件を満たすとき、
+これを \textbf{\textit{カットオフ調整関数 (cutoff adjustment function)}} と呼ぶ。
 \[
     T_s(p) =
     \begin{cases}
-        p_s + 1 & \text{if } D_s(p) \notin F_s, \\
-        p_s     & \text{if } D_s(p) \in F_s.
+        p_s + 1 & \text{($D_s(p) \notin F_s$ の場合)} \\
+        p_s     & \text{($D_s(p) \in F_s$ の場合)}
     \end{cases}
 \]
-where \( (|I| + 1) + 1 = 1 \). 
+ここで、\( (|I| + 1) + 1 = 1 \) とする。
+
+% \textbf{Theorem 1}. If a cutoff profile $p \in P$ is a fixed point of the cutoff adjustment function $T$, then $\mu^p$ is feasible, individually rational, and fair. Moreover, if $\mu$ is a feasible, individually rational, and fair matching, then there exists a cutoff profile $p \in P$ with $\mu = \mu^p$ that is a fixed point of $T$.
+
+\textbf{定理1}. カットオフ・プロファイル $p \in P$ がカットオフ調整関数 $T$ の不動点であるならば、対応するマッチング $\mu^p$ は実現可能であり、個人合理的であり、公平である。さらに、もしあるマッチング $\mu$ が実現可能で、個人合理的で、公平であるならば、あるカットオフ・プロファイル $p \in P$ が存在して $\mu = \mu^p$ となり、その $p$ は $T$ の不動点である。
+
+
+\paragraph{説明}
+この定理は、カットオフ調整アルゴリズムの理論的基盤を与える重要な結果である。まず前半は、あるカットオフ $p$ が不動点に到達したとき、そこから得られるマッチング $\mu^p$ が常に三つの望ましい性質、すなわち「実現可能性」「個人合理性」「公平性」を同時に満たすことを保証している。これは、不動点に到達すれば制度設計上の要件をすべて満たす安定的な状態が得られることを意味する。後半はその逆を述べており、もしもあるマッチングがすでに三つの性質を備えているならば、それは必ず何らかの不動点に対応している、ということを示している。つまり、この定理により、「不動点」と「望ましい性質を満たすマッチング」とが一対一に対応することが明らかになる。このことは、カットオフ調整アルゴリズムを用いれば、理論的に適切なマッチングを漏れなく探索・構築できることを保証している。
 
 
 
+% We call a poset  \( (X, \succeq) \) a \textbf{ \textit{lattice}} if \( \forall x, \forall y \in X \), \( \exists \sup_{\succeq} \{x, y\} \) and \( \exists \inf_{\succeq} \{x, y\} \) .
 
-\textbf{Theorem 1}. If a cutoff profile $p \in P$ is a fixed point of the cutoff adjustment function $T$, then $\mu^p$ is feasible, individually rational, and fair. Moreover, if $\mu$ is a feasible, individually rational, and fair matching, then there exists a cutoff profile $p \in P$ with $\mu = \mu^p$ that is a fixed point of $T$.
-
-
-
-
-We call a poset  \( (X, \succeq) \) a \textbf{ \textit{lattice}} if \( \forall x, \forall y \in X \), \( \exists \sup_{\succeq} \{x, y\} \) and \( \exists \inf_{\succeq} \{x, y\} \) .
-
-We call a poset \( (X, \succeq) \) a \textbf{ \textit{complete lattice}} if  \( \forall Y \in 2^X \), \( \exists \sup_{\succeq} Y \) and \( \exists \inf_{\succeq} Y \) .
+% We call a poset \( (X, \succeq) \) a \textbf{ \textit{complete lattice}} if  \( \forall Y \in 2^X \), \( \exists \sup_{\succeq} Y \) and \( \exists \inf_{\succeq} Y \) .
 
 
 
@@ -374,18 +407,325 @@ We call a poset \( (X, \succeq) \) a \textbf{ \textit{complete lattice}} if  \( 
 
 学校と生徒で例をだして、不動点になるカットオフ値とそうでないカットオフ値を出して比較する
 
+\subsubsection*{設定}
+\begin{itemize}
+  \item 学校：$A,B$
+  \item 生徒：$1,2,3,4$
+  \item 学校の優先順位：
+  \[
+    A: 1 \succ 2 \succ 3 \succ 4, \quad
+    B: 2 \succ 3 \succ 1 \succ 4
+  \]
+  \item 生徒の選好：
+  \[
+    \begin{aligned}
+    &1: A \succ B \succ \emptyset, \quad
+    2: B \succ A \succ \emptyset, \\
+    &3: B \succ A \succ \emptyset, \quad
+    4: B \succ \emptyset
+    \end{aligned}
+  \]
+  \item 定員：$q_A=1,\ q_B=2$
+\end{itemize}
+
+---
+
+\subsubsection*{例1：不動点となるカットオフ}
+\[
+p_A = 4, \quad p_B = 3
+\]
+
+\begin{itemize}
+  \item 通過者：$A=\{1\},\ B=\{2,3\}$
+  \item 応募（需要集合）：
+  \[
+    D_A(p)=\{1\},\quad D_B(p)=\{2,3\}
+  \]
+  \item 需要はそれぞれ定員内 $\Rightarrow$ 実現可能。
+  \item よって $T(p)=p$ （不動点）。
+\end{itemize}
+
+\paragraph{対応する割当}
+\[
+\mu(1)=A,\quad \mu(2)=B,\quad \mu(3)=B,\quad \mu(4)=\emptyset
+\]
+
+\paragraph{3つの性質の確認}
+\begin{itemize}
+  \item 実現可能性：$|D_A|=1 \leq q_A=1,\ |D_B|=2 \leq q_B=2$
+  \item 個人合理性：生徒1,2,3はいずれも希望する学校$\mu_1,\mu_2,\mu_3 \succ \emptyset$、4は空集合
+  \item 公平（justified envyなし）：いずれの未配属者も、配属者に比べて優先度で上位にいない
+\end{itemize}
+
+
+
+\subsubsection*{例2：不動点でないカットオフ}
+\[
+p_A = 2, \quad p_B = 2
+\]
+
+\begin{itemize}
+  \item 通過者：$A=\{1,2,3\},\ B=\{2,3,1\}$
+  \item 応募：
+  \[
+    D_A(p)=\{1\},\quad D_B(p)=\{2,3,4\}
+  \]
+  \item $|D_A|=1 \leq q_A=1$ で実現可能。  
+        $|D_B|=3 > q_B=2$ で不実現可能。
+  \item よって $T(p)=(2,3)\neq (2,2)$ （不動点ではない）。
+\end{itemize}
+
+ここから
+
+\section*{固定設定（市場は共通）}
+\begin{itemize}
+  \item 学校：$A,B$ \quad 生徒：$1,2,3,4$ \quad 定員：$q_A=1,\ q_B=2$
+\end{itemize}
+
+\paragraph{学校の優先順位}
+\[
+A:\ 1 \succ 2 \succ 3 \succ 4,\qquad
+B:\ 2 \succ 3 \succ 1 \succ 4
+\]
+
+\paragraph{生徒の選好}
+\[
+1:\ A \succ B \succ \emptyset,\quad
+2:\ B \succ A \succ \emptyset,\quad
+3:\ B \succ A \succ \emptyset,\quad
+4:\ B \succ \emptyset
+\]
+
+\bigskip\hrule\bigskip
+
+\section*{例1：不動点となるカットオフ（$T(p)=p$）}
+\[
+p_A=4\ \text{（Aは最上位1名通過）},\qquad
+p_B=3\ \text{（Bは上位2名通過）}
+\]
+
+\subsection*{通過可否と応募先（需要）}
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{@{}c*{2}{>{\centering\arraybackslash}m{16mm}}c@{}}
+\toprule
+生徒 & 通過(A) & 通過(B) & 応募先（最も好む通過校） \\
+\midrule
+1 & ○ & × & A \\
+2 & × & ○ & B \\
+3 & × & ○ & B \\
+4 & × & × & $\emptyset$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection*{需要（人数）と可否}
+\[
+D_A(p)=\{1\}\Rightarrow |D_A|=1 \le q_A=1\ \text{（実現可能）},
+D_B(p)=\{2,3\}\Rightarrow |D_B|=2 \le q_B=2\ \text{（実現可能）}
+\]
+両校とも実現可能 $\Rightarrow\ T(p)=p$（不動点）。
+
+\subsection*{対応する割当と3性質の確認}
+\[
+\mu(1)=A,\ \mu(2)=B,\ \mu(3)=B,\ \mu(4)=\emptyset
+\]
+\begin{itemize}
+  \item \textbf{実現可能性}：Aは1名、Bは2名で定員内。
+  \item \textbf{個人合理性}：割当は各生徒にとって$\emptyset$より好む学校のみ。
+  \item \textbf{公平（justified envyなし）}：Aでは2,3,4に嫉妬なし（2,3はBを好む／4はA不可）。Bでは4は在籍者$\{2,3\}$より優先度が低い。
+\end{itemize}
+
+\bigskip\hrule\bigskip
+
+\section*{例2：不動点でないカットオフ（$T(p)\neq p$）}
+\[
+p_A=2\ \text{（Aは上位3名通過）},\qquad
+p_B=2\ \text{（Bは上位3名通過）}
+\]
+
+\subsection*{通過可否と応募先（需要）}
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{@{}c*{2}{>{\centering\arraybackslash}m{16mm}}c@{}}
+\toprule
+生徒 & 通過(A) & 通過(B) & 応募先（最も好む通過校） \\
+\midrule
+1 & ○ & ○ & A \\
+2 & ○ & ○ & B \\
+3 & ○ & ○ & B \\
+4 & × & ○ & B \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection*{需要（人数）と$T$の更新}
+\[
+D_A(p)=\{1\}\Rightarrow |D_A|=1 \le q_A=1\ \text{（実現可能）},\\
+D_B(p)=\{2,3,4\}\Rightarrow |D_B|=3 > q_B=2\ \text{（不実現可能）}
+\]
+したがって
+\[
+T(p)=(p_A',p_B')=(2,3)\neq(2,2)\quad\Rightarrow\ \text{不動点ではない。}
+\]
+
 不動点の際に、３つの性質が満たされていることも例から確認する
+
+
+
+
+\paragraph{不動点でない場合の性質について}
+
+Kamada and Kojima (2024) の定理1によれば、カットオフ・プロファイル $p$ がカットオフ調整写像 $T$ の不動点であるとき、その対応するマッチング $\mu_p$ は実現可能性・個人合理性・公平性の三条件をすべて満たす。では不動点でない場合にはどうかというと、需要集合 $D_s(p)$ の定義上、各生徒は常に「通過できる学校の中で最も好む学校」に応募するため、$\mu_p$ は不動点か否かにかかわらず個人合理性を満たす。また、公平性（正当化された嫉妬の不在）についても、定理の証明で示されているように、$D_s(p)$ の構成そのものが嫉妬を生じさせない仕組みになっているため、不動点でなくとも保持される。したがって、不動点でない場合に崩れ得るのは実現可能性のみであり、具体的には定員超過などによって $D_s(p)\notin F_s$ となる学校が存在し、制約違反が生じることになる。結論として、この枠組みにおいては「不動点でないから個人合理性や公平性が壊れる」という例は存在せず、壊れる可能性があるのは実現可能性のみである。
 
 
 
 ラティスを定義する
 
-ラティスの一番上が、教師最適公平マッチングになっていることを示した
 
 
-\textbf{Theorem 2}. If the constraint at each school is a general upper-bound, then there exists an SOFM.
 
-\textbf{Claim 1}. The mapping $T$ has the smallest fixed point, i.e. there exists $p \in P$ such that $T(p) = p$ and $p \leq p'$ for all $p' \in P$ with $T(p') = p'$.
+
+% We call a poset  \( (X, \succeq) \) a \textbf{ \textit{lattice}} if \( \forall x, \forall y \in X \), \( \exists \sup_{\succeq} \{x, y\} \) and \( \exists \inf_{\succeq} \{x, y\} \) .
+
+% We call a poset \( (X, \succeq) \) a \textbf{ \textit{complete lattice}} if  \( \forall Y \in 2^X \), \( \exists \sup_{\succeq} Y \) and \( \exists \inf_{\succeq} Y \) .
+
+
+半順序集合 $(X, \succeq)$ において、任意の $x, y \in X$ に対して、上限 $\sup_{\succeq} \{x, y\}$ と下限 $\inf_{\succeq} \{x, y\}$ が常に存在する時、この半順序集合を \textbf{\textit{束（Lattice）}} と呼ぶ。これは、集合 $X$ の中から\underbar{どの2つの元（要素）を選んでも}、その2つを「上から押さえる」ことができる元の中で最小のもの（上限）と、「下から支える」ことができる元の中で最大のもの（下限）が、必ずその集合 $X$ の中に見つかる、という性質を表しています。
+
+
+半順序集合 $(X, \succeq)$ において、\textbf{\textit{空集合ではない}}任意の部分集合 $Y \subseteq X$ に対して、上限 $\sup_{\succeq} Y$ と下限 $\inf_{\succeq} Y$ が常に存在する時、この半順序集合を \textbf{\textit{完備束（Complete Lattice）}} と呼びます。これは、束の性質をさらに強力にしたものです。2つの元だけでなく、\underbar{どのような部分集合（元の集まり）を持ってきても}、その集合全体に対する上限と下限が必ず集合 $X$ の中に存在する、ということを意味します。有限集合だけでなく、無限個の元からなる部分集合についてもこの条件が成り立ちます。
+
+
+ラティスの一番上が、教師最適公平マッチングになっていることを示す
+
+\paragraph{カットオフ遷移説明}
+以下図は、カットオフ・アジャストメント・アルゴリズムの進行を縦長の菱形として表したものである。最下段の■が初期値 $(1,1)$ を示し、そこから需要の不一致に応じて各学校のカットオフが一段階ずつ引き上げられ、○で表されたさまざまな中間のカットオフ候補へと枝分かれしていく。各○は不動点とは限らず、さらに需要に応じて矢印に沿って上流へと進む。やがてすべての経路は最上段の●に収束し、そこが生徒最適公平マッチング（SOFM）に対応する不動点 $(4,3)$ である。この図は、初期カットオフから始めると最終的に SOFM に至ること、そしてその過程で複数の中間候補を経由しうることを直感的に示している。
+
+
+
+\begin{center}
+\begin{tikzpicture}[>=Latex,node distance=18mm and 18mm]
+
+  % 初期値 (1,1)
+  \node[draw,rectangle,fill=black!30,minimum size=8pt,label=below:{\footnotesize start $(1,1)$}] (start) {};
+
+  % 第2層
+  \node[draw,circle,fill=white,minimum size=8pt,label=left:{\footnotesize $(1,2)$}] (n12) [above left=of start] {};
+  \node[draw,circle,fill=white,minimum size=8pt,label=right:{\footnotesize $(2,1)$}] (n21) [above right=of start] {};
+
+  % 第3層
+  \node[draw,circle,fill=white,minimum size=8pt,label=left:{\footnotesize $(2,2)$}] (n22) [above left=of n21] {};
+  \node[draw,circle,fill=white,minimum size=8pt,label=right:{\footnotesize $(3,1)$}] (n31) [above right=of n21] {};
+  \node[draw,circle,fill=white,minimum size=8pt,label=left:{\footnotesize $(1,3)$}] (n13) [above left=of n12] {};
+
+  % 第4層
+  \node[draw,circle,fill=white,minimum size=8pt,label=left:{\footnotesize $(2,3)$}] (n23) [above right=of n13] {};
+  \node[draw,circle,fill=white,minimum size=8pt,label=right:{\footnotesize $(3,2)$}] (n32) [above left=of n31] {};
+  \node[draw,circle,fill=white,minimum size=8pt,label=right:{\footnotesize $(4,1)$}] (n41) [above right=of n31] {};
+
+
+   % 第5層
+  \node[draw,circle,fill=white,minimum size=8pt,label=left:{\footnotesize $(3,3)$}] (n33) [above right=of n23] {};
+  \node[draw,circle,fill=white,minimum size=8pt,label=right:{\footnotesize $(3,2)$}] (n32) [above left=of n31] {};
+  \node[draw,circle,fill=white,minimum size=8pt,label=right:{\footnotesize $(4,2)$}] (n42) [above right=of n32] {};
+
+  % 最上層 SOFM
+  \node[draw,circle,fill=black,minimum size=9pt,label=above:{\footnotesize SOFM $(4,3)$}] (sofm) [above right=of n33] {};
+
+  % edges
+  \draw[dashed,->] (start) -- (n12);
+  \draw[dashed,->] (start) -- (n21);
+
+  \draw[dashed,->] (n12) -- (n13);
+  \draw[dashed,->] (n12) -- (n22);
+
+  \draw[dashed,->] (n21) -- (n22);
+  \draw[dashed,->] (n21) -- (n31);
+
+  \draw[dashed,->] (n13) -- (n23);
+  \draw[dashed,->] (n22) -- (n23);
+  \draw[dashed,->] (n22) -- (n32);
+  \draw[dashed,->] (n31) -- (n32);
+  \draw[dashed,->] (n31) -- (n41);
+
+  \draw[dashed,->] (n23) -- (n33);
+  \draw[dashed,->] (n32) -- (n33);
+  \draw[dashed,->] (n32) -- (n42);
+  \draw[dashed,->] (n41) -- (n42);
+
+
+
+  \draw[dashed,->] (n33) -- (sofm);
+  \draw[dashed,->] (n42) -- (sofm);
+
+  % 凡例
+  \node[draw,rectangle,fill=black!30,minimum size=8pt] (legS) at (7,2) {};
+  \node[right] at (7.3,2) {\footnotesize:初期カットオフ $(1,1)$};
+  \node[draw,circle,fill=white,minimum size=8pt] (legN) at (7,1.5) {};
+  \node[right] at (7.3,1.5) {\footnotesize:途中のカットオフ};
+  \node[draw,circle,fill=black,minimum size=9pt] (legF) at (7,1.0) {};
+  \node[right] at (7.3,1.0) {\footnotesize:SOFM（不動点）};
+
+\end{tikzpicture}
+\end{center}
+
+
+
+
+% \paragraph{ラティスにおける位置付け}
+
+% 以下の市場設定に基づくカットオフのラティス構造を示す。
+% ラティスの最小元が \textbf{生徒最適公平マッチング (SOFM)}、最大元が \textbf{学校最適公平マッチング} である。
+% 不動点でないカットオフ（例2）はラティスの外側に位置する。
+
+% \begin{center}
+% \begin{tikzpicture}[node distance=25mm]
+%   % nodes
+%   \node (min) [draw, circle] {$p_A=4,\ p_B=3$};
+%   \node (max) [above=of min, draw, circle] {$p_A=4,\ p_B=4$};
+%   \node (nonfp) [right=40mm of min, draw, dashed, circle] {$p_A=2,\ p_B=2$};
+
+%   % labels
+%   \node[left=0mm of min] {SOFM（最小不動点）};
+%   \node[left=0mm of max] {学校最適（最大不動点）};
+%   \node[below=2mm of nonfp] {不動点でない};
+
+%   % edges
+%   \draw (min) -- (max);
+%   \draw[dashed,->] (nonfp) -- (min);
+% \end{tikzpicture}
+% \end{center}
+
+% この図から分かるように、例1の $(4,3)$ はラティスの最小不動点に位置し、対応するマッチングはSOFMである。
+% 一方、例2の $(2,2)$ は不動点ではないためラティスには含まれず、カットオフ調整アルゴリズムを適用すると最小不動点 $(4,3)$ に収束する。
+
+
+% \section*{カットオフの配置（SOFMを最上部に）}
+
+% 図の説明：
+%  ●（黒塗り）= 不動点（ラティスの要素）。ここでは SOFM = (p_A,p_B)=(4,3) のみ明示。
+%  ○（白抜き）= 不動点でないカットオフ（ラティスの要素ではないが、カットオフ空間上の点）。
+%  破線矢印は概念図として T の反復が SOFM 側へ向かう様子を示す（厳密な経路を主張しない）。
+
+
+
+% \textbf{Theorem 2}. If the constraint at each school is a general upper-bound, then there exists an SOFM.
+
+% \textbf{Claim 1}. The mapping $T$ has the smallest fixed point, i.e. there exists $p \in P$ such that $T(p) = p$ and $p \leq p'$ for all $p' \in P$ with $T(p') = p'$.
+
+
+\textbf{定理 2}. 
+各学校における制約が一般的な上限（general upper-bound）であるならば、SOFMは存在する。
+
+% \vspace{1cm} % 段落間のスペース
+
+\textbf{主張 1}. 
+写像 $T$ は最小不動点（smallest fixed point）を持つ。
+すなわち、$T(p) = p$ を満たし、かつ $T(p') = p'$ を満たすすべての $p' \in P$ に対して $p \leq p'$ となるような $p \in P$ が存在する。
+
+
+\bigbreak
 
 現職必置条件は満たさないので、私たちは、公平性を弱めて、強化公平性を満たすマッチングに着目する。
 
