@@ -164,7 +164,7 @@
 
 $I = \{1, ..., m\}$ を教師からなる空でない有限集合、$S = \{m+1, ..., n\}$ を学校からなる空でない有限集合とする。また、$I_{\alpha}$を\textbf{\textit{現職教師(currently employed / in-service teachers)}} からなる空でない有限集合とし、$I_{\alpha} \subset I$である。各教師 $i \in I$ は、学校の集合 $S$ とマッチしない状態 $\emptyset$ の和集合$S \cup \{ \emptyset \}$で定義される厳密な選好順序 $\succ_i$ を持つ。各学校 $s \in S$ は、教師の集合 $I$ の上で定義される厳密な優先順位 $\succ_s$ を持つ。教師が持つすべての選好の組をプロファイル $\succ_I = (\succ_i)_{i \in I}$ で表し、学校が持つすべての優先順位の組をプロファイル $\succ_S = (\succ_s)_{s \in S}$ で表す。
 
-各学校 $s \in S$ について、その採用制約は、実現可能な教師集合の族 $\mathcal{F}_s \subset 2^{I}$ によって与えられる。教師の部分集合 $I' \subseteq I$ は、$I' \in \mathcal{F}_s$ であるとき、学校 $s$ において\textbf{\textit{実現可能(feasible) }} であると定義される。したがって、一つの\textbf{\textit{問題(problem) }} は、組 $(I, S, \succ_I, \succ_S, \{\mathcal{F}_s\}_{s \in S})$ によって特徴づけられる。
+各学校 $s \in S$ について、その制約は、実現可能な教師集合の族 $\mathcal{F}_s \subset 2^{I}$ によって与えられる。教師の部分集合 $I' \subseteq I$ は、$I' \in \mathcal{F}_s$ であるとき、学校 $s$ において\textbf{\textit{実現可能(feasible) }} であると定義される。したがって、一つの\textbf{\textit{問題(problem) }} は、組 $(I, S, \succ_I, \succ_S, \{\mathcal{F}_s\}_{s \in S})$ によって特徴づけられる。
 
 \textbf{\textit{マッチング (matching)}}とは、教師と学校の組み合わせを決める写像$ \mu : I \cup S \to S \cup \{\emptyset\} \cup 2^{I}$であり、以下の3つの条件で定義される。
 \begin{itemize}
@@ -727,7 +727,7 @@ Kamada and Kojima (2024) の定理1によれば、カットオフ・プロファ
 
 \bigbreak
 
-現職必置条件は満たさないので、私たちは、公平性を弱めて、強化公平性を満たすマッチングに着目する。
+これらのモデルでは、現職必置条件は満たさないので、私たちは、公平性を弱めて、教科公平性を満たすマッチングに着目する。
 
 
 \begin{defn}
@@ -773,20 +773,20 @@ p_s^j     & \text{if } | D_s^j(p) | \leq c^j_s
 \subsection{仮定}
 本モデルでは、以下の4つの重要な仮定を導入する。
 
-\vspace{0.5\baselineskip} % \baselineskip から 0.5\baselineskip へ変更
-\noindent\textbf{仮定 (1)} \\
-各学校 $s \in S$ について、実現可能な教師集合の族 $\mathcal{F}_s$ は、一般上限制約（general upper-bound constraint）である。
+% \vspace{0.5\baselineskip} % \baselineskip から 0.5\baselineskip へ変更
+% \noindent\textbf{仮定 (1)} \\
+% 各学校 $s \in S$ について、実現可能な教師集合の族 $\mathcal{F}_s$ は、一般上限制約（general upper-bound constraint）である。
 
 \vspace{0.5\baselineskip}
-\noindent\textbf{仮定 (2)} \\
+\noindent\textbf{仮定 (1)} \\
 学校は、他の教師よりも現職教員を一様に優先する。形式的には、任意の学校 $s \in S$、α-教師 $i \in I_\alpha$、非α-教師 $j \in I\setminus I_\alpha$ について、もし両者がその学校にとって受け入れ可能であるならば、学校はα-教師を優先しなければならない。すなわち、$[i \succ_s \emptyset \text{ かつ } j \succ_s \emptyset] \implies i \succ_s j$ が成り立つ。
 
 \vspace{0.5\baselineskip}
-\noindent\textbf{仮定 (3)} \\
+\noindent\textbf{仮定 (2)} \\
 すべての現職教員を雇用する、実現可能なマッチングが少なくとも一つは存在する。すなわち、(i)すべての $s \in S$ で $\mu_s \in \mathcal{F}_s$、かつ (ii)すべての $i \in I_\alpha$ に対して $i \in \mu_s$ となる学校 $s \in S$ が存在する、という条件を満たすマッチング $\mu$ が存在する。
 
 \vspace{0.5\baselineskip}
-\noindent\textbf{仮定 (4)} \\
+\noindent\textbf{仮定 (3)} \\
 すべての現職教師は、いかなる学校も受け入れ可能な割り当て先であると見なす。形式的には、すべての $i \in I_\alpha$ とすべての $s \in S$ について、$s \succ_i \emptyset$ が成り立つ。
 
 
@@ -1016,7 +1016,7 @@ $\mu$の構成方法から $\mu_i = \mu^j_i$ であるため、$\mu_i \neq \empt
 
 学校選択モデルを形式的に定義する。$I$ を教師からなる空でない有限集合、$S$ を学校からなる空でない有限集合とする。各教師 $i \in I$ は、学校の集合 $S$ とマッチしない状態 $\emptyset$ の上で定義される厳密な選好順序 $\succ_i$ を持つ。各学校 $s \in S$ は、教師の集合 $I$ の上で定義される厳密な優先順位 $\succ_s$ を持つ。すべての選好の組をプロファイル $\succ_I = (\succ_i)_{i \in I}$ とし、すべての優先順位の組をプロファイル $\succ_S = (\succ_s)_{s \in S}$ とする。
 
-各学校 $s \in S$ について、その採用制約は、実現可能な教師集合の族 $\mathcal{F}_s$ によって与えられる。教師の部分集合 $I' \subseteq I$ は、$I' \in \mathcal{F}_s$ であるとき、学校 $s$ において\textbf{\textit{実現可能}} (feasible) であると定義される。したがって、一つの\textbf{\textit{問題}} (problem) は、組 $(I, S, \succ_I, \succ_S, \{\mathcal{F}_s\}_{s \in S})$ によって特徴づけられる。
+各学校 $s \in S$ について、その制約は、実現可能な教師集合の族 $\mathcal{F}_s$ によって与えられる。教師の部分集合 $I' \subseteq I$ は、$I' \in \mathcal{F}_s$ であるとき、学校 $s$ において\textbf{\textit{実現可能}} (feasible) であると定義される。したがって、一つの\textbf{\textit{問題}} (problem) は、組 $(I, S, \succ_I, \succ_S, \{\mathcal{F}_s\}_{s \in S})$ によって特徴づけられる。
 
 \textbf{\textit{マッチング}} (matching) $\mu$ とは、教師を学校に割り当てる写像であり、形式的には以下の3つの条件で定義される。
 \begin{itemize}
