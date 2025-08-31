@@ -270,7 +270,7 @@ $I = I_\alpha = \{1, 2\}$、$S = \{3, 4\}$ とする。
 %   動画は00:34:42から 以下のKamada and Kojima(2024)の結果の部分は、論文をGeminiとかに読ませて、まとめさせる。この流れに関する部分だけ。 その際タラツキー入れる？}
 
 \subsection{Kamada and Kojima(2024)の結果}
-kamada and kojima(2024)は、現職必置条件を要求せず、$|J| = 1$であるときを分析し、教師最適マッチング(TOFM)がカットオフアジャストメントアルゴリズム(cutoff adjustment algorithm)を用いて求められることを示した。本節では、そのことについて詳しく説明する。
+kamada and kojima(2024)は、現職必置条件を要求せず、$|J| = 1$であるときを分析し、教師最適マッチング(TOFM)がカットオフ調整アルゴリズム(cutoff adjustment algorithm)を用いて求められることを示した。本節では、そのことについて詳しく説明する。
 
 
 % 流れとしては、dとかtsとか定義→不動点を定義→不動点なら3つの性質を満たす→不動点の集合がラティスになっている→不動点から作ることができるマッチングの中に教師最適公平マッチングがある
@@ -902,15 +902,33 @@ Kamada and Kojima (2024) の定理1によれば、カットオフ・プロファ
 
 
 
-\textcolor{red}{ここから　動画は00:36:30から}
 
 
 
-このモデルの構造は、教科ごとの分析を可能にする。ある教科 $j \in J$ について、その教科の市場に特有の嫉妬や公平性を定義できる。\textbf{\textit{教科jにおける教科に基づいた正当な嫉妬}} とは、同じ教科 $j$ を持つ2人の教師間での正当な嫉妬をいう。また、\textbf{\textit{教科jにおいて教科公平である}} とは、教科jにおいて、教科に基づいた正当な嫉妬を持つ教師がいない状態をいう。\textbf{\textit{教科jにおいて現職必置条件を満たす}} とは、$\forall i \in I_\alpha \cap I_j, \mu_i \neq \emptyset$となることをいい、その教科を持つ全ての現職教師が雇用されるマッチングのことである。
+
+
+
+Kamada and Kojima(2024)では、$|J| = 1$、すなわち、全体の教科が1つの場合を考えていた。本稿では、教科は複数存在し、本章のケースの問題を考える。
+
+ここで、教科$j \in J$と学校$s \in S$における実現可能性条件 $\mathcal{F}^j_s$ は、次のように定義される。
+\[
+\mathcal{F}^j_s = \{\mu_s \subseteq I_j : |\{i \in \mu_s : A(i) = j \}| \leq c^j_s \}
+\]
+
+さらに、$\mathcal{F}^j_s$を用い、実現可能性条件 $\mathcal{F}_s$ は、次のように定義される。
+\[
+\mathcal{F}_s = \bigcup_{j \in J} \mathcal{F}^j_s
+\]
+
+
+
+また、本稿では、$(I, S, \succ_I, \succ_S, \{\mathcal{F}_s\}_{s \in S})$となる問題を考える。この場合においても、各教科$j \in J$についてそれぞれ考えることで、Kamada and Kojima(2024)と類似するパターンとして扱うことが可能になる。
+この時の、現職必置条件は、\textbf{\textit{教科jにおいて現職必置条件を満たす}} と言い、$\forall i \in I_\alpha \cap I_j, \mu_i \neq \emptyset$で表すことができる。これは、教科$j \in J$を持つ全ての現職教師が雇用されるマッチングのことである。
+ある教科 $j \in J$ について、その教科のマッチングの望ましさはいくつかの重要な特性によって評価することができる。この際の、正当な嫉妬とは、\textbf{\textit{教科jにおける教科に基づいた正当な嫉妬}} と言い、同じ教科 $j \in J$ を持つ2人の教師間での正当な嫉妬のことである。また、この時の教科公平とは、\textbf{\textit{教科jにおいて教科公平である}} と言い、教科jにおいて、教科に基づいた正当な嫉妬を持つ教師がいない状態のことである。
 
 解を見つけるために、カットオフに基づくメカニズムを利用する。まず、カットオフプロファイルの集合 \( P := \{ 1, \ldots, | I |, | I | + 1 \} ^S \) を考える。この集合には、すべての \( s \in S \) に対して \( p_s \) が \( p_s' \) 以下であるとき、かつそのときに限り \( p \leq p' \) となる半順序（partial order）\( \leq \) が与えられている。この空間は有限束（したがって完備束 (complete) でもある。）である。
 
-各学校 \( s \) について、\( i^{(s,l)} \) を、\( s \) の優先順位に従って下から \( l \) 番目の学生とする（例えば、\( s \) にとって最も順位の高い学生は \( i^{(s,|I|)} \) であり、最も低い学生は \( i^{(s,1)} \) である）。
+各学校 \( s \in S\) について、\( i^{(s,l)} \) を、\( s \) の優先順位に従って下から \( l \) 番目の学生とする（例えば、\( s \) にとって最も順位の高い学生は \( i^{(s,|I|)} \) であり、最も低い学生は \( i^{(s,1)} \) である）。
 また、すべての \( s \in S \) に対して \( i^* = i^{(s,|I|+1)} \) となるような架空の学生 \( i^* \in I \) を考え、各 \( s \in S \) について選好 \( \succ_s \) の定義域を、任意の \( i \in I \) に対して \( i^* \succ_s i \) が成立するように拡張する。
 
 教科$j \in J$におけるカットオフプロファイル \( p_j \in P \) が与えられたとき、各学校 \( s \in S \)と教科$j \in J$における「需要」を次のように定義する。
@@ -919,9 +937,13 @@ Kamada and Kojima (2024) の定理1によれば、カットオフ・プロファ
 
 $D^j_s(p_j) = \{ i \in I_j \mid i \succeq_s i^{(s,p^j_s)} \text{ and } s \succ_i \emptyset; \forall s' \in S_j, i \succeq_{s'} i^{(s',p^j_{s'})} \implies s \succeq_i s' \}$
 
-各教科 $j$ について、与えられた優先順位カットオフのベクトル $p_j$ における学校 $s$ の需要 $D^j_s(p_j)$ とは、$I_j$ に属する教師の集合であり、その教師は学校 $s$ でカットオフ $p^j_s$ 以上に順位付けられ、かつ、自身が条件を満たす他のどの学校よりも学校 $s$ を好む。
+各教科 $j$ について、優先順位カットオフを$p_j$で表す。このカットオフ$p_j$における学校 $s$ の教科$j \in J$に関する需要 $D^j_s(p_j)$ とは、次のように定義される。
 
-アルゴリズムの中核は、これらのカットオフを繰り返し調整する\textbf{\textit{教科別カットオフ調整関数}} $T : P \rightarrow P$ である。各学校 $s$ と教科 $j$ について、この関数は次のように定義される。
+$D^j_s(p_j) = \{ i \in I_j \mid i \succeq_s i^{(s,p^j_s)} \text{ and } s \succ_i \emptyset; \forall s' \in S_j, i \succeq_{s'} i^{(s',p^j_{s'})} \implies s \succeq_i s' \}$
+
+これは、$I_j$ に属する教師の集合であり、その教師は学校 $s$ でカットオフ $p^j_s$ 以上に順位付けられ、かつ、自身が条件を満たす他のどの学校よりも学校 $s$ を好むという意味である。
+
+Kamada and Kojima(2024)に倣い、\textbf{\textit{教科別カットオフ調整関数}} $T : P \rightarrow P$ は各学校 $s$ と教科 $j$ について、以下のように定義する。
 \[
 T_s^j(p) =
 \begin{cases}
@@ -929,6 +951,20 @@ p_s^j + 1 & \text{if } | D_s^j(p) | > c^j_s \\
 p_s^j     & \text{if } | D_s^j(p) | \leq c^j_s
 \end{cases}
 \]
+
+2.1節で説明した、Kamada and Kojima(2024)によると、上記教科別カットオフ調整関数を用いると、各教科$j$において、以下の条件を満たす教師最適公平マッチング（TOFM）$\mu^j$を求めることができる。
+\begin{align*}
+ &(i) \text{個人合理性 (individual rationality)}: && \forall i \in I_j, \mu^j_i \succ_i \emptyset,\\
+ &(ii) \text{公平性 (fairness)}:  && \nexists i, i' \in I_j, \nexists s \in S_j \text{ s.t. } s \succ_i \mu^j_i, i' \in \mu^j_s, i \succ_s i',\\
+ &(iii) \text{実現可能性 (feasibility)}:  && \forall s \in S_j, \mu^j_s \in \mathcal{F}^j_s,\\
+ &(iv) \text{教師最適性 (teacher optimality)}: && \mu^j_i \succeq_i \bar{\mu}^j_i \text{ (任意の$i \in I_j$と、教科jで実現可能、}\\
+ & && \text{個人合理的、かつ公平な任意の$\bar{\mu}^j$に対して)}
+\end{align*}
+
+
+
+\textcolor{red}{ここから　動画は00:43:05から}
+
 
 
 \subsection{結果と考察}
@@ -972,14 +1008,14 @@ p_s^j     & \text{if } | D_s^j(p) | \leq c^j_s
 
 \begin{proof}
 % \cite{10.1093/restud/rdad046}
-Kamada \& Kojima(2024)によれば、各教科$j$において、以下の条件を満たす教師最適公平マッチング（TOFM）$\mu^j$が存在する。
-\begin{align*}
- &(i) \text{個人合理性 (I.R.)}: && \forall i \in I_j, \mu^j_i \succ_i \emptyset,\\
- &(ii) \text{公平性 (fair)}:  && \nexists i, i' \in I_j, \nexists s \in S_j \text{ s.t. } s \succ_i \mu^j_i, i' \in \mu^j_s, i \succ_s i',\\
- &(iii) \text{実現可能性 (feasible)}:  && \forall s \in S_j, \mu^j_s \in \mathcal{F}^j_s,\\
- &(iv) \text{教師最適性 (T.O.)}: && \mu^j_i \succeq_i \bar{\mu}^j_i \text{ (任意の$i \in I_j$と、教科jで実現可能、}\\
- & && \text{個人合理的、かつ公平な任意の$\bar{\mu}^j$に対して)}
-\end{align*}
+% Kamada \& Kojima(2024)によれば、各教科$j$において、以下の条件を満たす教師最適公平マッチング（TOFM）$\mu^j$が存在する。
+% \begin{align*}
+%  &(i) \text{個人合理性 (I.R.)}: && \forall i \in I_j, \mu^j_i \succ_i \emptyset,\\
+%  &(ii) \text{公平性 (fair)}:  && \nexists i, i' \in I_j, \nexists s \in S_j \text{ s.t. } s \succ_i \mu^j_i, i' \in \mu^j_s, i \succ_s i',\\
+%  &(iii) \text{実現可能性 (feasible)}:  && \forall s \in S_j, \mu^j_s \in \mathcal{F}^j_s,\\
+%  &(iv) \text{教師最適性 (T.O.)}: && \mu^j_i \succeq_i \bar{\mu}^j_i \text{ (任意の$i \in I_j$と、教科jで実現可能、}\\
+%  & && \text{個人合理的、かつ公平な任意の$\bar{\mu}^j$に対して)}
+% \end{align*}
 定理1より、$\mu^j$は教科jにおいて現職必置条件を満たす。ここで、$\forall i \in I_j$に対して$\mu_i=\mu^j_i$、かつ、$\forall s \in S$に対して$\mu_s = \bigcup\limits_{j \in A(s)} \mu^j_s$となるようなマッチング$\mu$を構成する。
 
 \paragraph{($\mu$がsubject-TOFMであることを示す)}
