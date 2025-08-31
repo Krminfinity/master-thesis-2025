@@ -99,7 +99,7 @@
 
 % さらに、教員が\textbf{複数の教科免許}を保有する、最も複雑なモデルを考察する。この場合、教員の配属先の選択肢が教科をまたいで相互に影響するため、既存のアルゴリズムでは雇用保障が達成されないケースが存在することを示す。この課題を解決するため、本研究では「\textbf{主たる指導教科}」という新たな概念を導入し、学校がその教科を専門とする教員を優先するという仮定の下でモデルを改良する。
 
-% 最終的に、この改良された複数教科モデルにおいて、全ての現職教員の雇用を保証する安定的なマッチングを導出する\textbf{カットオフ調整アルゴリズム}を提示し、そのアルゴリズムが常に雇用保障を達成するマッチング（固定点）を見出すことを証明した（\textbf{定理4}）。本稿の貢献は、教員異動という現実の複雑な制約を理論モデルに組み込み、雇用保障という重要な要請を満たす具体的なメカニズムを設計・提案した点にある。
+% 最終的に、この改良された複数教科モデルにおいて、全ての現職教員の雇用を保証する安定的なマッチングを導出する\textbf{カットオフ調整アルゴリズム}を提示し、そのアルゴリズムが常に雇用保障を達成するマッチング（不動点）を見出すことを証明した（\textbf{定理4}）。本稿の貢献は、教員異動という現実の複雑な制約を理論モデルに組み込み、雇用保障という重要な要請を満たす具体的なメカニズムを設計・提案した点にある。
 
     \vspace{1cm} % 1cmの垂直方向のスペース
     \noindent % 段落のインデントをなくす
@@ -931,13 +931,16 @@ Kamada and Kojima(2024)では、$|J| = 1$、すなわち、全体の教科が1�
 各学校 \( s \in S\) について、\( i^{(s,l)} \) を、\( s \) の優先順位に従って下から \( l \) 番目の学生とする（例えば、\( s \) にとって最も順位の高い学生は \( i^{(s,|I|)} \) であり、最も低い学生は \( i^{(s,1)} \) である）。
 また、すべての \( s \in S \) に対して \( i^* = i^{(s,|I|+1)} \) となるような架空の学生 \( i^* \in I \) を考え、各 \( s \in S \) について選好 \( \succ_s \) の定義域を、任意の \( i \in I \) に対して \( i^* \succ_s i \) が成立するように拡張する。
 
-教科$j \in J$におけるカットオフプロファイル \( p_j \in P \) が与えられたとき、各学校 \( s \in S \)と教科$j \in J$における「需要」を次のように定義する。
+
+% \textcolor{red}{なんか重複あり}
+
+% 教科$j \in J$におけるカットオフプロファイル \( p_j \in P \) が与えられたとき、各学校 \( s \in S \)と教科$j \in J$における「需要」を次のように定義する。
 
 
 
-$D^j_s(p_j) = \{ i \in I_j \mid i \succeq_s i^{(s,p^j_s)} \text{ and } s \succ_i \emptyset; \forall s' \in S_j, i \succeq_{s'} i^{(s',p^j_{s'})} \implies s \succeq_i s' \}$
+% $D^j_s(p_j) = \{ i \in I_j \mid i \succeq_s i^{(s,p^j_s)} \text{ and } s \succ_i \emptyset; \forall s' \in S_j, i \succeq_{s'} i^{(s',p^j_{s'})} \implies s \succeq_i s' \}$
 
-各教科 $j$ について、優先順位カットオフを$p_j$で表す。このカットオフ$p_j$における学校 $s$ の教科$j \in J$に関する需要 $D^j_s(p_j)$ とは、次のように定義される。
+各教科 $j \in J$ について、優先順位カットオフを$p_j$で表す。このカットオフ$p_j$における学校 $s$ の教科$j \in J$に関する需要 $D^j_s(p_j)$ とは、次のように定義される。
 
 $D^j_s(p_j) = \{ i \in I_j \mid i \succeq_s i^{(s,p^j_s)} \text{ and } s \succ_i \emptyset; \forall s' \in S_j, i \succeq_{s'} i^{(s',p^j_{s'})} \implies s \succeq_i s' \}$
 
@@ -952,6 +955,333 @@ p_s^j     & \text{if } | D_s^j(p) | \leq c^j_s
 \end{cases}
 \]
 
+
+
+\textcolor{red}{関数の回し方の例を入れる}
+
+\noindent 上で定義した需要集合 $D^j_s(p)$ と教科別カットオフ調整関数 $T^j_s$ を、数値例で説明する。初期値 $p=(1,\dots,1)$ から出発し、$|D^j_s(p)|>c^j_s$ のときにのみ $p^j_s$ を1だけ引き上げる更新を反復する。まず $|J|=2$（例A）で基本的な「回し方」を確認し、ついで $|J|=3$ （例B）で校間・教科間の相互作用を示す。
+
+%========================
+% 関数の回し方：具体例
+%========================
+
+% 例A：|J|=2
+\paragraph{例A（\(|J|=2\)）}
+\(
+J=\{j,j'\},\ S=\{s\},\ I=\{i_1,i_2,i_3\}
+\) とする。定員は
+\(
+c^j_s=1,\ c^{j'}_s=1
+\)。
+免許集合は
+\(
+I_j=\{i_1,i_3\},\ I_{j'}=\{i_2\}
+\)。
+学校 \(s\) の優先順位は
+\(
+i_1 \succ_s i_2 \succ_s i_3
+\)。
+初期カットオフは
+\(
+(p^j_s,p^{j'}_s)=(1,1)
+\)
+である。
+
+%========================================
+% 例A：ラウンドごとの変化を「タイムライン＋要点箇条書き」で可視化
+% 追加パッケージ不要（標準の数式・段落のみ）
+%========================================
+
+% \paragraph{例Aのラウンド表示（タイムライン＋要点）}
+% 初期条件：
+% \(J=\{j,j'\},\ S=\{s\},\ I=\{i_1,i_2,i_3\}\)。
+% 定員 \(c^j_s=1,\ c^{j'}_s=1\)。
+% 免許 \(I_j=\{i_1,i_3\},\ I_{j'}=\{i_2\}\)。
+% 学校の優先順位 \(i_1 \succ_s i_2 \succ_s i_3\)。
+% 初期カットオフ \((p^j_s,p^{j'}_s)=(1,1)\)。
+% ここで \(i(s,\ell)\) は「下から \(\ell\) 番目」の教師（よって \(i(s,1)=i_3,\ i(s,2)=i_2,\ i(s,3)=i_1\)）。
+
+% --- 1行で全体の流れ（Before→After）を先に示すと、全体像が掴みやすい
+\[
+\boxed{(1,1)}
+\ \xrightarrow[\ |D^j_s|=2>1\ ]{T}
+\ \boxed{(2,1)}
+\ \xrightarrow[\ \text{据え置き}\ ]{T}
+\ \boxed{(2,1)}\quad\text{（不動点）}
+\]
+
+% --- ラウンド0
+\noindent\textbf{ラウンド0}\ \ (\(p=(1,1)\))
+\medskip
+
+\noindent\(\triangleright\) \textit{カットオフ値}：\(i^{(s,1)}=i_3\)
+
+\noindent\(\triangleright\) \textit{需要集合}：
+\[
+D^j_s(p)=\{i_1,i_3\}\quad(\ |D^j_s|=2>c^j_s=1\ ),\qquad
+D^{j'}_s(p)=\{i_2\}\quad(\ |D^{j'}_s|=1=c^{j'}_s\ )
+\]
+
+\noindent\(\triangleright\) \textit{更新規則}（超過需要のときのみ引き上げ）：
+\[
+p^j_s:\ 1\ \to\ \mathbf{2},\qquad p^{j'}_s:\ \text{据え置き}
+\]
+
+\noindent\(\triangleright\) \textit{次の状態}：
+\[
+p=(\mathbf{2},1)
+\]
+
+\medskip
+% --- ラウンド1
+\noindent\textbf{ラウンド1}\ \ (\(p=(2,1)\))
+\medskip
+
+\noindent\(\triangleright\) \textit{カットオフ値}：\(i^{(s,2)}=i_2\)
+
+\noindent\(\triangleright\) \textit{需要集合}：
+\[
+D^j_s(p)=\{i_1\}\quad(\ |D^j_s|=1=c^j_s\ ),\qquad
+D^{j'}_s(p)=\{i_2\}\quad(\ |D^{j'}_s|=1=c^{j'}_s\ )
+\]
+
+\noindent\(\triangleright\) \textit{更新規則}（ちょうど需要のため据え置き）：
+\[
+p^j_s:\ \text{据え置き},\qquad p^{j'}_s:\ \text{据え置き}
+\]
+
+\noindent\(\triangleright\) \textit{次の状態}：
+\[
+p=(2,1)
+\]
+
+\medskip
+% --- ラウンド2（停止の明示）
+\noindent\textbf{ラウンド2}\ \ (\(p=(2,1)\))
+\medskip
+
+\noindent\(\triangleright\) \textit{判定}：両教科とも \(|D|=c\) のため更新なし。
+
+\noindent\(\triangleright\) \textit{結論}：以後変化せず、\(\boxed{(p^j_s,p^{j'}_s)=(2,1)}\) が不動点となる。
+
+
+% \noindent\textbf{ラウンド0（初期）}：
+% \begin{align*}
+% &\text{\(j\) 教科： } p^j_s=1 \Rightarrow \text{しきい } i(s,1)=i_3.
+% \ \ i \succeq_s i_3 \text{ を満たす } I_j=\{i_1,i_3\} \\
+% &\hspace{3.6em}\Rightarrow D^j_s(p)=\{i_1,i_3\},\ |D^j_s(p)|=2>c^j_s(=1)
+% \ \Rightarrow\ p^j_s \leftarrow 2.\\[2mm]
+% &\text{\(j'\) 教科： } p^{j'}_s=1 \Rightarrow D^{j'}_s(p)=\{i_2\},\ |D^{j'}_s(p)|=1\le 1
+% \ \Rightarrow\ p^{j'}_s \text{据え置き}.
+% \end{align*}
+
+% \noindent\textbf{ラウンド1}：
+% \begin{align*}
+% &\text{\(j\) 教科： } p^j_s=2 \Rightarrow \text{しきい } i(s,2)=i_2.
+% \ \ i \succeq_s i_2 \text{ を満たす } I_j=\{i_1\} \\
+% &\hspace{3.6em}\Rightarrow |D^j_s(p)|=1=c^j_s \ \Rightarrow\ p^j_s \text{据え置き}.\\
+% &\text{\(j'\) 教科： } p^{j'}_s=1 \text{のまま変化なし}.
+% \end{align*}
+
+% したがって不動点に到達し，
+% \[
+% \boxed{(p^j_s,p^{j'}_s)=(2,1)}.
+% \]
+
+
+% 例B：|J|=3
+\paragraph{例B（\(|J|=3\)）}
+\(
+J=\{j,j',j''\},\ S=\{s,t\}
+\) とする。
+定員は
+\(
+c^j_s=1,\ c^{j'}_s=1,\ c^j_t=1,\ c^{j''}_t=1
+\)
+（すなわち
+\(A(s)=\{j,j'\},\ A(t)=\{j,j''\}\)）。
+教師集合は
+\(
+I=\{i_1,i_2,i_3,i_4,i_5\}
+\)
+で，免許と選好は次の通り（全員 \( \succ \emptyset\)）：
+\[
+I_j=\{i_1,i_2,i_5\},\quad I_{j'}=\{i_3\},\quad I_{j''}=\{i_4\},
+\]
+\[
+i_1,i_5: s \succ t,\quad i_2: t \succ s,\quad i_3: s \text{のみ},\quad i_4: t \text{のみ}.
+\]
+学校の優先順位（高い順）は
+\[
+s:\ i_1 \succ i_5 \succ i_3 \succ i_2 \succ i_4,\qquad
+t:\ i_2 \succ i_1 \succ i_4 \succ i_3 \succ i_5.
+\]
+初期カットオフは
+\(
+(p^j_s,p^{j'}_s,p^j_t,p^{j''}_t)=(1,1,1,1)
+\)。
+
+
+%========================================
+% 例B：ラウンドごとの変化を「タイムライン＋要点」で可視化
+% 追加パッケージ不要（標準の数式・段落のみ）
+%========================================
+
+% \paragraph{例Bのラウンド表示（タイムライン＋要点）}
+% 初期条件：
+% \(J=\{j,j',j''\},\ S=\{s,t\}\)。
+% 定員は
+% \(c^j_s=1,\ c^{j'}_s=1,\ c^j_t=1,\ c^{j''}_t=1\)。
+% 免許は
+% \(I_j=\{i_1,i_2,i_5\},\ I_{j'}=\{i_3\},\ I_{j''}=\{i_4\}\)。
+% 学校の優先順位（高い順）は
+% \(s:\ i_1 \succ i_5 \succ i_3 \succ i_2 \succ i_4\),
+% \(t:\ i_2 \succ i_1 \succ i_4 \succ i_3 \succ i_5\)。
+% 教師の学校選好は
+% \(i_1,i_5: s \succ t,\ i_2: t \succ s,\ i_3: s\ \text{のみ},\ i_4: t\ \text{のみ}\)。
+% 初期カットオフは
+% \((p^j_s,p^{j'}_s,p^j_t,p^{j''}_t)=(1,1,1,1)\)。
+% ここで \(i(s,\ell)\)（resp. \(i(t,\ell)\)）は「校 \(s\)（resp. \(t\)）の優先順位で下から \(\ell\) 番目」の教師。
+
+% --- 全体の流れ（Before→After）
+% \[
+% \boxed{(1,1,1,1)}
+% \ \xrightarrow[\ |D^j_s|>1\ ]{T}
+% \ \boxed{(2,1,1,1)}
+% \ \xrightarrow[\ |D^j_s|>1\ ]{T}
+% \ \boxed{(3,1,1,1)}
+% \ \xrightarrow[\ |D^j_s|>1\ ]{T}
+% \ \boxed{(4,1,1,1)}
+% \ \xrightarrow[\ |D^j_s|>1\ ]{T}
+% \ \boxed{(5,1,1,1)}\quad\text{（不動点）}
+% \]
+
+
+
+\[
+\renewcommand{\arraystretch}{1.15}
+\begin{array}{c}
+\boxed{(1,1,1,1)} \xrightarrow[|D^j_s|>1]{T} \boxed{(2,1,1,1)} \xrightarrow[|D^j_s|>1]{T} \boxed{(3,1,1,1)} \xrightarrow[|D^j_s|>1]{T} \boxed{(4,1,1,1)} \xrightarrow[|D^j_s|>1]{T} \boxed{(5,1,1,1)}\ \text{（不動点）}
+\end{array}
+\]
+
+% --- ラウンド0
+\noindent\textbf{ラウンド0}\ \ (\(p=(1,1,1,1)\))
+\medskip
+
+\noindent\(\triangleright\) \textit{カットオフ値}：
+\(i(s,1)=\) 最下位 \(=i_4\), \quad
+\(i(t,1)=\) 最下位 \(=i_5\).
+
+\noindent\(\triangleright\) \textit{需要集合と更新}：
+\[
+\begin{aligned}
+&\text{学校 }s,\ \text{教科 }j:\ \ I_j=\{i_1,i_2,i_5\},\ i\succeq_s i_4 \Rightarrow \{i_1,i_2,i_5\}\ \text{が通過候補}\\
+&\phantom{\text{学校 }s,\ \text{教科 }j:}\ \text{ただし }t\text{でも通る者は }s\succ_i t\text{のときのみ }D^j_s(p)\text{に入る。}\\
+&\phantom{\text{学校 }s,\ \text{教科 }j:}\ t\text{側は }p^j_t=1\Rightarrow i(t,1)=i_5\text{なので }i_1,i_2,i_5\text{はいずれも通過。}\\
+&\phantom{\text{学校 }s,\ \text{教科 }j:}\ \Rightarrow D^j_s(p)=\{i_1,i_5\}\ (\text{\(i_2\) は }t\succ s\ \text{なので }s\text{を選ばない}),\ |D^j_s|=2>c^j_s(=1)\\
+&\phantom{\text{学校 }s,\ \text{教科 }j:}\ \Rightarrow\ p^j_s:\ 1\to \mathbf{2}.\\[2mm]
+&\text{学校 }s,\ \text{教科 }j':\ I_{j'}=\{i_3\},\ |D^{j'}_s|=1\le 1\ \Rightarrow\ p^{j'}_s\ \text{据え置き}.\\
+&\text{学校 }t,\ \text{教科 }j:\ D^j_t(p)=\{i_2\}\ (t\succ s),\ |D^j_t|=1\le 1\ \Rightarrow\ p^j_t\ \text{据え置き}.\\
+&\text{学校 }t,\ \text{教科 }j'':\ I_{j''}=\{i_4\},\ |D^{j''}_t|=1\le 1\ \Rightarrow\ p^{j''}_t\ \text{据え置き}.
+\end{aligned}
+\]
+
+\noindent\(\triangleright\) \textit{次の状態}：
+\[
+p=(\mathbf{2},1,1,1)
+\]
+
+\medskip
+% --- ラウンド1
+\noindent\textbf{ラウンド1}\ \ (\(p=(2,1,1,1)\))
+\medskip
+
+\noindent\(\triangleright\) \textit{カットオフ値}：
+\(i(s,2)=i_2,\ \ i(t,1)=i_5\ \text{（変化なし）}\).
+
+\noindent\(\triangleright\) \textit{需要集合と更新}：
+\[
+\begin{aligned}
+&\text{学校 }s,\ \text{教科 }j:\ i\succeq_s i_2 \Rightarrow \{i_1,i_2,i_5\}\ \text{が候補だが},\\
+&\phantom{\text{学校 }s,\ \text{教科 }j:}\ i_2\ \text{は }t\succ s\ \text{のため }D^j_s\text{に入らず},\ D^j_s(p)=\{i_1,i_5\}.\\
+&\phantom{\text{学校 }s,\ \text{教科 }j:}\ |D^j_s|=2>1\ \Rightarrow\ p^j_s:\ 2\to \mathbf{3}.\\
+&\text{他の3つは }|D|=1\ \Rightarrow\ \text{据え置き}.
+\end{aligned}
+\]
+
+\noindent\(\triangleright\) \textit{次の状態}：
+\[
+p=(\mathbf{3},1,1,1)
+\]
+
+\medskip
+% --- ラウンド2～3（同型の繰返し）
+\noindent\textbf{ラウンド2～3}\ \ (\(p=(3,1,1,1)\to(4,1,1,1)\))
+\medskip
+
+\noindent\(\triangleright\) \textit{カットオフ値の推移}：
+\(i(s,3)=i_3,\ i(s,4)=i_5\)（単調に厳しくなる）。
+
+\noindent\(\triangleright\) \textit{需要集合}：
+いずれの段階でも
+\(D^j_s(p)=\{i_1,i_5\}\)（\(i_2\) は常に \(t\succ s\)）。
+したがって毎回 \(|D^j_s|=2>1\) となり，
+\[
+p^j_s:\ 3\to \mathbf{4}\ \to\ \mathbf{5}.
+\]
+
+\medskip
+% --- ラウンド4（停止）
+\noindent\textbf{ラウンド4}\ \ (\(p=(5,1,1,1)\))
+\medskip
+
+\noindent\(\triangleright\) \textit{カットオフ値}：
+\(i(s,5)=i_1\)。
+
+\noindent\(\triangleright\) \textit{需要集合と判定}：
+\(D^j_s(p)=\{i_1\}\) で \(|D^j_s|=1=c^j_s\)。
+他の3つも \(|D|=c\)。
+更新なし。
+
+\noindent\(\triangleright\) \textit{結論}：
+以後変化せず，
+\(\boxed{(p^j_s,p^{j'}_s,p^j_t,p^{j''}_t)=(5,1,1,1)}\) が不動点。
+
+
+
+
+% \noindent\textbf{ラウンド0（初期）}：
+% \begin{align*}
+% &\text{\(s,j\)： } p^j_s=1 \Rightarrow \text{しきい } i(s,1).
+% \ I_j \text{の候補のうち，} t \text{で通るなら } s \succ_i t \text{ の者のみ } D^j_s(p) \text{に入る。}\\
+% &\hspace{3.6em}i_1,i_5 \text{ は } s \succ t \Rightarrow \text{入る},\quad i_2 \text{ は } t \succ s \Rightarrow \text{入らない}.\\
+% &\hspace{3.6em}\Rightarrow |D^j_s(p)|=2>c^j_s(=1) \Rightarrow p^j_s \leftarrow 2.\\[1mm]
+% &\text{\(s,j'\)： } I_{j'}=\{i_3\} \Rightarrow |D^{j'}_s(p)|=1\le 1 \Rightarrow p^{j'}_s \text{据え置き}.\\
+% &\text{\(t,j\)： } I_j \text{のうち } t \text{を他校より好むのは } i_2 \text{のみ} \Rightarrow |D^j_t(p)|=1\le 1 \Rightarrow p^j_t \text{据え置き}.\\
+% &\text{\(t,j''\)： } I_{j''}=\{i_4\} \Rightarrow |D^{j''}_t(p)|=1\le 1 \Rightarrow p^{j''}_t \text{据え置き}.
+% \end{align*}
+
+% \noindent\textbf{ラウンド1以降（\(s,j\) だけが上がる）}：
+% \[
+% |D^j_s(p)|=1 \text{ になるまで } p^j_s \text{は } 2\to 3\to 4\to 5 \text{ と上昇し，そこで停止。}
+% \]
+% 他の 3 つ \((p^{j'}_s,p^j_t,p^{j''}_t)\) は初期から変化しない。よって不動点は
+% \[
+% \boxed{(p^j_s,p^{j'}_s,p^j_t,p^{j''}_t)=(5,1,1,1)}.
+% \]
+
+% \noindent いずれの例でも，各ラウンドの更新は
+% \[
+% T^j_s(p)=
+% \begin{cases}
+% p^j_s+1 & \text{if } |D^j_s(p)|>c^j_s,\\
+% p^j_s   & \text{if } |D^j_s(p)|\le c^j_s
+% \end{cases}
+% \]
+% に従っている。
+
+
 2.1節で説明した、Kamada and Kojima(2024)によると、上記教科別カットオフ調整関数を用いると、各教科$j$において、以下の条件を満たす教師最適公平マッチング（TOFM）$\mu^j$を求めることができる。
 \begin{align*}
  &(i) \text{個人合理性 (individual rationality)}: && \forall i \in I_j, \mu^j_i \succ_i \emptyset,\\
@@ -961,7 +1291,10 @@ p_s^j     & \text{if } | D_s^j(p) | \leq c^j_s
  & && \text{個人合理的、かつ公平な任意の$\bar{\mu}^j$に対して)}
 \end{align*}
 
-定理1より、$\mu^j$は教科jにおいて現職必置条件を満たす。ここで、$\forall i \in I_j$に対して$\mu_i=\mu^j_i$、かつ、$\forall s \in S$に対して$\mu^\star_s = \bigcup\limits_{j \in A(s)} \mu^j_s$となるようなマッチング$\mu$を構成する。
+定理5より、$\mu^j$は教科jにおいて現職必置条件を満たす。ここで、$\forall i \in I_j$に対して$\mu^\star_i=\mu^j_i$、かつ、$\forall s \in S$に対して$\mu^\star_s = \bigcup\limits_{j \in A(s)} \mu^j_s$となるようなマッチング$\mu^\star$を構成する。
+
+
+
 
 
 \textcolor{red}{ここから　動画は00:43:05から}
@@ -1004,12 +1337,13 @@ p_s^j     & \text{if } | D_s^j(p) | \leq c^j_s
 
   
 \begin{theorem}
-教科別教師最適公平マッチング（subject-TOFM）は常に現職必置条件を満たす。
+2.2節で定義したマッチング$\mu^\star$が教科別教師最適公平マッチング（subject-TOFM）である。
 \end{theorem}
+
 
 \begin{proof}
 
-    \textcolor{red}{本証明における定理1とは、付録に記載の定理4のことであり、容量制約の場合に、マッチングは、現職必置条件を満たすというものである。}
+    \textcolor{red}{本証明における定理1とは、付録に記載の定理5のことであり、容量制約の場合に、マッチングは、現職必置条件を満たすというものである。}
 % \cite{10.1093/restud/rdad046}
 % Kamada \& Kojima(2024)によれば、各教科$j$において、以下の条件を満たす教師最適公平マッチング（TOFM）$\mu^j$が存在する。
 % \begin{align*}
@@ -1021,24 +1355,24 @@ p_s^j     & \text{if } | D_s^j(p) | \leq c^j_s
 % \end{align*}
 % 定理1より、$\mu^j$は教科jにおいて現職必置条件を満たす。ここで、$\forall i \in I_j$に対して$\mu_i=\mu^j_i$、かつ、$\forall s \in S$に対して$\mu_s = \bigcup\limits_{j \in A(s)} \mu^j_s$となるようなマッチング$\mu$を構成する
 
-\paragraph{($\mu$がsubject-TOFMであることを示す)}
-(i)を示すために、まず$\mu$が\textbf{実現可能}であることを示す。任意の$s \in S$と任意の$j \in J$をとる。
+% \paragraph{($\mu$がsubject-TOFMであることを示す)}
+定義2の(i)を示すために、まず$\mu$が実現可能であることを示す。任意の$s \in S$と任意の$j \in J$をとる。
 \begin{itemize}
     \item \textbf{ケース1: $j \in A(s)$の場合。} $\mu^j_s \in \mathcal{F}^j_s$である。$\mu$の定義より$\{i \in I_j : i \in \mu^j_s\} = \{ i \in I_j : i\in \mu_s \}$。$\mu^j_s \in \mathcal{F}^j_s$であるから、$|\{i \in I_j : i \in \mu^j_s\}| = |\{ i \in I_j : i\in \mu_s \}| \leq c_j^s$。
     \item \textbf{ケース2: $j \notin A(s)$の場合。} このとき、$c^j_s=0$である。$|\{i \in I_j : i \in \mu_s\}|= 0 = c^j_s$。
 \end{itemize}
-したがって、$\mu_s \in \mathcal{F}_s$である。(※)
+したがって、$\mu_s \in \mathcal{F}_s$である。
 
-次に、$\mu$が\textbf{個人合理的}であることを示す。任意の$i \in I$をとると、ある$j \in J$が存在し、$i \in I_j$となる。$\mu^j$は個人合理的であるから、$\mu_i = \mu^j_i \succeq_i \emptyset$。
+次に、$\mu$が個人合理的であることを示す。任意の$i \in I$をとると、ある$j \in J$が存在し、$i \in I_j$となる。$\mu^j$は個人合理的であるから、$\mu_i = \mu^j_i \succeq_i \emptyset$。
 
-次に、$\mu$が\textbf{教科公平}であることを示す。$j \equiv A(i) = A(i')$となる任意の$i,i' \in I$をとる。背理法により、ある$s \in S$が存在し、$s \succ_i \mu_i, i' \in \mu_s, i \succ_s i'$が成り立つと仮定する。$i' \in \mu_s$であるから、$\mu$の定義より$s \in S_j$である。仮定より、$s \succ_i \mu^j_i, i' \in \mu^j_s, i \succ_s i'$となる。これは$\mu^j$がTOFMであること（条件(ii)公平性）に矛盾する。したがって、$\mu$は教科公平である。
+次に、$\mu$が教科公平であることを示す。$j \equiv A(i) = A(i')$となる任意の$i,i' \in I$をとる。背理法により、ある$s \in S$が存在し、$s \succ_i \mu_i, i' \in \mu_s, i \succ_s i'$が成り立つと仮定する。$i' \in \mu_s$であるから、$\mu$の定義より$s \in S_j$である。仮定より、$s \succ_i \mu^j_i, i' \in \mu^j_s, i \succ_s i'$となる。これは$\mu^j$がTOFMであること（条件(ii)公平性）に矛盾する。したがって、$\mu$は教科公平である。
 
 
-(ii)\textbf{教師最適性}を示すために、任意の$i \in I$と、実現可能、個人合理的、かつ教科公平である任意の$\mu'$をとる。$j \equiv A(i)$とする。$\mu^j$の定義より、$\mu^j$は教科jにおけるTOFMであり、条件(iv)を満たす。ここで、$\forall i' \in I_j$に対して$\bar{\mu}^j_{i'} = \mu'_{i'}$、$\forall s \in S_j$に対して$\bar{\mu}^j_s = \{ i' \in I_j : i' \in \mu'_s\}$となるような$\bar{\mu}^j$を構成する。
+定義2の(ii)教師最適性を示すために、任意の$i \in I$と、実現可能、個人合理的、かつ教科公平である任意の$\mu'$をとる。$j \equiv A(i)$とする。$\mu^j$の定義より、$\mu^j$は教科jにおけるTOFMであり、条件(iv)を満たす。ここで、$\forall i' \in I_j$に対して$\bar{\mu}^j_{i'} = \mu'_{i'}$、$\forall s \in S_j$に対して$\bar{\mu}^j_s = \{ i' \in I_j : i' \in \mu'_s\}$となるような$\bar{\mu}^j$を構成する。
 
 この$\bar{\mu}^j$が教科jで実現可能、個人合理的、かつ公平であることを示す。
 
-\paragraph{($\bar{\mu}^j$が教科jで実現可能であることを示す)}
+\paragraph{$\bar{\mu}^j$が教科jで実現可能であること}
 任意の$s \in S_j$をとる。$\mu'$は実現可能なので$\mu'_s \in \mathcal{F}_s$である。
 $\mu'_s \in \mathcal{F}_s$であるから、任意の$k \in J$について $|\{i' \in I_k : i' \in \mu'_s\}| \leq c^k_s$が成り立つ。
 $j \in J$なので、特に$|\{i \in I_j : i \in \mu'_s\}| \leq c^j_s$である。
@@ -1046,12 +1380,13 @@ $\bar{\mu}^j$の定義より、$\bar{\mu}^j_s = \{ i' \in I_j : i' \in \mu'_s\}$
 $|\bar{\mu}^j_s| = |\{ i' \in I_j : i' \in \mu'_s\}| \leq c^j_s$となる。
 したがって、$\bar{\mu}^j_s \in \mathcal{F}^j_s$であり、$\bar{\mu}^j$は教科jで実現可能である。
 
+\paragraph{$\bar{\mu}^j$が教科jで個人合理的であること}
 任意の $i \in I_j$ をとる。
 前提より、マッチング $\mu'$ は個人合理的であるから、$\mu'_{i} \succ_{i} \emptyset$ が成り立つ。
 $\bar{\mu}^j$ の定義によれば $\bar{\mu}^j_{i} = \mu'_{i}$ であるため、$\bar{\mu}^j_{i} \succ_{i} \emptyset$ もまた真である。
 したがって、$\bar{\mu}^j$は教科jで個人合理的である。
 
-\paragraph{($\bar{\mu}^j$が教科jで公平であることを示す)}
+\paragraph{$\bar{\mu}^j$が教科jで公平であること}
 任意の $i', i'' \in I_j$ をとる。このとき $A(i')=A(i'')=j$ である。
 背理法により、ある $s \in S_j$ が存在し、$s \succ_{i'} \bar{\mu}^j_{i'}$, $i'' \in \bar{\mu}^j_s$, かつ $i' \succ_s i''$ が成り立つと仮定する。
 
@@ -1070,24 +1405,43 @@ $\mu$ と $\mu'$ の構成方法から、$\mu_{i'} = \mu^j_{i'}$ および $\mu'
 \]
 が導かれる。これは任意の教師について成り立つため、$\mu$ は教科別教師最適公平マッチング（subject-TOFM）である。
 
-\paragraph{($\mu$が現職必置条件を満たしていることを示す)}
-(※)より$\mu$は実現可能である。
+
+
+
+\end{proof}
+
+
+
+\begin{theorem}
+    $\mu^\star$は現職必置条件を満たす。
+\end{theorem}
+\begin{proof}
+% \paragraph{($\mu$が現職必置条件を満たしていることを示す)}
+定理1の証明の冒頭で確認した通り、$\mu$は実現可能である。
 したがって、残るは全ての現職教師が割り当てを得ていること、すなわち $\forall i \in I_\alpha$ に対して $\mu_i \neq \emptyset$ であることを示せばよい。
 
 任意の $i \in I_\alpha$ をとり、$j \equiv A(i)$ とする。
-$\mu^j$ は教科jにおけるTOFMであり、定理1より、$\mu^j$は教科jにおいて現職必置条件を満たしている。
-（なぜなら、$\mathcal{F}^j_s$は教師集合$I_j$と学校集合$S_j$間のマッチング問題におけるキャパシティ制約であるから。）
+$\mu^j$ は教科jにおけるTOFMであり、定理5より、$\mu^j$は教科jにおいて現職必置条件を満たしている。
+% （なぜなら、$\mathcal{F}^j_s$は教師集合$I_j$と学校集合$S_j$間のマッチング問題におけるキャパシティ制約であるから。）
 
 よって、$\mu^j_i \neq \emptyset$ が成り立つ。
 $\mu$の構成方法から $\mu_i = \mu^j_i$ であるため、$\mu_i \neq \emptyset$ となる。
 これは任意の $i \in I_\alpha$ について真であるため、$\mu$は現職必置条件を満たしている。
 
 よって、subject-TOFMは教科制約の下で常に現職必置条件を満たしている。
-
-
 \end{proof}
 
+% \textcolor{red}{基本モデルのまとめを書く}
 
+
+\subsection{まとめと考察}
+本章では、各教員が単一免許を持つ状況を明示的に定式化し、（i）実現可能性、（ii）個人合理性、（iii）教科公平性の三条件を同時に満たす割当と、カットオフ調整関数の不動点が一対一に対応することを確認した（定理1の含意）。この対応により、初期カットオフから需要超過のある教科・学校のみカットオフ値を引き上げていく単純な反復で、理論的に適切なマッチングを網羅的に構成できる。すなわち、不動点のカットオフから得られる割当は三条件を満たし、逆に三条件を満たす任意の割当は何らかの不動点に対応する。
+
+反復の途中（不動点に達する前）であっても、各教員は常に「通過できる学校の中で最も好む学校」に応募するよう定義されているため、個人合理性と公平性は保たれる一方、実現可能性のみが崩れ得る（定員超過など）ことも併せて確認した。したがって、反復の目的は「公平性・個人合理性は維持したまま、実現可能性を満たすまでカットオフを引き上げる」ことにある。
+
+さらに、本章で導入した仮定の下では、構成したマッチングが現職必置条件(すべての現職教員が必ずいずれかの学校に割り当てられる）を満たすことを示した（定理2）。これは、教科ごとに得られる教師最適・教科公平な割当を束ねて全体の割当を構成すると、各現職教員の割当が非空であることから従う。実務的には「現職の雇用保障を壊さずに、応募希望と科目定員を同時に調整できる」ことを意味する。
+
+\noindent\textbf{含意と限界．}（1）基本モデルのカットオフ反復は、単純で実装容易（需要超過の箇所だけを機械的に引き上げればよい）であり、最終状態が三条件を満たすことが保証されるため、制度設計の基盤として有用である。（2）一方で、前提は「各教員が単一免許」という単純化に依拠している。複数免許や教科間の相互作用が強い環境では、同一の手続きが機能しない場合があるため、次章では複数免許を許す拡張モデルに進み、教科間連関を踏まえたカットオフ調整とその性質（弱い教科公平性の下での存在・現職必置の保証）を検討する。
 
 
 \section{拡張モデル：複数免許を持つ教員}
@@ -1129,9 +1483,9 @@ $\mu$の構成方法から $\mu_i = \mu^j_i$ であるため、$\mu_i \neq \empt
 
 % \textbf{Assumption (4)} All $\alpha$-teachers consider every school to be an acceptable assignment. Formally, for all $i \in I_\alpha$ and for all $s \in S$, it holds that $s \succ_i \emptyset$.
 
+\textcolor{red}{どこが同じでどこが違うのかを書く。違う部分は定義する。}
 
-
-学校選択モデルを形式的に定義する。$I$ を教師からなる空でない有限集合、$S$ を学校からなる空でない有限集合とする。各教師 $i \in I$ は、学校の集合 $S$ とマッチしない状態 $\emptyset$ の上で定義される厳密な選好順序 $\succ_i$ を持つ。各学校 $s \in S$ は、教師の集合 $I$ の上で定義される厳密な優先順位 $\succ_s$ を持つ。すべての選好の組をプロファイル $\succ_I = (\succ_i)_{i \in I}$ とし、すべての優先順位の組をプロファイル $\succ_S = (\succ_s)_{s \in S}$ とする。
+$I$ を教師からなる空でない有限集合、$S$ を学校からなる空でない有限集合とする。各教師 $i \in I$ は、学校の集合 $S$ とマッチしない状態 $\emptyset$ の上で定義される厳密な選好順序 $\succ_i$ を持つ。各学校 $s \in S$ は、教師の集合 $I$ の上で定義される厳密な優先順位 $\succ_s$ を持つ。すべての選好の組をプロファイル $\succ_I = (\succ_i)_{i \in I}$ とし、すべての優先順位の組をプロファイル $\succ_S = (\succ_s)_{s \in S}$ とする。
 
 各学校 $s \in S$ について、その制約は、実現可能な教師集合の族 $\mathcal{F}_s$ によって与えられる。教師の部分集合 $I' \subseteq I$ は、$I' \in \mathcal{F}_s$ であるとき、学校 $s$ において\textbf{\textit{実現可能}} (feasible) であると定義される。したがって、一つの\textbf{\textit{問題}} (problem) は、組 $(I, S, \succ_I, \succ_S, \{\mathcal{F}_s\}_{s \in S})$ によって特徴づけられる。
 
@@ -1149,20 +1503,24 @@ $\mu$の構成方法から $\mu_i = \mu^j_i$ であるため、$\mu_i \neq \empt
 % モデルの他の側面は、単一教科の場合と同様である。
 
 % 主な変更点は、
+
+\textcolor{red}{ここまでが、基本モデル同じで、次からが違う。}
+
 教師と教科の割り当て関数$A$は、各教師をその教師が免許を持つ教科の空でない集合に対応付ける。
 \[
 A: I \to 2^J\setminus {\emptyset}
 \]
 ある教科 $j \in J$ に関連する教師の集合 $I_j$ と学校の集合 $S_j$ は、この新しい文脈の下で以前と同様に、$I_j = \{i \in I \mid j \in A(i)\}$ および $S_j = \{s \in S \mid j \in A(s)\}$ と定義される。再配置前に教師 $i$ が担当していた主担当教科の集合を$B(i)$と定義し、$|B(i)| = 1$ と仮定する。また、教師 $i$ が免許を持つものの、以前は担当していなかった教科の集合を$C(i) = A(i) \setminus B(i)$とする。
 
-学校の実現可能性制約 $\mathcal{F}_s$ は、大きく異なる。
+学校の実現可能性制約 $\mathcal{F}_s$ は、基本モデルと大きく異なる。
 教師の集合 $\mu_s$ が学校 $s$ にとって実現可能であるとは、受け入れられた各教師をその教師が免許を持つ教科のいずれか一つに割り当てることで、学校の教科ごとのキャパシティを満たすような方法が存在する場合をいう。
 これは、各教師 $i \in \mu_s$ に対して $J_s(i) \in A(i)$ を満たす\textbf{\textit{教科割り当て関数}} (subject assignment function) $J_s : \mu_s \rightarrow J$ に依存する。
-形式的な制約は以下の通りである。
+厳密には以下の通りである。
 \[
 \mathcal{F}_s =\{\mu_s \subseteq I : \exists J_s:\mu_s \to J \text{ s.t. } \forall j \in J, |\{i \in \mu_s : J_s(i)= j\}| \leq c_s^j\}
 \]
 
+\textcolor{red}{ここからも、基本モデルと異なる部分を定義する。同じ部分は、同じだと説明をする。}
 
 マッチング $\mu$ の質は、いくつかの重要な特性によって評価される。マッチングが\textbf{\textit{実現可能}} (feasible) であるとは、すべての $s \in S$ について $\mu_s \in \mathcal{F}_s$ が成り立つことである。
 \textbf{\textit{個人合理的}} (individually rational) であるとは、すべての $i \in I$ について $\mu_i \succ_i \emptyset$ が成り立つことである。
@@ -1174,8 +1532,8 @@ A: I \to 2^J\setminus {\emptyset}
 
 
 公平性の概念は、この新しい設定に合わせて調整される。
-ある教師 $i$ が教師 $i'$ に対して\textbf{\textit{弱い教科に基づいた正当な嫉妬}} (weak subject justified envy) を持つとは、教師 $i$ が教えることのできる教科の集合が教師 $i'$ のそれ以上であり（すなわち、$A(s) \cap A(i') \subset A(s) \cap A(i)$）、かつ標準的な正当な嫉妬の条件が満たされる（$\exists s \in S \text{ s.t. } s \succ_i \mu_i, i' \in \mu_s, i \succ_s i'$）場合をいう。
-マッチングが\textbf{\textit{弱い教科公平}} (weak subject-fair) であるとは、他の教師に対して弱い教科に基づいた正当な嫉妬を持つ教師が誰もいない状態を指す。
+ある教師 $i$ が教師 $i'$ に対して\textbf{\textit{教科に基づいた正当な嫉妬}} (subject justified envy) を持つとは、教師 $i$ が教えることのできる教科の集合が教師 $i'$ のそれ以上であり（すなわち、$A(s) \cap A(i') \subset A(s) \cap A(i)$）、かつ標準的な正当な嫉妬の条件が満たされる（$\exists s \in S \text{ s.t. } s \succ_i \mu_i, i' \in \mu_s, i \succ_s i'$）場合をいう。
+マッチングが\textbf{\textit{教科公平}} (subject-fair) であるとは、他の教師に対して教科に基づいた正当な嫉妬を持つ教師が誰もいない状態を指す。
 
 さらに、マッチングが\textbf{\textit{教科jにおいて現職必置条件を満たす}} ($\alpha$-feasible on j) であるとは、複数教科制約の下で実現可能であり、かつ、教科 $j$ の免許を持つ全ての現職教師が雇用されている（すなわち、$\forall i \in I_\alpha \cap I_j, \mu_i \neq \emptyset$）場合をいう。
 
@@ -1195,52 +1553,20 @@ A: I \to 2^J\setminus {\emptyset}
 \end{itemize}
 
 
-カットオフ調整アルゴリズムを、複数教科のケースを扱えるように拡張する。
-学校$s$の教科$j$における需要関数 $D^j_s(p)$ は、教師が持つ全ての免許教科にわたる他の選択肢（alternative opportunities）を考慮するように再定義される。
-教師 $i \in I_j$ がこの需要集合に含まれるのは、その教師が学校$s$の教科$j$におけるカットオフを上回り、かつ、自身が条件を満たす他のいかなる割り当て候補となる学校$s'$の科目$j'$よりも学校$s$での職を好む場合である。
 
-\begin{align*}
-  D^j_s(p) = \{ i \in I_j \mid {} & i \succeq_s i^{(s,p^j_s)} \text{ かつ } s \succ_i \emptyset \text{ であり、} \\
-  & \forall s' \in S\setminus \{s\}, \forall j' \in A(i) \cap A(s'), 
-  i \succeq_{s'} i^{(s',p^{j'}_{s'})} \implies s \succ_i s' \}
-\end{align*}
+\textcolor{red}{この辺りに、Remark1を置き、$A(i) = A(i')$を反しないようにした、教科公平性とすると、性質として弱すぎるということを説明する。すなわち、公平性の概念が弱くなってしまい、$A(i) = A(i')$以外の場合では、正当な嫉妬を認めることとなってしまう。このことを、丁寧に説明する。}
 
+\bigbreak
 
-% The {\bf \textit{subject-cutoff adjustment function}}, $T : P \rightarrow P$, operates as before, but on this new demand function:
-% \[
-% T_s^j(p) =
-% \begin{cases}
-% p_s^j + 1 & \text{if } | D_s^j(p) | > c^j_s \\
-% p_s^j     & \text{if } | D_s^j(p) | \leq c_j^s
-% \end{cases}
-% \]
-% If $p$ is a fixed point of this function $T$, then the resulting sets of demanded teachers are feasible for each school, i.e., $\bigcup_{j \in A(s)} D^j_s(p) \in \mathcal{F}_s$. A final matching $\mu^p$ can be constructed from this fixed point by assigning to each school the union of its demanded teachers across all subjects it offers:
-% \[
-% \mu^{p}_s =\bigcup_{j \in A(s)} D^j_s(p)
-% \]
+\textcolor{red}{この辺りに、Remark2を置き、$A(i) \cap A(i') \neq \emptyset$を反しないようにした、教科公平性とすると、性質として強すぎるということを説明する。すなわち、公平性の概念が強くなってしまい、$A(i) \cap A(i') \neq \emptyset$で定義した、教科公平性を求めてしまうと、TOFMが存在しなくなってしまう場合があることを、反例を用いて説明する。}
 
-
-\textbf{\textit{教科別カットオフ調整関数}} $T : P \rightarrow P$ は、以前と同様に動作しますが、この新しい需要関数に対して適用される。
-\[
-T_s^j(p) =
-\begin{cases}
-p_s^j + 1 & \text{if } | D_s^j(p) | > c^j_s \\
-p_s^j     & \text{if } | D_s^j(p) | \leq c^j_s
-\end{cases}
-\]
-
-もし $p$ がこの関数 $T$ の不動点（fixed point）であるならば、その結果として得られる需要のある教師の集合は、各学校にとって実現可能となる。すなわち、$\bigcup_{j \in A(s)} D^j_s(p) \in \mathcal{F}_s$ である。
-この不動点から最終的なマッチング $\mu^p$ を構成することができる。これは、各学校に対して、その学校が募集するすべての教科にわたる需要のある教師の和集合を割り当てることで行われる。
-\[
-\mu^{p}_s =\bigcup_{j \in A(s)} D^j_s(p)
-\]
 
 
 
 \subsection{仮定}
 本モデルでは、以下の4つの重要な仮定を導入する。
 
-
+\textcolor{red}{これは仮定なので、もう一回そのまま描いてもいいと思う。つまりそのまま。}
 \textcolor{red}{証明とかで使っている場合は、仮定の番号を変更する}
 
 \vspace{0.5\baselineskip}
@@ -1345,7 +1671,56 @@ p_s^j     & \text{if } | D_s^j(p) | \leq c^j_s
 
 % \subsection{複数教科に対応するためのアルゴリズムの拡張}
 
-\subsection{結果と考察}
+
+\textcolor{red}{これらももう一回書いていい。Fixed Pointもちゃんと定義する。あと、数式での定義→言葉での説明の順番で書いていくこと。}
+
+
+カットオフ調整アルゴリズムを、複数教科のケースを扱えるように拡張する。
+学校$s$の教科$j$における需要関数 $D^j_s(p)$ は、教師が持つ全ての免許教科にわたる他の選択肢（alternative opportunities）を考慮するように再定義される。
+教師 $i \in I_j$ がこの需要集合に含まれるのは、その教師が学校$s$の教科$j$におけるカットオフを上回り、かつ、自身が条件を満たす他のいかなる割り当て候補となる学校$s'$の科目$j'$よりも学校$s$での職を好む場合である。
+
+\begin{align*}
+  D^j_s(p) = \{ i \in I_j \mid {} & i \succeq_s i^{(s,p^j_s)} \text{ かつ } s \succ_i \emptyset \text{ であり、} \\
+  & \forall s' \in S\setminus \{s\}, \forall j' \in A(i) \cap A(s'), 
+  i \succeq_{s'} i^{(s',p^{j'}_{s'})} \implies s \succ_i s' \}
+\end{align*}
+
+
+% The {\bf \textit{subject-cutoff adjustment function}}, $T : P \rightarrow P$, operates as before, but on this new demand function:
+% \[
+% T_s^j(p) =
+% \begin{cases}
+% p_s^j + 1 & \text{if } | D_s^j(p) | > c^j_s \\
+% p_s^j     & \text{if } | D_s^j(p) | \leq c_j^s
+% \end{cases}
+% \]
+% If $p$ is a fixed point of this function $T$, then the resulting sets of demanded teachers are feasible for each school, i.e., $\bigcup_{j \in A(s)} D^j_s(p) \in \mathcal{F}_s$. A final matching $\mu^p$ can be constructed from this fixed point by assigning to each school the union of its demanded teachers across all subjects it offers:
+% \[
+% \mu^{p}_s =\bigcup_{j \in A(s)} D^j_s(p)
+% \]
+
+
+\textbf{\textit{教科別カットオフ調整関数}} $T : P \rightarrow P$ は、以前と同様に動作するが、この新しい需要関数に対して適用される。
+\[
+T_s^j(p) =
+\begin{cases}
+p_s^j + 1 & \text{if } | D_s^j(p) | > c^j_s \\
+p_s^j     & \text{if } | D_s^j(p) | \leq c^j_s
+\end{cases}
+\]
+
+もし $p$ がこの関数 $T$ の不動点（fixed point）であるならば、その結果として得られる需要のある教師の集合は、各学校にとって実現可能となる。すなわち、$\bigcup_{j \in A(s)} D^j_s(p) \in \mathcal{F}_s$ である。
+この不動点から最終的なマッチング $\mu^p$ を構成することができる。これは、各学校に対して、その学校が募集するすべての教科にわたる需要のある教師の和集合を割り当てることで行われる。
+\[
+\mu^{p}_s =\bigcup_{j \in A(s)} D^j_s(p)
+\]
+
+
+
+
+\textcolor{red}{不動点の例・不動点でない例、不動点であるならば、教科公平性を満たしていることをも確認する。不動点じゃない時には、教科公平性を満たさないこと？}
+
+\subsection{主要定理}
 
 
 
@@ -1354,9 +1729,10 @@ p_s^j     & \text{if } | D_s^j(p) | \leq c^j_s
 % \end{theorem}
 
 \begin{theorem}
-もしカットオフのプロファイル \( p \in P\) が関数 \( T \) の不動点であるならば、それによって定まるマッチング \( \mu^{p} \) は弱い教科公平（weak subject-fair）である。
+もしカットオフのプロファイル \( p \in P\) が関数 \( T \) の不動点であるならば、それによって定まるマッチング \( \mu^{p} \) は教科公平（subject-fair）である。
 \end{theorem}
 
+\textcolor{red}{実現可能性、個人合理性も追加で証明する。}
 
 \begin{proof}
 %   Sps a cutoff profile \( p \in P\) is a fixed point of \( T \). 
@@ -1448,34 +1824,6 @@ $i \succ_s i'$ かつ $i' \succeq_s i^{(s,p_s^j)}$ であるから、優先順�
 % \subsubsection{動機付けの例}
 
 % 以下の例を考えます。これは、前述のアルゴリズムの下では、現職必置条件を満たす不動点が存在しないシナリオを説明するものである。
-
-
-
-\textbf{例 1.}(仮定(3)',仮定(5)を仮定しない場合に現職必置条件を保証できない例)
-教師の集合を $I = \{1,2,3,4\}$、学校の集合を $S = \{5,6\}$ とし、現職教師の集合を $I_\alpha = \{1,2,3\}$ とする。
-
-選好は以下の通りである。
-\begin{itemize}
-    \item 全ての教師 $i \in I$ について、$\succ_i: 6 \succ 5 \succ \emptyset$。
-    \item 全ての学校 $s \in S$ について、$\succ_s: 1 \succ 2 \succ 3 \succ 4 \succ \emptyset$。
-\end{itemize}
-
-教師の免許教科 ($A(i)$) と学校の募集教科 ($A(s)$) は以下の通りである。
-\begin{itemize}
-    \item $A(1) = \{\text{英語, 数学}\}$
-    \item $A(2) = \{\text{英語, 数学}\}$
-    \item $A(3) = \{\text{数学}\}$
-    \item $A(4) = \{\text{英語}\}$
-    \item $A(5) = \{\text{英語, 数学}\}$
-    \item $A(6) = \{\text{英語}\}$
-\end{itemize}
-
-最後に、教科ごとのキャパシティは $c_5^{\text{英語}} = 2$ および $c_5^{\text{数学}} = 1$ である。
-
-この設定では、アルゴリズムの一つの結果として、$\mu_5 = \{2\}$ および $\mu_6 = \{1\}$ といったマッチングが生じうる。
-この場合、現職教師である教師3 ($3 \in I_\alpha$) は、職を得られないままとなる。
-これは、現職必置条件を満たすマッチングの存在が保証されないことを示している。
-
 
 
 
@@ -1829,6 +2177,36 @@ $\widehat{D}_s^j(p^\star_j) = \widehat{\mu}_s^j(p^\star)$ であり、その実�
 \end{proof}
 
 
+
+
+\textbf{例 1.}(仮定(3)',仮定(5)を仮定しない場合に現職必置条件を保証できない例)
+教師の集合を $I = \{1,2,3,4\}$、学校の集合を $S = \{5,6\}$ とし、現職教師の集合を $I_\alpha = \{1,2,3\}$ とする。
+
+選好は以下の通りである。
+\begin{itemize}
+    \item 全ての教師 $i \in I$ について、$\succ_i: 6 \succ 5 \succ \emptyset$。
+    \item 全ての学校 $s \in S$ について、$\succ_s: 1 \succ 2 \succ 3 \succ 4 \succ \emptyset$。
+\end{itemize}
+
+教師の免許教科 ($A(i)$) と学校の募集教科 ($A(s)$) は以下の通りである。
+\begin{itemize}
+    \item $A(1) = \{\text{英語, 数学}\}$
+    \item $A(2) = \{\text{英語, 数学}\}$
+    \item $A(3) = \{\text{数学}\}$
+    \item $A(4) = \{\text{英語}\}$
+    \item $A(5) = \{\text{英語, 数学}\}$
+    \item $A(6) = \{\text{英語}\}$
+\end{itemize}
+
+最後に、教科ごとのキャパシティは $c_5^{\text{英語}} = 2$ および $c_5^{\text{数学}} = 1$ である。
+
+この設定では、アルゴリズムの一つの結果として、$\mu_5 = \{2\}$ および $\mu_6 = \{1\}$ といったマッチングが生じうる。
+この場合、現職教師である教師3 ($3 \in I_\alpha$) は、職を得られないままとなる。
+これは、現職必置条件を満たすマッチングの存在が保証されないことを示している。
+
+
+
+
 % \begin{table}[htbp]
 %   \centering
 %   \caption{記述統計量のサンプル}
@@ -1935,7 +2313,7 @@ $\mathcal{F}_s$ が予算制約であるため、これは(1)を満たす。(5)�
 \begin{proof}
   $\mathcal{F}_s$ が定員制約であると仮定する。(1)より、TOFMである $\mu^*$ が存在する。背理法により、$\mu^*_{i'} = \emptyset$ となるような $i' \in I_\alpha$ が存在すると仮定する。(4)より、全ての $s \in S$ に対して $s \succ_{i'} \emptyset$ である。(3)より、$i' \in \mu'_{s'}$ となるような $s' \in S$ が存在する。$\mathcal{F}_s$ が定員制約であることから、$|\mu^*_{s'}| \leq q_{s'}$ である。
 
-  \textbf{場合1:} $|\mu^*_{s'}| < q_{s'}$ のとき\\
+  \textbf{ケース1:} $|\mu^*_{s'}| < q_{s'}$ のとき\\
   このとき、 $|\mu^*_{s'} \cup \{i'\}| \leq q_{s'}$ である。
   以下のようにマッチング $\mu''$ を定義する。
   \[
@@ -1950,7 +2328,7 @@ $\mathcal{F}_s$ が予算制約であるため、これは(1)を満たす。(5)�
   しかし、$\mu^*_{i'} = \emptyset$、$\mu''_{i'} = s'$ であり、かつ $s' \succ_{i'} \emptyset$ である。
   したがって、$\mu^*_{i'} \nsucc_{i'} \mu''_{i'}$ となる。これはTOFMの定義(ii)に矛盾する。
 
-  \textbf{場合2:} $|\mu^*_{s'}| = q_{s'}$ のとき\\
+  \textbf{ケース2:} $|\mu^*_{s'}| = q_{s'}$ のとき\\
 このとき、$j \in \mu^*_{s'}$ となるような $j \in I \setminus I_\alpha$ が存在し、(2)より $i' \succ_{s'} j$ が成立する。
 以下のようにマッチング $\mu'''$ を定義する。
 \[
