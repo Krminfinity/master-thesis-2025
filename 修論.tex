@@ -961,13 +961,14 @@ p_s^j     & \text{if } | D_s^j(p) | \leq c^j_s
  & && \text{個人合理的、かつ公平な任意の$\bar{\mu}^j$に対して)}
 \end{align*}
 
+定理1より、$\mu^j$は教科jにおいて現職必置条件を満たす。ここで、$\forall i \in I_j$に対して$\mu_i=\mu^j_i$、かつ、$\forall s \in S$に対して$\mu^\star_s = \bigcup\limits_{j \in A(s)} \mu^j_s$となるようなマッチング$\mu$を構成する。
 
 
 \textcolor{red}{ここから　動画は00:43:05から}
 
 
 
-\subsection{結果と考察}
+\subsection{主要定理}
 
 % \begin{theorem}
 %   Under subject constraint, subject-TOFM is always $\alpha$-feasible.
@@ -1003,10 +1004,12 @@ p_s^j     & \text{if } | D_s^j(p) | \leq c^j_s
 
   
 \begin{theorem}
-教科制約の下で、教科別教師最適公平マッチング（subject-TOFM）は常に現職必置条件を満たす。
+教科別教師最適公平マッチング（subject-TOFM）は常に現職必置条件を満たす。
 \end{theorem}
 
 \begin{proof}
+
+    \textcolor{red}{本証明における定理1とは、付録に記載の定理4のことであり、容量制約の場合に、マッチングは、現職必置条件を満たすというものである。}
 % \cite{10.1093/restud/rdad046}
 % Kamada \& Kojima(2024)によれば、各教科$j$において、以下の条件を満たす教師最適公平マッチング（TOFM）$\mu^j$が存在する。
 % \begin{align*}
@@ -1016,7 +1019,7 @@ p_s^j     & \text{if } | D_s^j(p) | \leq c^j_s
 %  &(iv) \text{教師最適性 (T.O.)}: && \mu^j_i \succeq_i \bar{\mu}^j_i \text{ (任意の$i \in I_j$と、教科jで実現可能、}\\
 %  & && \text{個人合理的、かつ公平な任意の$\bar{\mu}^j$に対して)}
 % \end{align*}
-定理1より、$\mu^j$は教科jにおいて現職必置条件を満たす。ここで、$\forall i \in I_j$に対して$\mu_i=\mu^j_i$、かつ、$\forall s \in S$に対して$\mu_s = \bigcup\limits_{j \in A(s)} \mu^j_s$となるようなマッチング$\mu$を構成する。
+% 定理1より、$\mu^j$は教科jにおいて現職必置条件を満たす。ここで、$\forall i \in I_j$に対して$\mu_i=\mu^j_i$、かつ、$\forall s \in S$に対して$\mu_s = \bigcup\limits_{j \in A(s)} \mu^j_s$となるようなマッチング$\mu$を構成する
 
 \paragraph{($\mu$がsubject-TOFMであることを示す)}
 (i)を示すために、まず$\mu$が\textbf{実現可能}であることを示す。任意の$s \in S$と任意の$j \in J$をとる。
