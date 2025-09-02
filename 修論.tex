@@ -1483,34 +1483,35 @@ $\mu$の構成方法から $\mu_i = \mu^j_i$ であるため、$\mu_i \neq \empt
 
 % \textbf{Assumption (4)} All $\alpha$-teachers consider every school to be an acceptable assignment. Formally, for all $i \in I_\alpha$ and for all $s \in S$, it holds that $s \succ_i \emptyset$.
 
-\textcolor{red}{どこが同じでどこが違うのかを書く。違う部分は定義する。}
+% \textcolor{red}{どこが同じでどこが違うのかを書く。違う部分は定義する。}
 
-$I$ を教師からなる空でない有限集合、$S$ を学校からなる空でない有限集合とする。各教師 $i \in I$ は、学校の集合 $S$ とマッチしない状態 $\emptyset$ の上で定義される厳密な選好順序 $\succ_i$ を持つ。各学校 $s \in S$ は、教師の集合 $I$ の上で定義される厳密な優先順位 $\succ_s$ を持つ。すべての選好の組をプロファイル $\succ_I = (\succ_i)_{i \in I}$ とし、すべての優先順位の組をプロファイル $\succ_S = (\succ_s)_{s \in S}$ とする。
+% $I$ を教師からなる空でない有限集合、$S$ を学校からなる空でない有限集合とする。各教師 $i \in I$ は、学校の集合 $S$ とマッチしない状態 $\emptyset$ の上で定義される厳密な選好順序 $\succ_i$ を持つ。各学校 $s \in S$ は、教師の集合 $I$ の上で定義される厳密な優先順位 $\succ_s$ を持つ。すべての選好の組をプロファイル $\succ_I = (\succ_i)_{i \in I}$ とし、すべての優先順位の組をプロファイル $\succ_S = (\succ_s)_{s \in S}$ とする。
 
-各学校 $s \in S$ について、その制約は、実現可能な教師集合の族 $\mathcal{F}_s$ によって与えられる。教師の部分集合 $I' \subseteq I$ は、$I' \in \mathcal{F}_s$ であるとき、学校 $s$ において\textbf{\textit{実現可能}} (feasible) であると定義される。したがって、一つの\textbf{\textit{問題}} (problem) は、組 $(I, S, \succ_I, \succ_S, \{\mathcal{F}_s\}_{s \in S})$ によって特徴づけられる。
+% 各学校 $s \in S$ について、その制約は、実現可能な教師集合の族 $\mathcal{F}_s$ によって与えられる。教師の部分集合 $I' \subseteq I$ は、$I' \in \mathcal{F}_s$ であるとき、学校 $s$ において\textbf{\textit{実現可能}} (feasible) であると定義される。したがって、一つの\textbf{\textit{問題}} (problem) は、組 $(I, S, \succ_I, \succ_S, \{\mathcal{F}_s\}_{s \in S})$ によって特徴づけられる。
 
-\textbf{\textit{マッチング}} (matching) $\mu$ とは、教師を学校に割り当てる写像であり、形式的には以下の3つの条件で定義される。
-\begin{itemize}
-    \item[(i)] すべての教師$i$について、その割り当て先は $\mu_i \in S \cup \{\emptyset\}$ である。
-    \item[(ii)] すべての学校$s$について、そこに割り当てられた教師の集合は $\mu_s \subseteq I$ である。
-    \item[(iii)] いかなる教師$i$と学校$s$のペアにおいても、$\mu_i = s$ であることと $i \in \mu_s$ であることが同値であるように、割り当ては整合的でなければならない。
-\end{itemize}
+% \textbf{\textit{マッチング}} (matching) $\mu$ とは、教師を学校に割り当てる写像であり、形式的には以下の3つの条件で定義される。
+% \begin{itemize}
+%     \item[(i)] すべての教師$i$について、その割り当て先は $\mu_i \in S \cup \{\emptyset\}$ である。
+%     \item[(ii)] すべての学校$s$について、そこに割り当てられた教師の集合は $\mu_s \subseteq I$ である。
+%     \item[(iii)] いかなる教師$i$と学校$s$のペアにおいても、$\mu_i = s$ であることと $i \in \mu_s$ であることが同値であるように、割り当ては整合的でなければならない。
+% \end{itemize}
 
 
-
+本章では，2章における「問題」の定義および
+「マッチング」の定義（定義~\ref{def:matching-prev}）をそのまま採用する。すなわち，集合 $I, S$，各教師の選好 $\succ_i$，各学校の優先順位 $\succ_s$，各学校の実現可能集合族 $\mathcal{F}_s$，および写像 $\mu$ に関する記号と意味は2章と同一である。
 % このセクションでは、前節のモデルを\textbf{複数教科制約} (Multi-Subject Constraint) の場合に拡張する。
 % これにより、教師が持つ免許は1つだけという制約がなくなり、複数の教科で資格を持つことが許容される。
 % モデルの他の側面は、単一教科の場合と同様である。
 
 % 主な変更点は、
 
-\textcolor{red}{ここまでが、基本モデル同じで、次からが違う。}
+% \textcolor{red}{ここまでが、基本モデル同じで、次からが違う。}
 
 教師と教科の割り当て関数$A$は、各教師をその教師が免許を持つ教科の空でない集合に対応付ける。
 \[
 A: I \to 2^J\setminus {\emptyset}
 \]
-ある教科 $j \in J$ に関連する教師の集合 $I_j$ と学校の集合 $S_j$ は、この新しい文脈の下で以前と同様に、$I_j = \{i \in I \mid j \in A(i)\}$ および $S_j = \{s \in S \mid j \in A(s)\}$ と定義される。再配置前に教師 $i$ が担当していた主担当教科の集合を$B(i)$と定義し、$|B(i)| = 1$ と仮定する。また、教師 $i$ が免許を持つものの、以前は担当していなかった教科の集合を$C(i) = A(i) \setminus B(i)$とする。
+ある教科 $j \in J$ に関連する教師の集合 $I_j$ と学校の集合 $S_j$ は、2章と同様に定義される。再配置前に教師 $i$ が担当していた主担当教科の集合を$B(i)$とし、$|B(i)| = 1$ と仮定する。また、教師 $i$ が免許を持つものの、以前は担当していなかった教科の集合を$C(i) = A(i) \setminus B(i)$とする。
 
 学校の実現可能性制約 $\mathcal{F}_s$ は、基本モデルと大きく異なる。
 教師の集合 $\mu_s$ が学校 $s$ にとって実現可能であるとは、受け入れられた各教師をその教師が免許を持つ教科のいずれか一つに割り当てることで、学校の教科ごとのキャパシティを満たすような方法が存在する場合をいう。
