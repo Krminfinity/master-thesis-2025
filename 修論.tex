@@ -360,6 +360,21 @@ D_s(p) = \{i_2, i_3\}
 \end{itemize}
 
 
+
+
+
+半順序集合 $(X, \succeq)$ において、任意の $x, y \in X$ に対して、上限 $\sup_{\succeq} \{x, y\}$ と下限 $\inf_{\succeq} \{x, y\}$ が常に存在する時、この半順序集合を \textbf{\textit{束（Lattice）}} と呼ぶ。これは、集合 $X$ の中から\underbar{どの2つの元（要素）を選んでも}、その2つを「上から押さえる」ことができる元の中で最小のもの（上限）と、「下から支える」ことができる元の中で最大のもの（下限）が、必ずその集合 $X$ の中に見つかる、という性質を表している。
+
+
+半順序集合 $(X, \succeq)$ において、空集合ではない任意の部分集合 $Y \subseteq X$ に対して、上限 $\sup_{\succeq} Y$ と下限 $\inf_{\succeq} Y$ が常に存在する時、この半順序集合を \textbf{\textit{完備束（Complete Lattice）}} と呼ぶ。これは、束の性質をさらに強力にしたものであり、2つの元だけでなく、\underbar{どのような部分集合（元の集まり）を持ってきても}、その集合全体に対する上限と下限が必ず集合 $X$ の中に存在する、ということを意味する。有限集合だけでなく、無限個の元からなる部分集合についてもこの条件が成り立つ。
+
+
+\textbf{定理}. $(L, \leq)$ を完備束とし、$f: L \to L$ を増加関数、すなわち、$x \leq y$ ならば $f(x) \leq f(y)$ が成り立つとする。このとき、$f$ の不動点の集合 $\{ u \in L : f(u) = u \}$ は $\leq$ の下で完備束をなす。特に、$f$ は最小不動点 $\underline{u}$ と最大不動点 $\overline{u}$ を持つ。\footnote{https://pauldelatte.github.io/files/L3.pdfより}
+
+\bigbreak
+
+
+
 \textbf{定理1}. カットオフ・プロファイル $p \in P$ がカットオフ調整関数 $T$ の不動点であるならば、対応するマッチング $\mu^p$ は実現可能であり、個人合理的であり、公平である。さらに、もしあるマッチング $\mu$ が実現可能で、個人合理的で、公平であるならば、あるカットオフ・プロファイル $p \in P$ が存在して $\mu = \mu^p$ となり、その $p$ は $T$ の不動点である。
 
 
@@ -629,16 +644,6 @@ Kamada and Kojima (2024) の定理1によれば、カットオフ・プロファ
 % We call a poset \( (X, \succeq) \) a \textbf{ \textit{complete lattice}} if  \( \forall Y \in 2^X \), \( \exists \sup_{\succeq} Y \) and \( \exists \inf_{\succeq} Y \) .
 
 
-半順序集合 $(X, \succeq)$ において、任意の $x, y \in X$ に対して、上限 $\sup_{\succeq} \{x, y\}$ と下限 $\inf_{\succeq} \{x, y\}$ が常に存在する時、この半順序集合を \textbf{\textit{束（Lattice）}} と呼ぶ。これは、集合 $X$ の中から\underbar{どの2つの元（要素）を選んでも}、その2つを「上から押さえる」ことができる元の中で最小のもの（上限）と、「下から支える」ことができる元の中で最大のもの（下限）が、必ずその集合 $X$ の中に見つかる、という性質を表している。
-
-
-半順序集合 $(X, \succeq)$ において、\textbf{\textit{空集合ではない}}任意の部分集合 $Y \subseteq X$ に対して、上限 $\sup_{\succeq} Y$ と下限 $\inf_{\succeq} Y$ が常に存在する時、この半順序集合を \textbf{\textit{完備束（Complete Lattice）}} と呼ぶ。これは、束の性質をさらに強力にしたものであり、2つの元だけでなく、\underbar{どのような部分集合（元の集まり）を持ってきても}、その集合全体に対する上限と下限が必ず集合 $X$ の中に存在する、ということを意味する。有限集合だけでなく、無限個の元からなる部分集合についてもこの条件が成り立つ。
-
-
-\textbf{定理}. $(L, \leq)$ を完備束とし、$f: L \to L$ を増加関数、すなわち、$x \leq y$ ならば $f(x) \leq f(y)$ が成り立つとする。このとき、$f$ の不動点の集合 $\{ u \in L : f(u) = u \}$ は $\leq$ の下で完備束をなす。特に、$f$ は最小不動点 $\underline{u}$ と最大不動点 $\overline{u}$ を持つ。\footnote{https://pauldelatte.github.io/files/L3.pdfより}
-
-
-
 % ラティスの一番上が、教師最適公平マッチングになっていることを示す
 
 \paragraph{カットオフ遷移説明}
@@ -805,7 +810,7 @@ Kamada and Kojima (2024) の定理1によれば、カットオフ・プロファ
 \subsection{仮定}
 本モデルでは、以下の3つの重要な仮定を導入する。
 
-\textcolor{red}{証明とかで使っている場合は、仮定の番号を変更する}
+% \textcolor{red}{証明とかで使っている場合は、仮定の番号を変更する}
 
 % \vspace{0.5\baselineskip} % \baselineskip から 0.5\baselineskip へ変更
 % \noindent\textbf{仮定 (1)} \\
@@ -957,7 +962,7 @@ p_s^j     & \text{if } | D_s^j(p) | \leq c^j_s
 
 
 
-\textcolor{red}{関数の回し方の例を入れる}
+% \textcolor{red}{関数の回し方の例を入れる}
 
 \noindent 上で定義した需要集合 $D^j_s(p)$ と教科別カットオフ調整関数 $T^j_s$ を、数値例で説明する。初期値 $p=(1,\dots,1)$ から出発し、$|D^j_s(p)|>c^j_s$ のときにのみ $p^j_s$ を1だけ引き上げる更新を反復する。まず $|J|=2$（例A）で基本的な「回し方」を確認し、ついで $|J|=3$ （例B）で校間・教科間の相互作用を示す。
 
@@ -1297,7 +1302,7 @@ p^j_s:\ 3\to \mathbf{4}\ \to\ \mathbf{5}.
 
 
 
-\textcolor{red}{ここから　動画は00:43:05から}
+% \textcolor{red}{ここから　動画は00:43:05から}
 
 
 
@@ -1497,8 +1502,7 @@ $\mu$の構成方法から $\mu_i = \mu^j_i$ であるため、$\mu_i \neq \empt
 % \end{itemize}
 
 
-本章では，2章における「問題」の定義および
-「マッチング」の定義（定義~\ref{def:matching-prev}）をそのまま採用する。すなわち，集合 $I, S$，各教師の選好 $\succ_i$，各学校の優先順位 $\succ_s$，各学校の実現可能集合族 $\mathcal{F}_s$，および写像 $\mu$ に関する記号と意味は2章と同一である。
+本章では，2章における「問題」の定義および「マッチング」の定義をそのまま採用する。すなわち，集合 $I, S$，各教師の選好 $\succ_i$，各学校の優先順位 $\succ_s$，各学校の実現可能集合族 $\mathcal{F}_s$，および写像 $\mu$ に関する記号と意味は2章と同一である。
 % このセクションでは、前節のモデルを\textbf{複数教科制約} (Multi-Subject Constraint) の場合に拡張する。
 % これにより、教師が持つ免許は1つだけという制約がなくなり、複数の教科で資格を持つことが許容される。
 % モデルの他の側面は、単一教科の場合と同様である。
@@ -1513,62 +1517,143 @@ A: I \to 2^J\setminus {\emptyset}
 \]
 ある教科 $j \in J$ に関連する教師の集合 $I_j$ と学校の集合 $S_j$ は、2章と同様に定義される。再配置前に教師 $i$ が担当していた主担当教科の集合を$B(i)$とし、$|B(i)| = 1$ と仮定する。また、教師 $i$ が免許を持つものの、以前は担当していなかった教科の集合を$C(i) = A(i) \setminus B(i)$とする。
 
-学校の実現可能性制約 $\mathcal{F}_s$ は、基本モデルと大きく異なる。
-教師の集合 $\mu_s$ が学校 $s$ にとって実現可能であるとは、受け入れられた各教師をその教師が免許を持つ教科のいずれか一つに割り当てることで、学校の教科ごとのキャパシティを満たすような方法が存在する場合をいう。
-これは、各教師 $i \in \mu_s$ に対して $J_s(i) \in A(i)$ を満たす\textbf{\textit{教科割り当て関数}} (subject assignment function) $J_s : \mu_s \rightarrow J$ に依存する。
-厳密には以下の通りである。
+学校の実現可能性制約 $\mathcal{F}_s$ は、各教師 $i \in \mu_s$ に対して $J_s(i) \in A(i)$ を満たす\textbf{\textit{教科割り当て関数}} (subject assignment function) $J_s : \mu_s \rightarrow J$ に依存し、以下のように定義される。
 \[
 \mathcal{F}_s =\{\mu_s \subseteq I : \exists J_s:\mu_s \to J \text{ s.t. } \forall j \in J, |\{i \in \mu_s : J_s(i)= j\}| \leq c_s^j\}
 \]
+教師の集合 $\mu_s$ が学校 $s$ にとって実現可能であるとは、受け入れられた各教師をその教師が免許を持つ教科のいずれか一つに割り当てることで、学校の教科ごとのキャパシティを満たすような方法が存在する場合をいう。
 
-\textcolor{red}{ここからも、基本モデルと異なる部分を定義する。同じ部分は、同じだと説明をする。}
 
-マッチング $\mu$ の質は、いくつかの重要な特性によって評価される。マッチングが\textbf{\textit{実現可能}} (feasible) であるとは、すべての $s \in S$ について $\mu_s \in \mathcal{F}_s$ が成り立つことである。
-\textbf{\textit{個人合理的}} (individually rational) であるとは、すべての $i \in I$ について $\mu_i \succ_i \emptyset$ が成り立つことである。
-ある教師 $i$ が教師 $i'$ に対して\textbf{\textit{正当化された嫉妬を持つ}} (have justified envy toward) とは、$s \succ_i \mu_i$、$i' \in \mu_s$、かつ $i \succ_s i'$ となるような学校 $s \in S$ が存在する場合をいう。
-したがって、マッチング $\mu$ が\textbf{\textit{公平}} (fair) であるとは、別の教師に対して正当化された嫉妬を持つ教師が一人もいないことである。
-最後に、マッチング $\mu$ が\textbf{\textit{効率的}} (non-wasteful) とは、$s \succ_i \mu_i$ かつ $\mu_s \cup \{i\} \in \mathcal{F}_s$ となるようなペア $(i, s) \in I \times S$ が存在しないことである。
-マッチング $\mu$ は、実現可能、個人合理的、公平、かつ効率的という性質を同時に満たすとき、\textbf{\textit{安定}} (stable) であると定義される。
-マッチング $\mu$ が\textbf{\textit{現職必置条件}} (in-service teacher condition) を満たすとは、この集合の全ての教師が割り当てを得ること、すなわち $\forall i \in I_{\alpha}, \mu_i \neq \emptyset$ が成り立つ場合をいう。
+マッチング $\mu$ の質は、いくつかの重要な特性によって評価される。本章でも、2章で導入した定義をそのまま継承する。とくに「実現可能（feasible）」「個人合理的（individually rational）」「正当化された嫉妬（justified envy）」「公平（fair）」「効率的（non-wasteful）」「安定（stable）」「現職必置条件（in-service teacher condition）」はすべて2章の定義に従う。
+
+
+
+
+
+
+
+% マッチング $\mu$ の質は、いくつかの重要な特性によって評価される。マッチングが\textbf{\textit{実現可能}} (feasible) であるとは、すべての $s \in S$ について $\mu_s \in \mathcal{F}_s$ が成り立つことである。
+% \textbf{\textit{個人合理的}} (individually rational) であるとは、すべての $i \in I$ について $\mu_i \succ_i \emptyset$ が成り立つことである。
+% ある教師 $i$ が教師 $i'$ に対して\textbf{\textit{正当化された嫉妬を持つ}} (have justified envy toward) とは、$s \succ_i \mu_i$、$i' \in \mu_s$、かつ $i \succ_s i'$ となるような学校 $s \in S$ が存在する場合をいう。
+% したがって、マッチング $\mu$ が\textbf{\textit{公平}} (fair) であるとは、別の教師に対して正当化された嫉妬を持つ教師が一人もいないことである。
+% 最後に、マッチング $\mu$ が\textbf{\textit{効率的}} (non-wasteful) とは、$s \succ_i \mu_i$ かつ $\mu_s \cup \{i\} \in \mathcal{F}_s$ となるようなペア $(i, s) \in I \times S$ が存在しないことである。
+% マッチング $\mu$ は、実現可能、個人合理的、公平、かつ効率的という性質を同時に満たすとき、\textbf{\textit{安定}} (stable) であると定義される。
+% マッチング $\mu$ が\textbf{\textit{現職必置条件}} (in-service teacher condition) を満たすとは、この集合の全ての教師が割り当てを得ること、すなわち $\forall i \in I_{\alpha}, \mu_i \neq \emptyset$ が成り立つ場合をいう。
 
 
 公平性の概念は、この新しい設定に合わせて調整される。
 ある教師 $i$ が教師 $i'$ に対して\textbf{\textit{教科に基づいた正当な嫉妬}} (subject justified envy) を持つとは、教師 $i$ が教えることのできる教科の集合が教師 $i'$ のそれ以上であり（すなわち、$A(s) \cap A(i') \subset A(s) \cap A(i)$）、かつ標準的な正当な嫉妬の条件が満たされる（$\exists s \in S \text{ s.t. } s \succ_i \mu_i, i' \in \mu_s, i \succ_s i'$）場合をいう。
 マッチングが\textbf{\textit{教科公平}} (subject-fair) であるとは、他の教師に対して教科に基づいた正当な嫉妬を持つ教師が誰もいない状態を指す。
 
-さらに、マッチングが\textbf{\textit{教科jにおいて現職必置条件を満たす}} ($\alpha$-feasible on j) であるとは、複数教科制約の下で実現可能であり、かつ、教科 $j$ の免許を持つ全ての現職教師が雇用されている（すなわち、$\forall i \in I_\alpha \cap I_j, \mu_i \neq \emptyset$）場合をいう。
+さらに、マッチングが教科jにおいて現職必置条件を満たす ($\alpha$-feasible on j) であることや教師最適公平マッチング (TOFM)についても、2章の定義をそのまま継承する。
+
+
+% とは、複数教科制約の下で実現可能であり、かつ、教科 $j$ の免許を持つ全ての現職教師が雇用されている（すなわち、$\forall i \in I_\alpha \cap I_j, \mu_i \neq \emptyset$）場合をいう。
 
 % これと関連するものの異なる条件として、現職必置性 (α-feasibility) があります。マッチング $\mu$ が\textbf{\textit{現職必置条件}} (α-feasible) であるとは、すべての $s \in S$ について $\mu_s \in \mathcal{F}_s$ という条件を満たし、かつ、それに加えて、$i$ がα-教師として指定されている場合は常に $\mu_i \neq \emptyset$ となることです。
 
 
 
-\paragraph{定義1.(再掲)}
-制約 $\mathcal{F}_s$ は、$I' \in \mathcal{F}_s$ かつ $I'' \subseteq I'$ ならば常に $I'' \in \mathcal{F}_s$ が成り立つとき、\textbf{\textit{一般上限}} (general upper-bound) である。
+% \paragraph{定義1.(再掲)}
+% 制約 $\mathcal{F}_s$ は、$I' \in \mathcal{F}_s$ かつ $I'' \subseteq I'$ ならば常に $I'' \in \mathcal{F}_s$ が成り立つとき、\textbf{\textit{一般上限}} (general upper-bound) である。
 
 
-\paragraph{定義2.(再掲)}
-マッチング $\mu$ は、以下の2つの条件を満たすとき、\textbf{\textit{教師最適公平マッチング (TOFM)}} (teacher-optimal fair matching) となる。
-\begin{itemize}
-    \item[(i)] $\mu$ は、実現可能、個人合理的、かつ公平であり、かつ
-    \item[(ii)] 実現可能、個人合理的、かつ公平である、他のいかなるマッチング $\mu'$ に対しても、すべての教師 $i \in I$ について $\mu_i \succeq_i \mu'_i$ が成り立つ。
-\end{itemize}
+% \paragraph{定義2.(再掲)}
+% マッチング $\mu$ は、以下の2つの条件を満たすとき、\textbf{\textit{教師最適公平マッチング (TOFM)}} (teacher-optimal fair matching) となる。
+% \begin{itemize}
+%     \item[(i)] $\mu$ は、実現可能、個人合理的、かつ公平であり、かつ
+%     \item[(ii)] 実現可能、個人合理的、かつ公平である、他のいかなるマッチング $\mu'$ に対しても、すべての教師 $i \in I$ について $\mu_i \succeq_i \mu'_i$ が成り立つ。
+% \end{itemize}
 
 
 
-\textcolor{red}{この辺りに、Remark1を置き、$A(i) = A(i')$を反しないようにした、教科公平性とすると、性質として弱すぎるということを説明する。すなわち、公平性の概念が弱くなってしまい、$A(i) = A(i')$以外の場合では、正当な嫉妬を認めることとなってしまう。このことを、丁寧に説明する。}
+% \textcolor{red}{この辺りに、Remark1を置き、$A(i) = A(i')$を反しないようにした、教科公平性とすると、性質として弱すぎるということを説明する。すなわち、公平性の概念が弱くなってしまい、$A(i) = A(i')$以外の場合では、正当な嫉妬を認めることとなってしまう。このことを、丁寧に説明する。}
 
 \bigbreak
 
-\textcolor{red}{この辺りに、Remark2を置き、$A(i) \cap A(i') \neq \emptyset$を反しないようにした、教科公平性とすると、性質として強すぎるということを説明する。すなわち、公平性の概念が強くなってしまい、$A(i) \cap A(i') \neq \emptyset$で定義した、教科公平性を求めてしまうと、TOFMが存在しなくなってしまう場合があることを、反例を用いて説明する。}
+\begin{remark}[弱すぎる教科公平の定義について]
+本章で導入した「教科に基づいた正当な嫉妬（subject justified envy）」と「教科公平（subject-fair）」を、
+$A(i)=A(i')$（教えられる教科集合が一致）という場合に\emph{のみ}検知するように弱めて定義すると、公平性の概念が弱くなりすぎる。
 
+直観的には、$i$ の方が $i'$ より\emph{広い}教科集合を持ち（すなわち $A(i') \subsetneq A(i)$）、かつ標準的な意味で $i$ が $i'$ に対して正当な嫉妬を持つ状況であっても、$A(i)=A(i')$ でないという理由だけで「教科に基づいた正当な嫉妬」として\emph{数え上げられない}からである。
+このとき、そのマッチングは実際には不公平であるにもかかわらず、形式的には「教科公平」と判定されうる。
+言い換えれば、$A(i)=A(i')$ の場合に限って嫉妬を認める定義は、$A(i)\neq A(i')$ のすべての局面（とりわけ $A(i') \subsetneq A(i)$）で生じる正当な嫉妬を黙殺してしまい、公平性テストとしての弁別力を失わせる。
+
+（例）ある学校 $s$ において、$i$ は $i'$ より多くの教科資格を持ち（$A(i') \subsetneq A(i)$）、標準的条件（$\exists s\in S$ s.t.\ $s \succ_i \mu_i$, $i'\in \mu_s$, $i \succ_s i'$）が満たされるとする。
+この状況は実質的な不公正（$i$ は $s$ に割り当てられるべき）を示すが、$A(i)=A(i')$ を満たさないため、弱い定義では「教科に基づいた正当な嫉妬」と認識されず、結果としてそのマッチングが「教科公平」と誤って評価されうる。
+
+以上より、$A(i)=A(i')$ に限定する弱い定義は、公平性の本質的な違反を看過し得るため、分析目的に照らして不適切に弱い。
+\end{remark}
+
+
+\bigbreak
+
+% \textcolor{red}{この辺りに、Remark2を置き、$A(i) \cap A(i') \neq \emptyset$を反しないようにした、教科公平性とすると、性質として強すぎるということを説明する。すなわち、公平性の概念が強くなってしまい、$A(i) \cap A(i') \neq \emptyset$で定義した、教科公平性を求めてしまうと、TOFMが存在しなくなってしまう場合があることを、反例を用いて説明する。}
+
+\begin{remark}[強すぎる教科公平の定義について]
+本章の「教科に基づいた正当な嫉妬」や「教科公平」の検査条件を、
+\emph{担当教科集合の交差が非空}であること（$A(i)\cap A(i')\neq\emptyset$）を満たすだけで
+嫉妬の候補に含めるように強めると、公平性の概念は過度に強くなる。
+
+直観的には、$i$ が学校 $s$ における（現在 $i'$ が担っている）\emph{特定の教科枠}を実際には
+担当できない局面であっても、$A(i)\cap A(i')\neq\emptyset$ というだけで
+「入れ替え可能」と見なされ、$i$ の不満が「教科に基づく正当な嫉妬」と数え上げられてしまう。
+この過剰検出により、フェアと見なせるマッチングの集合が空になり、結果として
+\emph{教師最適教科公平マッチング（TOFM）が存在しない}事態を招きうる。
+
+\medskip
+\noindent\textbf{反例（最小構成）。}
+教師 $I=\{i_A,i_B,i_{AB}\}$、学校 $S=\{s_A,s_B\}$ を考える。
+それぞれが担当できる教科集合と、学校側の必要教科は次の通り：
+\[
+A(i_A)=\{A\},\quad A(i_B)=\{B\},\quad A(i_{AB})=\{A,B\},\qquad
+s_A:\text{教科 }A,\ s_B:\text{教科 }B.
+\]
+各教師は配属を $\emptyset$ より好み、学校の優先順位は
+\[
+\succ_{s_A}:\ i_B \succ i_{AB} \succ i_A,\qquad
+\succ_{s_B}:\ i_A \succ i_{AB} \succ i_B
+\]
+とする（すなわち、$s_A$ では $B$ 専任の $i_B$ が、$s_B$ では $A$ 専任の $i_A$ が
+ともに $i_{AB}$ より上位にランクされている）。
+この設定では、実現可能性から $s_A$ には $\{i_A,i_{AB}\}$ のいずれか、
+$s_B$ には $\{i_B,i_{AB}\}$ のいずれかを割り当てるしかない。
+
+\begin{itemize}
+\item もし $\mu(s_A)=i_{AB},\ \mu(s_B)=i_B$ とすると、$i_A$ は未配属であり、
+$A(i_A)\cap A(i_{AB})=\{A\}\neq\emptyset$ を理由に $s_B$ にいる $i_{AB}$ へ
+（教科 $B$ の枠であるにもかかわらず）嫉妬が成立してしまう。
+強い定義ではこのような \emph{特定枠に関する実現可能性を無視した}交差ベースの嫉妬も
+カウントされるため、$\mu$ は教科公平でない。
+
+\item 逆に $\mu(s_A)=i_A,\ \mu(s_B)=i_{AB}$ とすると、未配属の $i_B$ が
+$A(i_B)\cap A(i_{AB})=\{B\}\neq\emptyset$ を根拠に $s_A$ の $i_{AB}$ に嫉妬し、
+同様に教科公平に反する判定となる。
+\end{itemize}
+
+さらに $i_{AB}$ を未配属として $\mu(s_A)=i_A,\ \mu(s_B)=i_B$ としても、
+交差条件の下では $i_{AB}$ が両校のいずれかに対して
+$A(i_{AB})\cap A(i_A)\neq\emptyset$ あるいは
+$A(i_{AB})\cap A(i_B)\neq\emptyset$ を理由に嫉妬を主張でき、
+やはり教科公平が壊れてしまう。
+
+\medskip
+\noindent\textbf{帰結。}
+この反例が示す通り、$A(i)\cap A(i')\neq\emptyset$ を満たすだけで
+嫉妬を認定する（＝\emph{交差ベースの強い教科公平}）定義は、
+特定の学校・特定の教科枠における \emph{実現可能な入れ替え} という本質を捉え損ない、
+フェアと判定されるマッチングを消し去ってしまうことがある。
+ゆえに、TOFM の存在を保証したい分析目的に対しては、
+この定義は\emph{強すぎる}。
+\end{remark}
 
 
 
 \subsection{仮定}
 本モデルでは、以下の4つの重要な仮定を導入する。
 
-\textcolor{red}{これは仮定なので、もう一回そのまま描いてもいいと思う。つまりそのまま。}
-\textcolor{red}{証明とかで使っている場合は、仮定の番号を変更する}
+% \textcolor{red}{これは仮定なので、もう一回そのまま描いてもいいと思う。つまりそのまま。}
+% \textcolor{red}{証明とかで使っている場合は、仮定の番号を変更する}
 
 \vspace{0.5\baselineskip}
 \noindent\textbf{仮定 (1)} \\
@@ -1673,18 +1758,18 @@ A: I \to 2^J\setminus {\emptyset}
 % \subsection{複数教科に対応するためのアルゴリズムの拡張}
 
 
-\textcolor{red}{これらももう一回書いていい。Fixed Pointもちゃんと定義する。あと、数式での定義→言葉での説明の順番で書いていくこと。}
 
 
-カットオフ調整アルゴリズムを、複数教科のケースを扱えるように拡張する。
-学校$s$の教科$j$における需要関数 $D^j_s(p)$ は、教師が持つ全ての免許教科にわたる他の選択肢（alternative opportunities）を考慮するように再定義される。
-教師 $i \in I_j$ がこの需要集合に含まれるのは、その教師が学校$s$の教科$j$におけるカットオフを上回り、かつ、自身が条件を満たす他のいかなる割り当て候補となる学校$s'$の科目$j'$よりも学校$s$での職を好む場合である。
+学校$s$の教科$j$における需要関数 $D^j_s(p)$ は、以下のように定義される。
 
 \begin{align*}
   D^j_s(p) = \{ i \in I_j \mid {} & i \succeq_s i^{(s,p^j_s)} \text{ かつ } s \succ_i \emptyset \text{ であり、} \\
   & \forall s' \in S\setminus \{s\}, \forall j' \in A(i) \cap A(s'), 
   i \succeq_{s'} i^{(s',p^{j'}_{s'})} \implies s \succ_i s' \}
 \end{align*}
+
+これは、その教師が学校$s$の教科$j$におけるカットオフを上回り、かつ、自身が条件を満たす他のいかなる割り当て候補となる学校$s'$の科目$j'$よりも学校$s$での職を好む場合に、教師$i$が学校$s$の教科$j$における需要集合に含まれることを意味する。
+
 
 
 % The {\bf \textit{subject-cutoff adjustment function}}, $T : P \rightarrow P$, operates as before, but on this new demand function:
@@ -1701,7 +1786,7 @@ A: I \to 2^J\setminus {\emptyset}
 % \]
 
 
-\textbf{\textit{教科別カットオフ調整関数}} $T : P \rightarrow P$ は、以前と同様に動作するが、この新しい需要関数に対して適用される。
+\textbf{\textit{教科別カットオフ調整関数}} $T : P \rightarrow P$ は、以下のように定義される。
 \[
 T_s^j(p) =
 \begin{cases}
@@ -1710,16 +1795,32 @@ p_s^j     & \text{if } | D_s^j(p) | \leq c^j_s
 \end{cases}
 \]
 
-もし $p$ がこの関数 $T$ の不動点（fixed point）であるならば、その結果として得られる需要のある教師の集合は、各学校にとって実現可能となる。すなわち、$\bigcup_{j \in A(s)} D^j_s(p) \in \mathcal{F}_s$ である。
-この不動点から最終的なマッチング $\mu^p$ を構成することができる。これは、各学校に対して、その学校が募集するすべての教科にわたる需要のある教師の和集合を割り当てることで行われる。
+
+% \textcolor{red}{Fixed Pointもちゃんと定義する。あと、数式での定義→言葉での説明の順番で書いていくこと。}
+
+
+半順序集合 $(X, \succeq)$ において、任意の $x, y \in X$ に対して、上限 $\sup_{\succeq} \{x, y\}$ と下限 $\inf_{\succeq} \{x, y\}$ が常に存在する時、この半順序集合を \textbf{\textit{束（Lattice）}} と呼ぶ。これは、集合 $X$ の中から\underbar{どの2つの元（要素）を選んでも}、その2つを「上から押さえる」ことができる元の中で最小のもの（上限）と、「下から支える」ことができる元の中で最大のもの（下限）が、必ずその集合 $X$ の中に見つかる、という性質を表している。
+
+
+半順序集合 $(X, \succeq)$ において、空集合ではない任意の部分集合 $Y \subseteq X$ に対して、上限 $\sup_{\succeq} Y$ と下限 $\inf_{\succeq} Y$ が常に存在する時、この半順序集合を \textbf{\textit{完備束（Complete Lattice）}} と呼ぶ。これは、束の性質をさらに強力にしたものであり、2つの元だけでなく、\underbar{どのような部分集合（元の集まり）を持ってきても}、その集合全体に対する上限と下限が必ず集合 $X$ の中に存在する、ということを意味する。有限集合だけでなく、無限個の元からなる部分集合についてもこの条件が成り立つ。
+
+
+\textbf{定理}. $(L, \leq)$ を完備束とし、$f: L \to L$ を増加関数、すなわち、$x \leq y$ ならば $f(x) \leq f(y)$ が成り立つとする。このとき、$f$ の不動点の集合 $\{ u \in L : f(u) = u \}$ は $\leq$ の下で完備束をなす。特に、$f$ は最小不動点 $\underline{u}$ と最大不動点 $\overline{u}$ を持つ。\footnote{https://pauldelatte.github.io/files/L3.pdfより}
+
+\bigbreak
+
+もし $p$ がこの関数 $T$ の不動点（fixed point）であるならば、$\bigcup_{j \in A(s)} D^j_s(p) \in \mathcal{F}_s$となる。これは、需要関数から得られる教員の集合が、各学校にとって実現可能であることを意味する。
+この不動点から最終的なマッチング $\mu^p$ を以下のように構成することができる。
 \[
 \mu^{p}_s =\bigcup_{j \in A(s)} D^j_s(p)
 \]
+これは、各学校に対して、その学校が募集するすべての教科にわたる需要のある教師の和集合を割り当てることで行われている。
 
 
 
 
-\textcolor{red}{不動点の例・不動点でない例、不動点であるならば、教科公平性を満たしていることをも確認する。不動点じゃない時には、教科公平性を満たさないこと？}
+
+\textcolor{red}{不動点の例・不動点でない例、不動点であるならば、教科公平性を満たしていることをも確認する。不動点じゃない時には、教科公平性を満たさないこと？そういう例があるのであれば。}
 
 \subsection{主要定理}
 
